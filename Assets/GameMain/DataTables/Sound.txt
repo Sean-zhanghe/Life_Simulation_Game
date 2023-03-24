@@ -1,0 +1,9 @@
+﻿#	声音配置表				
+#	Id		AssetName	SoundGroupId	SoundPlayParamId
+#	int		string	int	int
+#	声音编号	策划备注	资源名称	声音组名称	声音播放参数
+	10001	游戏背景音乐	GameBGM.mp3	1001	1001
+	10002	主菜单背景音乐	MenuBGM.mp3	1001	1001
+	20001	玩家子弹	weapon_player.wav	1003	1003
+	30001	按钮点击	Click.wav	1002	1002
+	30002	按钮选择	Select.wav	1002	1002

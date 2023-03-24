@@ -1,0 +1,7 @@
+﻿#	场景配置表					
+#	Id		AssetName	BackgroundMusicId	Procedure	PlayerPosition
+#	int		string	int	string	string
+#	场景编号	备注	资源名称	背景音乐编号	流程名称	玩家位置
+	1	人物选择	Character	10002	ProcedureCharacter	"0:0,0,0"
+	2	游戏主场景	MainGame	10002	ProcedureGame	"0:5,-50,0|3:55.5,17,0"
+	3	宿舍	Dormitory	10002	ProcedureGame	"0:8,-11,0"

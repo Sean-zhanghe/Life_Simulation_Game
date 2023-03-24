@@ -1,0 +1,5 @@
+﻿#	工作配置表			
+#	Id		Consume	Reward
+#	int		string	string
+#	工作Id	策划备注	消耗	工作奖励
+	1001	整理床铺	uPower=-1&uEnergy=-1	

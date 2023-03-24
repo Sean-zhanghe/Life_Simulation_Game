@@ -1,0 +1,8 @@
+﻿#	任务配置表						
+#	Id		TaskType	Description	TaskCondition	Reward	NextTaskId
+#	int		int	string	string	string	int
+#	任务ID		任务类型(1:主线，2:随机)	任务描述	任务完成条件(type=完成任务条件类型&任务目标=(数量或Id)&...)	奖励	下一任务ID
+	10001		1	入学报道	uType=1&uDialog=10004		10002
+	10002		1	找到宿舍	uType=1&uDialog=10004		10003
+	10003		1	整理床铺	uType=2&uWork=1001		10004
+	10004		1	学校发布招聘任务信息招募设备内测人员	uType=1&uDialog=10004		0
