@@ -64,26 +64,24 @@ namespace StarForce
         {
             pause = true;
 
-            //foreach (var entity in entityLoader.GetAllEntities())
-            //{
-            //    IPause iPause = entity.Logic as IPause;
-            //    if (iPause != null)
-            //        iPause.Pause();
-            //}
-            entityLoader.HideAllEntity();
+            foreach (var entity in entityLoader.GetAllEntities())
+            {
+                IPause iPause = entity.Logic as IPause;
+                if (iPause != null)
+                    iPause.Pause();
+            }
         }
 
         public void Resume()
         {
             pause = false;
 
-            //foreach (var entity in entityLoader.GetAllEntities())
-            //{
-            //    IPause iPause = entity.Logic as IPause;
-            //    if (iPause != null)
-            //        iPause.Resume();
-            //}
-            CreatePlayer();
+            foreach (var entity in entityLoader.GetAllEntities())
+            {
+                IPause iPause = entity.Logic as IPause;
+                if (iPause != null)
+                    iPause.Resume();
+            }
         }
 
         public void CreatePlayer()

@@ -88,10 +88,10 @@ public class TaskManager : IReference
             int condDialogId = GetTaskConditionValue(EnumTaskType.MainTask, Constant.Parameter.Dialog);
             if (condDialogId == dialogId)
             {
-                // 修改主线任务状态
-                dataTask.ChangeTaskState(EnumTaskType.MainTask, EnumTaskState.Finish);
                 // 发放主线任务奖励
                 dataPlayer.AddPriorityByConfiger(dataTask.CurrentMainTask.Reward);
+                // 修改主线任务状态
+                dataTask.ChangeTaskState(EnumTaskType.MainTask, EnumTaskState.Finish);
             }
         }
 

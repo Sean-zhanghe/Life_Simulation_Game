@@ -146,12 +146,12 @@ namespace StarForce.Data
                     if (dicMainTask.ContainsKey(CurrentMainTask.NextTaskId))
                     {
                         CurrentMainTask = dicMainTask[CurrentMainTask.NextTaskId];
+                        GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
                     }
                     else
                     {
                         CurrentMainTask = null;
                     }
-                    GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
                 }
             }
 
@@ -163,6 +163,12 @@ namespace StarForce.Data
                 if (dicRandomTask.ContainsKey(CurrentRandomTask.Id))
                 {
                     dicRandomTask[CurrentRandomTask.Id].ChangeTaskState(taskState);
+                }
+
+                if (CurrentRandomTask.state == EnumTaskState.Finish)
+                {
+                    GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.RandomTask, CurrentMainTask));
+                    CurrentRandomTask = null;
                 }
             }
         }

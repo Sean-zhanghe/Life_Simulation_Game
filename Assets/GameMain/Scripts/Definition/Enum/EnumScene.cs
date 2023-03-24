@@ -11,6 +11,8 @@
         MainGame = 2,
 
         Dormitory = 3,
+
+        Company = 4,
     }
 
 }
