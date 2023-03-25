@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameMain/Scenes/Dormitory.unity
     guid: 450a9f7233723e3409670de05f120a92
+  - enabled: 1
+    path: Assets/GameMain/Scenes/Level/Level_Menu.unity
+    guid: c4ffe537cb558814e900b58bd00d5392
   m_configObjects: {}
