@@ -1,7 +1,7 @@
 ﻿#	玩家配置表				
-#	Id		EntityId	PlayerLevel	WeaponType
+#	Id		EntityId	PlayerLevel	WeaponId
 #	int		int	int	int
-#	配置编号	策划备注	实体编号	玩家等级	武器类型
+#	配置编号	策划备注	实体编号	玩家等级	武器Id
 	101	玩家男1	10001	1	0
 	102	玩家男2	10002	1	0
 	201	玩家女1	10003	1	0

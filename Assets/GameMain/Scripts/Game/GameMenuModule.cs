@@ -21,6 +21,8 @@ public class GameMenuModule : BaseModule
         base.OnEnter(fsm);
 
         GameEntry.Event.Subscribe(LoadSceneCompleteEventArgs.EventId, OnLoadSceneComplete);
+
+        GameEntry.UI.OpenUIForm(UIFormId.UILevelMenuForm, this);
     }
 
     protected override void OnUpdate(ProcedureOwner fsm, float elapseSeconds, float realElapseSeconds)
@@ -39,7 +41,6 @@ public class GameMenuModule : BaseModule
     {
         base.OnDestroy(fsm);
     }
-
 
     private void OnLoadSceneComplete(object sender, GameEventArgs e)
     {

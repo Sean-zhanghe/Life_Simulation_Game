@@ -1,0 +1,7 @@
+﻿#	关卡配置表			
+#	Id		Name	SceneId
+#	int		string	int
+#	关卡Id	策划备注	关卡名称	场景Id
+	1	第一关	寂静岭	5
+	2	第二关	葬魔塔	6
+	3	第三关	堕神峰	7

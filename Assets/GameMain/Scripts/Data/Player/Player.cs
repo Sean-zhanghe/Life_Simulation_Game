@@ -153,7 +153,7 @@ namespace StarForce.Data
             }
         }
 
-        public void SetPriority(EnumPriority priorityType, int value)
+        public void SetPriority(EnumPriority priorityType, float value)
         {
             switch (priorityType)
             {
@@ -175,15 +175,17 @@ namespace StarForce.Data
                 case EnumPriority.EXP:
                     EXP = Mathf.Clamp(value, 0, MaxEXP);
                     break;
-                case EnumPriority.Level:
-                    Level = Mathf.Clamp(value, 0, MaxLevel);
-                    break;
                 case EnumPriority.Money:
                     Money = Mathf.Max(0, value);
                     break;
                 default:
                     break;
             }
+        }
+
+        public void SetLevel(int level)
+        {
+            Level = Mathf.Clamp(level, 0, MaxLevel);
         }
 
         public void Upgrade()

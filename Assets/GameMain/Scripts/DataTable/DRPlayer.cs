@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-03-27 11:55:43.338
+// 生成时间：2023-03-27 16:35:08.692
 //------------------------------------------------------------
 
 using GameFramework;
@@ -55,9 +55,9 @@ namespace StarForce
         }
 
         /// <summary>
-        /// 获取武器类型。
+        /// 获取武器Id。
         /// </summary>
-        public int WeaponType
+        public int WeaponId
         {
             get;
             private set;
@@ -77,7 +77,7 @@ namespace StarForce
             index++;
             EntityId = int.Parse(columnStrings[index++]);
             PlayerLevel = int.Parse(columnStrings[index++]);
-            WeaponType = int.Parse(columnStrings[index++]);
+            WeaponId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -92,7 +92,7 @@ namespace StarForce
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     EntityId = binaryReader.Read7BitEncodedInt32();
                     PlayerLevel = binaryReader.Read7BitEncodedInt32();
-                    WeaponType = binaryReader.Read7BitEncodedInt32();
+                    WeaponId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

@@ -99,7 +99,7 @@ namespace StarForce.Data
 
             int serialId = GenerateSerialId();
             PlayerData playerData = dicPlayerData[playerId];
-            player = Player.Create(playerData, serialId, playerData.Level, playerData.WeaponType, name);
+            player = Player.Create(playerData, serialId, playerData.Level, playerData.WeaponId, name);
             //dicPlayer.Add(serialId, player);
             return player;
         }
@@ -168,7 +168,7 @@ namespace StarForce.Data
             GameEntry.Event.Fire(this, PlayerPriorityChangeEventArgs.Create(player.SerialId, prioritye, lastPriority, currentPriority));
         }
 
-        public void SetPriority(string priorityType, int value = 0)
+        public void SetPriority(string priorityType, float value = 0)
         {
 
             //if (!dicPlayer.ContainsKey(serialId))
@@ -199,12 +199,19 @@ namespace StarForce.Data
                 case Constant.Parameter.EXP:
                     player.SetPriority(EnumPriority.EXP, value);
                     break;
-                case Constant.Parameter.Level:
-                    player.SetPriority(EnumPriority.Level, value);
-                    break;
                 default:
                     break;
             }
+        }
+
+        public void SetLevel(int level)
+        {
+            player.SetLevel(level);
+        }
+
+        public void Reset()
+        {
+            SetPriority(Constant.Parameter.HP, player.MaxHP);
         }
 
         public void Upgrade()

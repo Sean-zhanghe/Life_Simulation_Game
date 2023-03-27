@@ -23,6 +23,7 @@ public class Teleport : MonoBehaviour
         if (PreTaskId == -1)
         {
             StarForce.GameEntry.Event.Fire(this, LoadGameSceneEventArgs.Create((int)to));
+            return;
         }
 
         Task preTask = dataTask.GetTask(PreTaskId);

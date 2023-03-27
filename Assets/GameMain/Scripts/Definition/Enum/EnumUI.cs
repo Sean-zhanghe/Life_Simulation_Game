@@ -45,6 +45,11 @@ namespace StarForce
         UIWaitingForm = 1005,
 
         /// <summary>
+        /// 等待
+        /// </summary>
+        UILevelMenuForm = 1006,
+
+        /// <summary>
         /// 弹出框。
         /// </summary>
         UITipsForm = 2001,

@@ -15,6 +15,7 @@ namespace StarForce
         private bool pause = false;
         public string lastScene;
         public string currentScene;
+        private int m_BackgroundMusicId;
 
         private EntityLoader entityLoader;
 
@@ -139,8 +140,8 @@ namespace StarForce
         {
 
             // 停止所有声音
-            //GameEntry.Sound.StopAllLoadingSounds();
-            //GameEntry.Sound.StopAllLoadedSounds();
+            GameEntry.Sound.StopAllLoadingSounds();
+            GameEntry.Sound.StopAllLoadedSounds();
 
             // 隐藏所有实体
             entityLoader.HideAllEntity();
@@ -161,6 +162,7 @@ namespace StarForce
                 return;
             }
 
+            m_BackgroundMusicId = scene.BackgroundMusicId;
             GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset(scene.AssetName), Constant.AssetPriority.SceneAsset, this);
         }
 
@@ -185,6 +187,11 @@ namespace StarForce
 
             lastScene = currentScene;
             currentScene = ne.SceneAssetName.Substring(Constant.Path.Scenes.Length, ne.SceneAssetName.Length - Constant.Path.Scenes.Length - ".unity".Length);
+
+            if (m_BackgroundMusicId > 0)
+            {
+                GameEntry.Sound.PlayMusic(m_BackgroundMusicId);
+            }
 
             GameEntry.Event.Fire(this, LoadSceneCompleteEventArgs.Create(lastScene, currentScene));
 

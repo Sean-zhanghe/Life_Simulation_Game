@@ -8,4 +8,5 @@
 	1003	设置	UISettingForm	Setting	FALSE	FALSE
 	1004	对话框	UIDialogForm	Default	FALSE	FALSE
 	1005	等待	UIWaitingForm	PopUp	FALSE	TRUE
+	1006	关卡选择	UILevelMenuForm	Default	FALSE	TRUE
 	2001	提示框	UITipsForm	PopUp	TRUE	FALSE
