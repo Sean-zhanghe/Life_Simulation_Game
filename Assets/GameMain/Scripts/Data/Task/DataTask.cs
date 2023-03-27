@@ -147,6 +147,7 @@ namespace StarForce.Data
                     {
                         CurrentMainTask = dicMainTask[CurrentMainTask.NextTaskId];
                         GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
+                        GameEntry.Sound.PlaySound(30003);
                     }
                     else
                     {
@@ -169,6 +170,7 @@ namespace StarForce.Data
                 {
                     GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.RandomTask, CurrentMainTask));
                     CurrentRandomTask = null;
+                    GameEntry.Sound.PlaySound(30003);
                 }
             }
         }

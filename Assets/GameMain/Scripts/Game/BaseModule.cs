@@ -1,16 +1,17 @@
-﻿using GameFramework.Event;
-using GameFramework.Fsm;
+﻿using GameFramework.Fsm;
 using StarForce;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ProcedureOwner = GameFramework.Fsm.IFsm<StarForce.GameManager>;
 
-/// <summary>
-/// 游戏模式
-/// </summary>
-public class GameModule : BaseModule
+
+public class BaseModule : FsmState<GameManager>
 {
+    protected GameManager gameManager;
+    protected ProcedureOwner procedureOwner;
+    protected bool pause = false;
+
     protected override void OnInit(ProcedureOwner fsm)
     {
         base.OnInit(fsm);
@@ -20,22 +21,21 @@ public class GameModule : BaseModule
     {
         base.OnEnter(fsm);
 
-        GameEntry.Event.Subscribe(LoadSceneCompleteEventArgs.EventId, OnLoadSceneComplete);
+        procedureOwner = fsm;
 
-        gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
+        gameManager = fsm.Owner;
     }
 
     protected override void OnUpdate(ProcedureOwner fsm, float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-        
     }
 
     protected override void OnLeave(ProcedureOwner fsm, bool isShutdown)
     {
         base.OnLeave(fsm, isShutdown);
 
-        GameEntry.Event.Unsubscribe(LoadSceneCompleteEventArgs.EventId, OnLoadSceneComplete);
+        GameEntry.UI.CloseAllLoadedUIForms();
     }
 
     protected override void OnDestroy(ProcedureOwner fsm)
@@ -43,14 +43,18 @@ public class GameModule : BaseModule
         base.OnDestroy(fsm);
     }
 
-    private void OnLoadSceneComplete(object sender, GameEventArgs e)
+    public void Pause()
     {
-        LoadSceneCompleteEventArgs ne = (LoadSceneCompleteEventArgs)e;
-        if (ne == null)
-        {
-            return;
-        }
+        pause = true;
+    }
 
-        string currentScene = ne.CurrentScene;
+    public void Resume()
+    {
+        pause = false;
+    }
+
+    public void Restart()
+    {
+
     }
 }

@@ -47,9 +47,6 @@ namespace StarForce
             lastScene = "Character";
             currentScene = "MainGame";
 
-            // 创建玩家
-            CreatePlayer();
-
             CreaterNPC();
         }
         public void Clear()
@@ -84,7 +81,12 @@ namespace StarForce
             }
         }
 
-        public void CreatePlayer()
+        public void Restart()
+        {
+
+        }
+
+        public void CreatePlayer<T>() where T : EntityLogic
         {
             int characterId = GameEntry.Setting.GetInt(Constant.DataNode.CharacterId);
             string playerName = GameEntry.Setting.GetString(Constant.DataNode.PlayerName);
@@ -96,14 +98,14 @@ namespace StarForce
 
 
             // 设置玩家位置
-            int curSceneId = GetSceneId(currentScene);
+            int curSceneId = dataScene.GetSceneIdByName(currentScene);
             if (curSceneId == 0)
             {
                 Log.Error("Can not get current scene {0} id.", curSceneId);
                 return;
             }
 
-            int lastSceneId = GetSceneId(lastScene);
+            int lastSceneId = dataScene.GetSceneIdByName(lastScene);
             if (lastSceneId == 0)
             {
                 Log.Error("Can not get last scene {0} id.", lastSceneId);
@@ -111,7 +113,7 @@ namespace StarForce
             }
 
             Vector3 pos = dataScene.GetPlayerPosition(curSceneId, lastSceneId);
-            entityLoader.ShowEntity<EntityLogicPlayer>(EnumEntity.Player, null, EntityDataPlayer.Create(player, pos));
+            entityLoader.ShowEntity<T>(EnumEntity.Player, null, EntityDataPlayer.Create(player, pos));
         }
 
         public void CreaterNPC()
@@ -131,19 +133,6 @@ namespace StarForce
                     EntityDataNPC.Create(npcData, npc.transform.position)
                 );
             }
-        }
-
-        private int GetSceneId(string sceneName)
-        {
-            SceneData[] scenes = dataScene.GetAllSceneData();
-            foreach (var scene in scenes)
-            {
-                if (scene.AssetName == sceneName)
-                {
-                    return scene.Id;
-                }
-            }
-            return 0;
         }
 
         public void Transition(int to)
@@ -196,8 +185,8 @@ namespace StarForce
 
             lastScene = currentScene;
             currentScene = ne.SceneAssetName.Substring(Constant.Path.Scenes.Length, ne.SceneAssetName.Length - Constant.Path.Scenes.Length - ".unity".Length);
-            
-            CreatePlayer();
+
+            GameEntry.Event.Fire(this, LoadSceneCompleteEventArgs.Create(lastScene, currentScene));
 
             CreaterNPC();
         }

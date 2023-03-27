@@ -12,9 +12,9 @@ namespace StarForce
         private bool pause = false;
 
         private GameModuleFsmMgr gameModuleFsmMgr = null;
-        private TaskManager taskManager = null;
-        private SceneControl sceneControl = null;
-        private AchievementManager achievementManager = null;
+        public TaskManager taskManager = null;
+        public SceneControl sceneControl = null;
+        public AchievementManager achievementManager = null;
         private CursorManager cursorManager = null;
 
 
@@ -25,10 +25,6 @@ namespace StarForce
 
         public void OnEnter()
         {
-            // 创建游戏模块管理状态机
-            gameModuleFsmMgr = GameModuleFsmMgr.Create(this);
-            gameModuleFsmMgr.Initialize();
-
             // 创建任务管理模块
             taskManager = TaskManager.Create();
             taskManager.Initialize();
@@ -44,6 +40,10 @@ namespace StarForce
             // 创建光标管理
             cursorManager = CursorManager.Create();
 
+            // 创建游戏模块管理状态机
+            gameModuleFsmMgr = GameModuleFsmMgr.Create(this);
+            gameModuleFsmMgr.Initialize();
+
         }
 
 
@@ -56,6 +56,7 @@ namespace StarForce
         {
             pause = true;
 
+            gameModuleFsmMgr.Pause();
             sceneControl.Pause();
         }
 
@@ -63,13 +64,14 @@ namespace StarForce
         {
             pause = false;
 
+            gameModuleFsmMgr.Resume();
             sceneControl.Resume();
-
         }
 
         public void Restart()
         {
-
+            gameModuleFsmMgr.Restart();
+            sceneControl.Restart();
         }
 
         public void Quick()

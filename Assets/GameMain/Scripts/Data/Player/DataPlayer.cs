@@ -214,7 +214,6 @@ namespace StarForce.Data
 
         public void AddPriorityByConfiger(string configer)
         {
-            Debug.Log(configer);
             if (configer == string.Empty) return;
 
             string[] priorities = configer.Split('&');

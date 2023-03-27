@@ -12,7 +12,11 @@
 
         Dormitory = 3,
 
-        Company = 4,
+        LevelMenu = 4,
+
+        Level_1 = 5,
+
+        Level_2 = 6,
     }
 
 }

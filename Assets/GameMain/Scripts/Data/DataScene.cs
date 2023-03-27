@@ -78,10 +78,23 @@ namespace StarForce.Data
             return results;
         }
 
-        public Vector3 GetPlayerPosition(int sceneId, int teleport)
+        public int GetSceneIdByName(string sceneName)
         {
-            Vector3 playerPos = new Vector3(0, 0, 0);
-            SceneData sceneData = GetSceneDataById(sceneId);
+            SceneData[] scenes = this.GetAllSceneData();
+            foreach (var scene in scenes)
+            {
+                if (scene.AssetName == sceneName)
+                {
+                    return scene.Id;
+                }
+            }
+            return 0;
+        }
+
+        public Vector3 GetPlayerPosition(int curSceneId, int lastSceneId)
+        {
+            Vector3 playerPos = Vector3.zero;
+            SceneData sceneData = GetSceneDataById(curSceneId);
             string[] positions = sceneData.PlayerPosition.Split('|');
             foreach (var pos in positions)
             {
@@ -97,7 +110,7 @@ namespace StarForce.Data
                     playerPos = temp;
                 }
 
-                if (scene == teleport)
+                if (scene == lastSceneId)
                 {
                     playerPos = temp;
                     return playerPos;

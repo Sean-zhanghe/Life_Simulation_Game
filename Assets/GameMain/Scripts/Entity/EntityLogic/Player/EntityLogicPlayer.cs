@@ -12,7 +12,7 @@ namespace StarForce
     {
         protected EntityDataPlayer entityDataPlayer;
 
-        private PlayerMovement playerMovement;
+        protected PlayerMovement playerMovement;
 
         protected bool pause = false;
 
@@ -56,21 +56,21 @@ namespace StarForce
             entityDataPlayer = null;
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             pause = true;
 
             playerMovement.OnPause();
         }
 
-        public void Resume()
+        public virtual void Resume()
         {
             pause = false;
 
             playerMovement.OnResume();
         }
 
-        protected void Dead()
+        protected virtual void Dead()
         {
             playerMovement.OnDead();
         }

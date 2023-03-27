@@ -14,6 +14,8 @@ public class GameModuleFsmMgr : IReference
 
     private IFsm<GameManager> fsm;
 
+    private bool pause = false;
+
     public GameModuleFsmMgr()
     {
         this.gameManager = null;
@@ -30,6 +32,7 @@ public class GameModuleFsmMgr : IReference
     {
         List<FsmState<GameManager>> moduleList = new List<FsmState<GameManager>>() { 
             new RealityModule(),
+            new GameMenuModule(),
             new GameModule()
         };
 
@@ -45,5 +48,28 @@ public class GameModuleFsmMgr : IReference
     public void Clear()
     {
         GameEntry.Fsm.DestroyFsm(fsm);
+    }
+
+
+    public void Pause()
+    {
+        pause = true;
+
+        BaseModule curState = (BaseModule)fsm.CurrentState;
+        curState.Pause();
+    }
+
+    public void Resume()
+    {
+        pause = false;
+
+        BaseModule curState = (BaseModule)fsm.CurrentState;
+        curState.Resume();
+    }
+
+    public void Restart()
+    {
+        BaseModule curState = (BaseModule)fsm.CurrentState;
+        curState.Restart();
     }
 }

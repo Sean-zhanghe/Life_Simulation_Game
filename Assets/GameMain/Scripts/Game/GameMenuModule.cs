@@ -7,9 +7,9 @@ using UnityEngine;
 using ProcedureOwner = GameFramework.Fsm.IFsm<StarForce.GameManager>;
 
 /// <summary>
-/// 游戏模式
+/// 游戏菜单模式
 /// </summary>
-public class GameModule : BaseModule
+public class GameMenuModule : BaseModule
 {
     protected override void OnInit(ProcedureOwner fsm)
     {
@@ -21,14 +21,11 @@ public class GameModule : BaseModule
         base.OnEnter(fsm);
 
         GameEntry.Event.Subscribe(LoadSceneCompleteEventArgs.EventId, OnLoadSceneComplete);
-
-        gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
     }
 
     protected override void OnUpdate(ProcedureOwner fsm, float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-        
     }
 
     protected override void OnLeave(ProcedureOwner fsm, bool isShutdown)
@@ -43,6 +40,7 @@ public class GameModule : BaseModule
         base.OnDestroy(fsm);
     }
 
+
     private void OnLoadSceneComplete(object sender, GameEventArgs e)
     {
         LoadSceneCompleteEventArgs ne = (LoadSceneCompleteEventArgs)e;
@@ -52,5 +50,13 @@ public class GameModule : BaseModule
         }
 
         string currentScene = ne.CurrentScene;
+
+        if (currentScene == Constant.Scene.MainGame)
+        {
+            ChangeState<RealityModule>(procedureOwner);
+            return;
+        }
+
+        ChangeState<GameModule>(procedureOwner);
     }
 }

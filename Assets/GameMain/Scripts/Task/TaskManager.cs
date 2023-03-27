@@ -10,6 +10,7 @@ public class TaskManager : IReference
 {
     private DataTask dataTask;
     private DataPlayer dataPlayer;
+
     public TaskManager()
     {
 
@@ -102,10 +103,10 @@ public class TaskManager : IReference
             int condDialogId = GetTaskConditionValue(EnumTaskType.RandomTask, Constant.Parameter.Dialog);
             if (condDialogId == dialogId)
             {
-                // 修改随机任务状态
-                dataTask.ChangeTaskState(EnumTaskType.RandomTask, EnumTaskState.Finish);
                 // 发放随机任务奖励
                 dataPlayer.AddPriorityByConfiger(dataTask.CurrentRandomTask.Reward);
+                // 修改随机任务状态
+                dataTask.ChangeTaskState(EnumTaskType.RandomTask, EnumTaskState.Finish);
             }
         }
     }
@@ -126,8 +127,8 @@ public class TaskManager : IReference
             int condWorkId = GetTaskConditionValue(EnumTaskType.MainTask, Constant.Parameter.Work);
             if (condWorkId == workId)
             {
-                dataTask.ChangeTaskState(EnumTaskType.MainTask, EnumTaskState.Finish);
                 dataPlayer.AddPriorityByConfiger(dataTask.CurrentMainTask.Reward);
+                dataTask.ChangeTaskState(EnumTaskType.MainTask, EnumTaskState.Finish);
             }
         }
 
@@ -137,8 +138,8 @@ public class TaskManager : IReference
             int condWorkId = GetTaskConditionValue(EnumTaskType.RandomTask, Constant.Parameter.Work);
             if (condWorkId == workId)
             {
-                dataTask.ChangeTaskState(EnumTaskType.RandomTask, EnumTaskState.Finish);
                 dataPlayer.AddPriorityByConfiger(dataTask.CurrentRandomTask.Reward);
+                dataTask.ChangeTaskState(EnumTaskType.RandomTask, EnumTaskState.Finish);
             }
         }
     }
