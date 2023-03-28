@@ -26,7 +26,7 @@ public class RealityModule : BaseModule
 
         GameEntry.UI.OpenUIForm(UIFormId.UIMainForm, this);
 
-        gameManager.sceneControl.CreatePlayer<EntityLogicPlayer>();
+        gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
     }
 
     protected override void OnUpdate(ProcedureOwner fsm, float elapseSeconds, float realElapseSeconds)
@@ -61,6 +61,6 @@ public class RealityModule : BaseModule
             return;
         }
 
-        gameManager.sceneControl.CreatePlayer<EntityLogicPlayer>();
+        gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
     }
 }

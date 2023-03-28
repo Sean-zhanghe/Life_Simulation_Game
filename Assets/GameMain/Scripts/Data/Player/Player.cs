@@ -17,7 +17,7 @@ namespace StarForce.Data
 
         public string Name { get; private set; }
 
-        public int WeaponType { get; private set; }
+        public int WeaponId { get; private set; }
 
         public float Power { get; private set; }
 
@@ -54,6 +54,10 @@ namespace StarForce.Data
         public float MaxHP { get { return GetMaxPriority(EnumPriority.HP, Level); } }
 
         public float MaxEXP { get { return GetMaxPriority(EnumPriority.EXP, Level); } }
+
+        public bool IsDead { get { return HP <= 0; } }
+
+        public float AttackInterval { get { return GameEntry.Config.GetInt(Constant.Config.AttackInterval); } }
 
         public Player()
         {
@@ -118,9 +122,9 @@ namespace StarForce.Data
             return result;
         }
 
-        public void SetWeapon(EnumWeapon weapon)
+        public void SetWeapon(int weapon)
         {
-            WeaponType = (int)weapon;
+            WeaponId = weapon;
         }
 
         public void AddPriority(EnumPriority priorityType, float value)
@@ -206,7 +210,7 @@ namespace StarForce.Data
             player.playerData = playerData;
             player.SerialId = serialId;
             player.Level = level;
-            player.WeaponType = weapon;
+            player.WeaponId = weapon;
             player.Name = Name;
             player.HP = player.MaxHP;
             player.Power = player.MaxPower;

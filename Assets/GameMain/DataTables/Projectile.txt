@@ -1,0 +1,5 @@
+﻿#	抛射物配置表					
+#	Id		ProjectileEntityId	Speed	VFXEntityId	Damage
+#	int		int	float	int	float
+#	抛射物Id	策划备注	抛射物实体Id	速度	特效实体Id	伤害
+	1001	箭	30001	15	40001	10

@@ -1,0 +1,5 @@
+﻿#	武器配置表							
+#	Id		Name	WeaponType	ProjectileId	ProjectileType	Damage	Paramater
+#	int		string	int	int	string	float	string
+#	武器Id	策划备注	武器名	武器类型（1：近战 2：远程）	抛射物Id	抛射物类型	伤害	动画参数
+	1001		弓箭	2	1001	EntityProjectileArrow	0	AttackWeapon

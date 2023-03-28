@@ -25,8 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     private CinemachineConfiner virtualConfig;
 
-    private DataGame dataGame;
-
     public bool IsPause { get; private set; }
     public bool IsDead { get; private set; }
 
@@ -36,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
         rb2 = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        dataGame = StarForce.GameEntry.Data.GetData<DataGame>();
+        IsPause = false;
+        IsDead = false;
     }
 
     public void OnShow(object userData)
@@ -63,15 +62,15 @@ public class PlayerMovement : MonoBehaviour
         Vector2 input = (transform.right * inputX + transform.up * inputY).normalized;
         rb2.velocity = input * speed;
 
-        animator.SetBool("IsMoving", input != Vector2.zero);
+        animator.SetBool(Constant.Animator.IsMoving, input != Vector2.zero);
         if (input != Vector2.zero)
         {
             stopX = inputX;
             stopY = inputY;
         }
 
-        animator.SetFloat("InputX", stopX);
-        animator.SetFloat("InputY", stopY);
+        animator.SetFloat(Constant.Animator.InputX, stopX);
+        animator.SetFloat(Constant.Animator.InputY, stopY);
     }
 
     public void OnHide(bool isShutdown, object userData)

@@ -39,6 +39,8 @@ namespace StarForce
             GameEntry.Event.Subscribe(LoadSceneFailureEventArgs.EventId, OnLoadSceneFailure);
             GameEntry.Event.Subscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
             GameEntry.Event.Subscribe(LoadGameSceneEventArgs.EventId, OnLoadGameScene);
+            GameEntry.Event.Subscribe(ShowEntityInGameEventArgs.EventId, OnShowEntityInGame);
+            GameEntry.Event.Subscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
 
             entityLoader = EntityLoader.Create(this);
 
@@ -56,6 +58,8 @@ namespace StarForce
             GameEntry.Event.Unsubscribe(LoadSceneFailureEventArgs.EventId, OnLoadSceneFailure);
             GameEntry.Event.Unsubscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
             GameEntry.Event.Unsubscribe(LoadGameSceneEventArgs.EventId, OnLoadGameScene);
+            GameEntry.Event.Unsubscribe(ShowEntityInGameEventArgs.EventId, OnShowEntityInGame);
+            GameEntry.Event.Unsubscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
         }
 
         public void Pause()
@@ -218,6 +222,24 @@ namespace StarForce
             }
 
             Log.Info("Load scene '{0}' update, progress '{1}'.", ne.SceneAssetName, ne.Progress.ToString("P2"));
+        }
+
+        private void OnShowEntityInGame(object sender, GameEventArgs e)
+        {
+            ShowEntityInGameEventArgs ne = (ShowEntityInGameEventArgs)e;
+            if (ne == null)
+                return;
+
+            entityLoader.ShowEntity(ne.EntityId, ne.Type, ne.ShowSuccess, ne.EntityData);
+        }
+
+        private void OnHideEntityInGame(object sender, GameEventArgs e)
+        {
+            HideEntityInGameEventArgs ne = (HideEntityInGameEventArgs)e;
+            if (ne == null)
+                return;
+
+            entityLoader.HideEntity(ne.EntityId);
         }
     }
 

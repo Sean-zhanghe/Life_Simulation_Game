@@ -49,7 +49,7 @@ namespace StarForce
             s_MusicSerialId = null;
         }
 
-        public static int? PlaySound(this SoundComponent soundComponent, EnumSound enumSound, EntityLogicEx bindingEntity = null, object userData = null)
+        public static int? PlaySound(this SoundComponent soundComponent, EnumSound enumSound, Entity bindingEntity = null, object userData = null)
         {
             if (enumSound == EnumSound.None)
                 return null;
@@ -57,7 +57,7 @@ namespace StarForce
             return soundComponent.PlaySound((int)enumSound, bindingEntity, userData);
         }
 
-        public static int? PlaySound(this SoundComponent soundComponent, int soundId, EntityLogicEx bindingEntity = null, object userData = null)
+        public static int? PlaySound(this SoundComponent soundComponent, int soundId, Entity bindingEntity = null, object userData = null)
         {
             SoundData soundData = GameEntry.Data.GetData<DataSound>().GetSoundDataBySoundId(soundId);
 
@@ -75,7 +75,7 @@ namespace StarForce
             playSoundParams.MaxDistance = soundData.SoundPlayParam.MaxDistance;
             playSoundParams.DopplerLevel = soundData.SoundPlayParam.DopplerLevel;
 
-            return soundComponent.PlaySound(AssetUtility.GetSoundAsset(soundData.AssetName), soundData.SoundGroupData.Name, Constant.AssetPriority.SoundAsset, playSoundParams, bindingEntity != null ? bindingEntity.Entity : null, userData);
+            return soundComponent.PlaySound(AssetUtility.GetSoundAsset(soundData.AssetName), soundData.SoundGroupData.Name, Constant.AssetPriority.SoundAsset, playSoundParams, bindingEntity, userData);
         }
 
         public static bool IsMuted(this SoundComponent soundComponent, string soundGroupName)

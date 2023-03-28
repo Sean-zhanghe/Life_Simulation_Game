@@ -20,7 +20,7 @@ public class Teleport : MonoBehaviour
     public void TeleportToScene()
     {
         // 无前置任务直接跳转
-        if (PreTaskId == -1)
+        if (PreTaskId == 0)
         {
             StarForce.GameEntry.Event.Fire(this, LoadGameSceneEventArgs.Create((int)to));
             return;

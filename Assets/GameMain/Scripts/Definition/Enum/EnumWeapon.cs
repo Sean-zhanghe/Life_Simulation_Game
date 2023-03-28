@@ -1,12 +1,16 @@
 ﻿namespace StarForce
 {
 
-    // 任务状态
-    public enum EnumWeapon : byte
+    // 武器类型
+    public enum EnumWeaponType : byte
     {
         None = 0,
 
-        Bow = 1,
+        Melee = 1,
+
+        Ranged = 2,
     }
+
+
 
 }

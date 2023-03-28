@@ -45,7 +45,7 @@ namespace StarForce
             if (EventSystem.current.IsPointerOverGameObject())
                 return null;
 
-            return Physics2D.OverlapPoint(mouseWorldPos, Constant.Layer.GameLayerId);
+            return Physics2D.OverlapPoint(mouseWorldPos, Constant.Layer.CursorLayerId);
         }
 
         public CursorManager()

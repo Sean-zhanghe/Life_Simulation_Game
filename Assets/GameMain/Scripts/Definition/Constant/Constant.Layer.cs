@@ -22,8 +22,8 @@ namespace StarForce
             public const string UILayerName = "UI";
             public static readonly int UILayerId = LayerMask.GetMask(UILayerName);
 
-            public const string GameLayerName = "Game";
-            public static readonly int GameLayerId = LayerMask.GetMask(GameLayerName);
+            public const string CursorLayerName = "Cursor";
+            public static readonly int CursorLayerId = LayerMask.GetMask(CursorLayerName);
 
         }
     }

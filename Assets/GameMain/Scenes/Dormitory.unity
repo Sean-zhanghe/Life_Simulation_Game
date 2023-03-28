@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 508448795}
   - component: {fileID: 508448796}
   - component: {fileID: 508448797}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Teleport
   m_TagString: Teleport
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   to: 2
-  PreTaskId: -1
+  PreTaskId: 0
 --- !u!1 &783647156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3757,7 +3757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 973488208}
   - component: {fileID: 973488207}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraBorder
   m_TagString: CameraBorder
   m_Icon: {fileID: 0}
@@ -20309,7 +20309,7 @@ GameObject:
   - component: {fileID: 1765200459}
   - component: {fileID: 1765200460}
   - component: {fileID: 1765200461}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: bed
   m_TagString: Work
   m_Icon: {fileID: 0}

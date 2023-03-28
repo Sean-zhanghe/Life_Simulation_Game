@@ -70,7 +70,7 @@ namespace StarForce
             playerMovement.OnResume();
         }
 
-        protected virtual void Dead()
+        public virtual void Dead()
         {
             playerMovement.OnDead();
         }

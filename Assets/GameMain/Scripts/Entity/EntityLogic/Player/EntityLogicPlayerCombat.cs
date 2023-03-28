@@ -10,24 +10,56 @@ namespace StarForce
 {
     public class EntityLogicPlayerCombat : EntityLogicPlayer
     {
+        private PlayerAttack playerAttack;
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
+
+            playerAttack = transform.GetComponent<PlayerAttack>();
+            playerAttack.OnInit(userData);
         }
 
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
+
+            playerAttack.OnShow(userData);
         }
 
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
+
+            playerAttack.OnUpdate(elapseSeconds, realElapseSeconds);
         }
 
         protected override void OnHide(bool isShutdown, object userData)
         {
             base.OnHide(isShutdown, userData);
+
+            playerAttack.OnHide(isShutdown, userData);
+        }
+
+        public override void Pause()
+        {
+            base.Pause();
+
+            playerAttack.OnPause();
+        }
+
+        public override void Resume()
+        {
+            base.Resume();
+
+            playerAttack.OnResume();
+        }
+
+        public override void Dead()
+        {
+            base.Dead();
+
+            playerAttack.OnDead();
         }
     }
 }
