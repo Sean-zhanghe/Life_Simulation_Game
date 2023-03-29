@@ -67,12 +67,16 @@
     <Compile Include="Assets\GameMain\Scripts\Data\DataGame.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataPoolParam.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\DataProjectile.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataScene.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataSound.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\DataWeapon.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataWork.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\DataEntity.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\EntityData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\EntityGroupData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\Level\DataLevel.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\Level\LevelData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Player\DataPlayer.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Player\Player.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Player\PlayerData.cs" />
@@ -85,11 +89,13 @@
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRDialog.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DREntity.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DREntityGroup.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRLevel.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRMusic.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRPlayer.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRPlayerLevel.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRPoolParam.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRProjectile.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRScene.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRSound.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRSoundGroup.cs" />
@@ -97,9 +103,11 @@
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRTask.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRUIForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRUISound.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DRWeapon.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRWork.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DataTableExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\Debugger\ChangeLanguageDebuggerWindow.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Animator.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.AssetPriority.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Config.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.DataNode.cs" />
@@ -108,6 +116,7 @@
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Parameter.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Path.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.ProcedureData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Scene.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Setting.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\Constant\Constant.Tag.cs" />
     <Compile Include="Assets\GameMain\Scripts\Definition\DataStruct\BuildInfo.cs" />
@@ -123,25 +132,39 @@
     <Compile Include="Assets\GameMain\Scripts\Definition\Enum\EnumWeapon.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataFollow.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataPlayer.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataProjectile.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EntityLogicNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\EntityLogicPlayer.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\EntityLogicPlayerCombat.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\PlayerAttack.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Projectile\EntityHideSelfProjectile.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Projectile\EntityProjectile.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Projectile\EntityProjectileArrow.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Projectile\EntityVFX.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Projectile\EntityVFXAutoHide.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogicEx.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\ChangeSceneEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\DialogFinishEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\EnterGameEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\GameStateChangeEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\HideEntityInGameEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\LoadGameSceneEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\LoadSceneCompleteEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\OpenDialogEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\PlayerPriorityChangeEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\ReleaseTaskEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Event\ShowEntityInGameEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Event\WorkFinishEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\Extension\EntityLoader.cs" />
     <Compile Include="Assets\GameMain\Scripts\Extension\EventSubscriber.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\BaseModule.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameManager.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Game\GameMenuModule.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameModule.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\GameModuleFsmMgr.cs" />
     <Compile Include="Assets\GameMain\Scripts\Game\IPause.cs" />
@@ -189,6 +212,7 @@
     <Compile Include="Assets\GameMain\Scripts\UI\UICharacterForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIDialogueForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\UILevelMenuForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIMainForm.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIOpenParam\DialogParams.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\UIOpenParam\UIWaitingParams.cs" />
@@ -201,11 +225,13 @@
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\LitJsonHelper.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Utility\TypeUtility.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\WebUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GameMain\Configs\DefaultDictionary.xml" />
     <None Include="Assets\GameMain\Localization\ChineseTraditional\Dictionaries\Default.xml" />
+    <None Include="Assets\GameMain\DataTables\Projectile.txt" />
     <None Include="Assets\GameMain\Localization\English\Dictionaries\Default.xml" />
     <None Include="Assets\GameMain\Configs\DefaultConfig.txt" />
     <None Include="Assets\GameMain\Configs\ResourceBuilder.xml" />
@@ -223,6 +249,7 @@
     <None Include="Assets\GameMain\Configs\BuildSettings.xml" />
     <None Include="Assets\GameMain\Localization\ChineseSimplified\Dictionaries\Default.xml" />
     <None Include="Assets\GameMain\DataTables\Entity.txt" />
+    <None Include="Assets\GameMain\DataTables\Weapon.txt" />
     <None Include="Assets\GameMain\DataTables\Sound.txt" />
     <None Include="Assets\GameMain\Libraries\LitJson.dll" />
     <None Include="Assets\GameFramework\Libraries\ICSharpCode.SharpZipLib.dll" />
@@ -235,6 +262,7 @@
     <None Include="Assets\GameMain\Configs\BuildInfo.txt" />
     <None Include="Assets\GameMain\Libraries\protobuf-net.dll" />
     <None Include="Assets\GameMain\DataTables\Task.txt" />
+    <None Include="Assets\GameMain\DataTables\Level.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -76,11 +77,6 @@ public class PlayerAttack : MonoBehaviour
         IsDead = true;
     }
 
-    private void SetUpTimers()
-    {
-
-    }
-
     private void Attack()
     {
         int weaponId = dataPlayer.player.WeaponId;
@@ -113,6 +109,8 @@ public class PlayerAttack : MonoBehaviour
             float inputX = animator.GetFloat(Constant.Animator.InputX);
             float inputY = animator.GetFloat(Constant.Animator.InputY);
             Vector2 direction = (transform.right * inputX + transform.up * inputY).normalized;
+            float angel = Random.Range(-2f, 2f);
+            direction = Quaternion.AngleAxis(angel, Vector3.forward) * direction;
 
             GameEntry.Event.Fire(this, ShowEntityInGameEventArgs.Create(
                 projectile.ProjectileEntityId,
