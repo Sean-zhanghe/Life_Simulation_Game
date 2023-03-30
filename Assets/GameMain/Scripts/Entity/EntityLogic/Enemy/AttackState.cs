@@ -33,7 +33,7 @@ public class AttackState : BaseState
 
         timer += elapseSeconds;
 
-        // 收到伤害
+        // 受到伤害
         if (logic.IsHit)
         {
             ChangeState<HitState>(fsm);

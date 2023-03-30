@@ -41,6 +41,7 @@ public class BaseState : FsmState<EntityLogicEnemy>
     protected override void OnLeave(ProcedureOwner fsm, bool isShutdown)
     {
         base.OnLeave(fsm, isShutdown);
+        pause = false;
     }
 
     protected override void OnDestroy(ProcedureOwner fsm)

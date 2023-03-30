@@ -17,6 +17,8 @@ namespace StarForce
         public string currentScene;
         private int m_BackgroundMusicId;
 
+        // 在这边记录敌人状态机ID 防止ID重复
+        private int ENEMY_FSM_SERIAL_ID = 0;
         private EntityLoader entityLoader;
 
         private DataScene dataScene;
@@ -159,7 +161,7 @@ namespace StarForce
                     enemyData.EntityId,
                     TypeUtility.GetEntityType(enemyData.EnemyType),
                     (entity) => { dicEntityEnemy.Add(entity.Id, (EntityLogicEnemy)entity.Logic); },
-                    EntityDataEnemy.Create(enemyData, enemy.transform.position)
+                    EntityDataEnemy.Create(enemyData, ENEMY_FSM_SERIAL_ID++, enemy.transform.position)
                 );
             }
         }

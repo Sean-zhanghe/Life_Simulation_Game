@@ -19,7 +19,9 @@ namespace StarForce
         public Animator animator;
         public Vector3 origion;
         public Transform target;
+        public Transform hpBarRoot;
 
+        public Transform reactPoint;
         public Transform attackPoint;
         public float attackArea = 0.75f;
 
@@ -28,6 +30,9 @@ namespace StarForce
         public bool IsDead { get { return HP <= 0; } }
 
         public bool IsHit { get; set; }
+
+        private bool loadedHPBar = false;
+        private EntityLogicHPBar entityHPBar;
 
         protected override void OnInit(object userData)
         {
@@ -40,11 +45,14 @@ namespace StarForce
             }
 
             enemyData = entityDataEnemy.enemyData;
+            SERIAL_ID = entityDataEnemy.FSM_SERIAL_ID;
             // 记录起始位置
             origion = entityDataEnemy.Position;
 
             animator = GetComponent<Animator>();
+            reactPoint = transform.GetChild(0);
             attackPoint = transform.GetChild(1);
+            hpBarRoot = transform.GetChild(2);
         }
 
         protected override void OnShow(object userData)
@@ -76,6 +84,8 @@ namespace StarForce
             base.OnUpdate(elapseSeconds, realElapseSeconds);
 
             if (pause) return;
+
+            FindTarget();
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -83,24 +93,22 @@ namespace StarForce
             base.OnHide(isShutdown, userData);
 
             origion = Vector3.zero;
+
+            HideHpBar();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void FindTarget()
         {
-            Debug.Log("1111111111");
-            if (collision.CompareTag(Constant.Tag.Player))
+            RaycastHit2D hit = Physics2D.Raycast(reactPoint.position, transform.localScale.x * new Vector3(0.25f, 0, 0)
+                , 5, Constant.Layer.PlayerLayerId);
+            if (hit)
             {
-                Debug.Log("player enter 11111111111111");
-                target = collision.transform;
+                if (hit.transform.CompareTag(Constant.Tag.Player))
+                    target = hit.transform;
             }
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.CompareTag(Constant.Tag.Player))
+            else
             {
-                Debug.Log("player exit 11111111111111");
-                target = null;
+                Debug.DrawRay(reactPoint.position, transform.localScale.x * new Vector3(5f, 0, 0), Color.red);
             }
         }
 
@@ -118,12 +126,27 @@ namespace StarForce
         {
             base.Damage(value);
 
+            if (IsDead) return;
+
+            if (!loadedHPBar)
+            {
+                GameEntry.Event.Fire(this, ShowEntityInGameEventArgs.Create(
+                    (int)EnumEntity.HPBar,
+                    typeof(EntityLogicHPBar),
+                    OnLoadHpBarSuccess,
+                    EntityDataFollow.Create(hpBarRoot)
+                    ));
+                loadedHPBar = true;
+            }
+
             IsHit = true;
 
-            Debug.Log("damage 111111111111111");
-            Debug.Log(value);
             HP -= value;
-            Debug.Log(HP);
+
+            if (entityHPBar)
+            {
+                entityHPBar.UpdateHealth(HP / enemyData.MaxHP);
+            }
         }
 
         public override void Dead()
@@ -147,6 +170,27 @@ namespace StarForce
             }
         }
 
+        private void OnLoadHpBarSuccess(Entity entity)
+        {
+            entityHPBar = entity.Logic as EntityLogicHPBar;
+            if (IsDead || !Available)
+            {
+                HideHpBar();
+            }
+            else
+            {
+                entityHPBar.UpdateHealth(HP / enemyData.MaxHP);
+            }
+        }
+        private void HideHpBar()
+        {
+            if (entityHPBar)
+            {
+                GameEntry.Event.Fire(this, HideEntityInGameEventArgs.Create(entityHPBar.Id));
+                loadedHPBar = false;
+                entityHPBar = null;
+            }
+        }
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(attackPoint.position, attackArea);

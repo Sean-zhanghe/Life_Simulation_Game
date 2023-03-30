@@ -61,7 +61,7 @@ namespace StarForce
 
         public virtual void Damage(float value)
         {
-
+            
         }
 
         public virtual void Dead()

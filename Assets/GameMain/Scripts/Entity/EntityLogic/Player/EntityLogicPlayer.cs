@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityGameFramework.Runtime;
 using GameFramework.Event;
 using Cinemachine;
-
+using StarForce.Data;
 
 namespace StarForce
 {
     public class EntityLogicPlayer : EntityLogicBase
     {
+        protected DataPlayer dataPlayer;
         protected EntityDataPlayer entityDataPlayer;
 
         protected PlayerMovement playerMovement;
@@ -18,6 +19,7 @@ namespace StarForce
         {
             base.OnInit(userData);
 
+            dataPlayer = GameEntry.Data.GetData<DataPlayer>();
             playerMovement = transform.GetComponent<PlayerMovement>();
             
             playerMovement.OnInit(userData);

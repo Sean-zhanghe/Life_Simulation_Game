@@ -85,11 +85,26 @@ public class PlayerAttack : MonoBehaviour
         if (weapon == null)
         {
             // TODO 无装备武器空手近战
-            animator.SetTrigger("Attack");
+            animator.SetTrigger(Constant.Animator.Attack);
             return;
         }
 
         animator.SetTrigger(weapon.Parameter);
+
+        
+    }
+
+    public void AttackEnemy()
+    {
+        int weaponId = dataPlayer.player.WeaponId;
+        WeaponData weapon = dataWeapon.GetWeaponDataById(weaponId);
+
+        // 空手
+        if (weapon == null) 
+        {
+
+            return;
+        }
 
         // 近战
         if (weapon.WeaponType == (int)EnumWeaponType.Melee)
@@ -101,7 +116,6 @@ public class PlayerAttack : MonoBehaviour
         // 远程
         if (weapon.WeaponType == (int)EnumWeaponType.Ranged)
         {
-            animator.SetTrigger(weapon.Parameter);
 
             ProjectileData projectile = dataProjectile.GetProjectileDataById(weapon.ProjectileId);
             if (projectile == null) return;
@@ -136,5 +150,11 @@ public class PlayerAttack : MonoBehaviour
                 EntityDataProjectile.Create(projectile, direction, firePoint.position, rotation)
                 ));
         }
+
+    }
+
+    public void EndAttackEnemy()
+    {
+
     }
 }

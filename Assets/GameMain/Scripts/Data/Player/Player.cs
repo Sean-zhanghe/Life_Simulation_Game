@@ -204,6 +204,17 @@ namespace StarForce.Data
             }
         }
 
+        public void Damage(float value)
+        {
+            if (value == 0) return;
+
+            float lastHP = HP;
+            AddPriority(EnumPriority.HP, -value);
+
+            Debug.Log("player hp 1111111111111111");
+            Debug.Log(HP);
+        }
+
         public static Player Create(PlayerData playerData, int serialId, int level = 1, int weapon = 0, string Name = "")
         {
             Player player = ReferencePool.Acquire<Player>();

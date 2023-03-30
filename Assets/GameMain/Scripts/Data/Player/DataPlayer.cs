@@ -232,6 +232,13 @@ namespace StarForce.Data
             }
         }
 
+        public void Damage(float value)
+        {
+            if (value == 0) return;
+            
+            player.Damage(value);
+        }
+
         protected override void OnUnload()
         {
             GameEntry.DataTable.DestroyDataTable<DRPlayer>();
