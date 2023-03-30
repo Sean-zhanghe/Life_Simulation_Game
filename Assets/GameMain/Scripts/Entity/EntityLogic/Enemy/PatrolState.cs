@@ -41,6 +41,7 @@ public class PatrolState : BaseState
         if (logic.IsHit)
         {
             ChangeState<HitState>(fsm);
+            return;
         }
 
         // 发现玩家并且没有超出追击范围
@@ -48,6 +49,7 @@ public class PatrolState : BaseState
             Vector2.Distance(logic.target.position, logic.origion) < logic.enemyData.ChaseRadius)
         {
             ChangeState<ChaseState>(fsm);
+            return;
         }
 
         logic.transform.position = Vector2.MoveTowards(logic.transform.position,
@@ -56,6 +58,7 @@ public class PatrolState : BaseState
         if (Vector2.Distance(logic.transform.position, patrolPosition) < .1f)
         {
             ChangeState<IdleState>(fsm);
+            return;
         }
 
         // 当超过一定时间还没有到达随机巡逻点，从新随机

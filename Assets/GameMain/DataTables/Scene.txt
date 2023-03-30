@@ -6,6 +6,6 @@
 	2	游戏主场景	MainGame	10002	ProcedureGame	"0:5,-50,0|3:55.5,17,0|4:-54,-3,0"
 	3	宿舍	Dormitory	10002	ProcedureGame	"0:8,-11,0"
 	4	关卡选择	Level_Menu	10001	ProcedureGame	"0:0,0,0"
-	5	第一关	Level_1	10001	ProcedureGame	"0:0,0,0"
+	5	第一关	Level_1	10001	ProcedureGame	"0:-3.49,4.57,0"
 	6	第二关	Level_2	10001	ProcedureGame	"0:0,0,0"
 	7	第三关	Level_3	10001	ProcedureGame	"0:0,0,0"
