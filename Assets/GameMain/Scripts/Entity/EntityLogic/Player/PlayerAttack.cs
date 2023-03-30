@@ -112,11 +112,28 @@ public class PlayerAttack : MonoBehaviour
             float angel = Random.Range(-2f, 2f);
             direction = Quaternion.AngleAxis(angel, Vector3.forward) * direction;
 
+            // 调整箭矢旋转方向
+            Quaternion rotation = Quaternion.identity;
+            if (inputX == 0 && inputY == -1)
+            {
+                rotation = Quaternion.AngleAxis(90, Vector3.forward);
+            }
+
+            if (inputX == 1 && inputY == 0)
+            {
+                rotation = Quaternion.AngleAxis(180, Vector3.forward);
+            }
+
+            if (inputX == 0 && inputY == 1)
+            {
+                rotation = Quaternion.AngleAxis(270, Vector3.forward);
+            }
+
             GameEntry.Event.Fire(this, ShowEntityInGameEventArgs.Create(
                 projectile.ProjectileEntityId,
                 TypeUtility.GetEntityType(weapon.ProjectileType),
                 null,
-                EntityDataProjectile.Create(projectile, direction, firePoint.position)
+                EntityDataProjectile.Create(projectile, direction, firePoint.position, rotation)
                 ));
         }
     }

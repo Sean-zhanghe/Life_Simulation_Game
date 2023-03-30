@@ -21,11 +21,14 @@ namespace StarForce
 
         private DataScene dataScene;
         private DataNPC dataNPC;
+        private DataEnemy dataEnemy;
         private Dictionary<int, EntityLogicNPC> dicEntityNPC;
+        private Dictionary<int, EntityLogicEnemy> dicEntityEnemy;
 
         public SceneControl()
         {
             dicEntityNPC = new Dictionary<int, EntityLogicNPC>();
+            dicEntityEnemy = new Dictionary<int, EntityLogicEnemy>();
         }
 
         public static SceneControl Create()
@@ -46,11 +49,13 @@ namespace StarForce
 
             dataScene = GameEntry.Data.GetData<DataScene>();
             dataNPC = GameEntry.Data.GetData<DataNPC>();
+            dataEnemy = GameEntry.Data.GetData<DataEnemy>();
 
             lastScene = "Character";
             currentScene = "MainGame";
 
             CreaterNPC();
+            CreaterEnemy();
         }
         public void Clear()
         {
@@ -118,7 +123,7 @@ namespace StarForce
             }
 
             Vector3 pos = dataScene.GetPlayerPosition(curSceneId, lastSceneId);
-            entityLoader.ShowEntity<T>(EnumEntity.Player, null, EntityDataPlayer.Create(player, pos));
+            entityLoader.ShowEntity<T>(player.EntityId, null, EntityDataPlayer.Create(player, pos));
         }
 
         public void CreaterNPC()
@@ -139,6 +144,26 @@ namespace StarForce
                 );
             }
         }
+
+        public void CreaterEnemy()
+        {
+            GameObject[] Enemys = GameObject.FindGameObjectsWithTag(Constant.Tag.Enemy);
+            foreach (var enemy in Enemys)
+            {
+                int enemyId = int.Parse(enemy.name);
+                EnemyData enemyData = dataEnemy.GetEnemyDataById(enemyId);
+                if (enemyData == null) continue;
+
+                // 创建Enemy
+                entityLoader.ShowEntity(
+                    enemyData.EntityId,
+                    TypeUtility.GetEntityType(enemyData.EnemyType),
+                    (entity) => { dicEntityEnemy.Add(entity.Id, (EntityLogicEnemy)entity.Logic); },
+                    EntityDataEnemy.Create(enemyData, enemy.transform.position)
+                );
+            }
+        }
+
 
         public void Transition(int to)
         {
@@ -200,6 +225,7 @@ namespace StarForce
             GameEntry.Event.Fire(this, LoadSceneCompleteEventArgs.Create(lastScene, currentScene));
 
             CreaterNPC();
+            CreaterEnemy();
         }
 
         private void OnLoadSceneFailure(object sender, GameEventArgs e)

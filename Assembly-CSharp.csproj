@@ -72,6 +72,8 @@
     <Compile Include="Assets\GameMain\Scripts\Data\DataSound.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataWeapon.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\DataWork.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\Enemy\DataEnemy.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Data\Enemy\EnemyData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\DataEntity.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\EntityData.cs" />
     <Compile Include="Assets\GameMain\Scripts\Data\Entity\EntityGroupData.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Assets\GameMain\Scripts\DataTable\BinaryReaderExtension.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRCharacter.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRDialog.cs" />
+    <Compile Include="Assets\GameMain\Scripts\DataTable\DREnemy.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DREntity.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DREntityGroup.cs" />
     <Compile Include="Assets\GameMain\Scripts\DataTable\DRLevel.cs" />
@@ -132,11 +135,22 @@
     <Compile Include="Assets\GameMain\Scripts\Definition\Enum\EnumWeapon.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataEnemy.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataFollow.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataPlayer.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityData\EntityDataProjectile.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityExtension.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\AttackState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\BaseState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\ChaseState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\DeadState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\EntityLogicEnemy.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\EntityLogicSkeleton.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\HitState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\IdleState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Enemy\PatrolState.cs" />
+    <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EntityLogicBase.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\EntityLogicNPC.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\EntityLogicPlayer.cs" />
     <Compile Include="Assets\GameMain\Scripts\Entity\EntityLogic\Player\EntityLogicPlayerCombat.cs" />
@@ -242,6 +256,7 @@
     <None Include="Assets\GameMain\DataTables\Character.txt" />
     <None Include="Assets\GameMain\DataTables\Work.txt" />
     <None Include="Assets\GameMain\DataTables\Player.txt" />
+    <None Include="Assets\GameMain\DataTables\Enemy.txt" />
     <None Include="Assets\GameMain\Configs\DataTableCodeTemplate.txt" />
     <None Include="Assets\GameMain\DataTables\NPC.txt" />
     <None Include="Assets\GameMain\DataTables\Scene.txt" />

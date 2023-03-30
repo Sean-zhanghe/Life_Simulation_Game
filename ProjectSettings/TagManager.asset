@@ -9,6 +9,7 @@ TagManager:
   - NPC
   - Teleport
   - Work
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Bullet
   - Player
   - Enemy
-  - 
+  - BulletIgnore
   - 
   - 
   - 

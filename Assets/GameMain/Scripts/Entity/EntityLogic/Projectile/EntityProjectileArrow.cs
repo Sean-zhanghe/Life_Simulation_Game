@@ -34,8 +34,17 @@ namespace StarForce
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log(collision.transform.gameObject.name);
             SpawnCollisionParticles();
+
+            if (collision.CompareTag(Constant.Tag.Enemy))
+            {
+                EntityLogicEnemy enemy = collision.GetComponent<EntityLogicEnemy>();
+                if (enemy != null)
+                {
+                    if (!enemy.IsDead)
+                        enemy.Damage(entityDataProjectile.projectileData.Damage);
+                }
+            }
 
             if (!hide)
             {

@@ -8,14 +8,11 @@ using Cinemachine;
 
 namespace StarForce
 {
-    public class EntityLogicPlayer : EntityLogicEx, IPause
+    public class EntityLogicPlayer : EntityLogicBase
     {
         protected EntityDataPlayer entityDataPlayer;
 
         protected PlayerMovement playerMovement;
-
-        protected bool pause = false;
-
 
         protected override void OnInit(object userData)
         {
@@ -56,21 +53,21 @@ namespace StarForce
             entityDataPlayer = null;
         }
 
-        public virtual void Pause()
+        public override void Pause()
         {
             pause = true;
 
             playerMovement.OnPause();
         }
 
-        public virtual void Resume()
+        public override void Resume()
         {
             pause = false;
 
             playerMovement.OnResume();
         }
 
-        public virtual void Dead()
+        public override void Dead()
         {
             playerMovement.OnDead();
         }

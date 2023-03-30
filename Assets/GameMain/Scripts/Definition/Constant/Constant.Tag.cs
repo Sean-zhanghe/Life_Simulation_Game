@@ -15,6 +15,7 @@ namespace StarForce
             public const string NPC = "NPC";
             public const string Teleport = "Teleport";
             public const string Work = "Work";
+            public const string Enemy = "Enemy";
         }
     }
 }

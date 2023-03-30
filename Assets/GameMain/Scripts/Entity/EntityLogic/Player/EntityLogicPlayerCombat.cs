@@ -55,6 +55,11 @@ namespace StarForce
             playerAttack.OnResume();
         }
 
+        public override void Damage(float value)
+        {
+            base.Damage(value);
+        }
+
         public override void Dead()
         {
             base.Dead();

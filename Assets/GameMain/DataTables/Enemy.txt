@@ -1,0 +1,5 @@
+﻿#	敌人配置表													
+#	Id		Name	EntityId	EnemyType	MaxHP	Damage	Speed	Chase	IdleTime	PatrolRadius	ChaseRadius	AttackRate	Drop
+#	int		string	int	string	float	float	float	float	float	float	float	float	string
+#	敌人Id	策划备注	敌人名字	实体编号	敌人类型	血量	伤害	速度	追击速度	停止时间	巡逻范围	追击范围	攻击频率	掉落物品
+	1001	骷髅	骷髅	50001	EntityLogicSkeleton	50	5	5	7	3	5	10	0.2	
