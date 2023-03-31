@@ -34,5 +34,9 @@
     <String Key="Task.NoTask" Value="暂无任务" />
     <String Key="UI.Dialog.Next" Value="下一步" />
     <String Key="UI.Dialog.Finish" Value="完成" />
+    <String Key="Level.LevelTitle" Value="关卡" />
+    <String Key="Level.QuitLevelMessage" Value="确定退出当前关卡？" />
+    <String Key="Level.Complete" Value="{0}完成" />
+    <String Key="Level.Failed" Value="{0}失败" />
   </Dictionary>
 </Dictionaries>

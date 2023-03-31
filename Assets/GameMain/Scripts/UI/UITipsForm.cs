@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using GameFramework;
+using StarForce.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
@@ -93,6 +94,19 @@ namespace StarForce
             }
         }
 
+        private DataGame dataGame;
+
+#if UNITY_2017_3_OR_NEWER
+        protected override void OnInit(object userData)
+#else
+        protected internal override void OnInit(object userData)
+#endif
+        {
+            base.OnInit(userData);
+
+            dataGame = GameEntry.Data.GetData<DataGame>();
+        }
+
 #if UNITY_2017_3_OR_NEWER
         protected override void OnOpen(object userData)
 #else
@@ -127,6 +141,9 @@ namespace StarForce
 
             RefreshOtherText(dialogParams.OtherText);
             m_OnClickOther = dialogParams.OnClickOther;
+
+            // 游戏转为暂停状态
+            dataGame.GamePause();
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -156,6 +173,9 @@ namespace StarForce
             m_OnClickOther = null;
 
             base.OnClose(isShutdown, userData);
+
+            // 游戏转为正常状态
+            dataGame.GameResume();
         }
 
         private void RefreshDialogMode()

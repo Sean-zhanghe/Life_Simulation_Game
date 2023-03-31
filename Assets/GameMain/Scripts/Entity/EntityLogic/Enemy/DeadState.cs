@@ -46,5 +46,6 @@ public class DeadState : BaseState
     protected override void OnDestroy(ProcedureOwner fsm)
     {
         base.OnDestroy(fsm);
+
     }
 }

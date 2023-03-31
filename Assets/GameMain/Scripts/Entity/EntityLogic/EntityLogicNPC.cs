@@ -10,6 +10,7 @@ namespace StarForce
     public class EntityLogicNPC : EntityLogicEx, IPause
     {
         private Transform NPCTips;
+        private Animator animator;
 
         protected EntityDataNPC entityDataNPC;
         private DataTask dataTask;
@@ -23,6 +24,7 @@ namespace StarForce
             base.OnInit(userData);
 
             NPCTips = transform.GetChild(0);
+            animator = GetComponent<Animator>();
         }
 
         protected override void OnShow(object userData)
@@ -87,11 +89,15 @@ namespace StarForce
         public void Pause()
         {
             pause = true;
+
+            animator.speed = 0;
         }
 
         public void Resume()
         {
             pause = false;
+
+            animator.speed = 1;
         }
 
         private int GetDialogId()

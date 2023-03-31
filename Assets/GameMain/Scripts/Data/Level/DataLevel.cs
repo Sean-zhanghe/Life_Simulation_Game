@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace StarForce.Data
 {
@@ -10,9 +11,16 @@ namespace StarForce.Data
     {
         private IDataTable<DRLevel> dtLevel;
         private Dictionary<int, LevelData> dicLevelData;
+        public List<int> listLevelId;
 
+        private readonly static int NONE_LEVEL_INDEX = -1;
+        private readonly static int NONE_LEVEL_ID = -1;
+        public int CurLevelIndex { get; private set; }
         public int CurLevelId { get; private set; }
+        public int MaxLevelIndex { get; private set; }
         public int MaxLevelId { get; private set; }
+
+        private EnumGameState levelState;
 
         protected override void OnInit()
         {
@@ -30,16 +38,23 @@ namespace StarForce.Data
                 throw new System.Exception("Can not get data table Level");
 
             dicLevelData = new Dictionary<int, LevelData>();
+            listLevelId = new List<int>();
 
             DRLevel[] dRLevels = dtLevel.GetAllDataRows();
             foreach (var dRLevel in dRLevels)
             {
                 LevelData levelData = new LevelData(dRLevel);
                 dicLevelData.Add(levelData.Id, levelData);
+                listLevelId.Add(levelData.Id);
             }
 
-            CurLevelId = 1;
-            MaxLevelId = 1;
+            listLevelId.Sort();
+
+            CurLevelIndex = NONE_LEVEL_INDEX;
+            MaxLevelIndex = 0;
+            CurLevelId = NONE_LEVEL_ID;
+            MaxLevelId = listLevelId[MaxLevelIndex];
+            levelState = EnumGameState.None;
         }
 
         public LevelData GetLevelDataById(int levelId)
@@ -64,6 +79,13 @@ namespace StarForce.Data
             return results;
         }
 
+        public void ChangeLevelState(EnumGameState state)
+        {
+            if (levelState == state) return;
+
+            levelState = state;
+        }
+
         public void LoadLevel(int level)
         {
             if (level < 1)
@@ -85,14 +107,85 @@ namespace StarForce.Data
 
         private void InternalLoadLevel(LevelData levelData)
         {
-            if (CurLevelId != levelData.SceneId)
+            bool isReload = true;
+
+            if (CurLevelId != levelData.Id)
             {
-                CurLevelId = levelData.SceneId;
+                for (int i = 0; i < listLevelId.Count; i++)
+                {
+                    if (listLevelId[i] == levelData.Id)
+                    {
+                        CurLevelIndex = i;
+                        CurLevelId = listLevelId[i];
+                        break;
+                    }
+                }
+                isReload = false;
             }
+
+            ChangeLevelState(EnumGameState.GameNormal);
 
             GameEntry.Data.GetData<DataPlayer>().Reset();
 
-            GameEntry.Event.Fire(this, LoadGameSceneEventArgs.Create(CurLevelId));
+            if (isReload)
+            {
+                GameEntry.Event.Fire(this, ReloadLevelEventArgs.Create(levelData));
+            }
+            else
+            {
+                GameEntry.Event.Fire(this, LoadGameSceneEventArgs.Create(levelData.SceneId));
+            }
+        }
+
+        public void LevelGameSuccess()
+        {
+            if (levelState != EnumGameState.GameNormal) return;
+
+            // TODO 发放通关奖励
+
+            MaxLevelIndex++;
+            if (MaxLevelIndex >= listLevelId.Count)
+            {
+                MaxLevelIndex = listLevelId.Count - 1;
+            }
+            MaxLevelId = listLevelId[MaxLevelIndex];
+
+            ChangeLevelState(EnumGameState.Gameover);
+            GameEntry.Event.Fire(this, GameoverEventArgs.Create(EnumGameOverType.Success));
+        }
+
+        public void LevelGameFail()
+        {
+            if (levelState != EnumGameState.GameNormal) return;
+
+            ChangeLevelState(EnumGameState.Gameover);
+            GameEntry.Event.Fire(this, GameoverEventArgs.Create(EnumGameOverType.Fail));
+        }
+
+        public void LoadNextLevel()
+        {
+            // 最后一关
+            int nextLevelIndex = CurLevelIndex + 1;
+            if (nextLevelIndex >= listLevelId.Count)
+            {
+                nextLevelIndex = listLevelId.Count - 1;
+                return;
+            }
+
+            int nextLevelId = listLevelId[nextLevelIndex];
+
+            LoadLevel(nextLevelId);
+        }
+
+        public void ExitLevel()
+        {
+            if (CurLevelIndex == NONE_LEVEL_INDEX) return;
+
+            CurLevelIndex = NONE_LEVEL_INDEX;
+            CurLevelId = NONE_LEVEL_ID;
+            ChangeLevelState(EnumGameState.None);
+
+            GameEntry.Event.Fire(this, LoadGameSceneEventArgs.Create((int)EnumScene.LevelMenu));
         }
 
         protected override void OnUnload()
@@ -101,6 +194,7 @@ namespace StarForce.Data
 
             dtLevel = null;
             dicLevelData = null;
+            levelState = EnumGameState.None;
         }
 
         protected override void OnShutdown()

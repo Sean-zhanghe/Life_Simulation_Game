@@ -8,5 +8,7 @@ namespace StarForce
         GameBGM = 10001,
 
         MenuBGM = 10002,
+
+
     }
 }

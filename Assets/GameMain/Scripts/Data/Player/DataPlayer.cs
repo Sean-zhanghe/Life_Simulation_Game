@@ -3,6 +3,7 @@ using GameFramework.DataTable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityGameFramework.Runtime;
 
 namespace StarForce.Data
@@ -104,7 +105,7 @@ namespace StarForce.Data
             return player;
         }
 
-        public void AddPriority(string priorityType, int value = 0)
+        public void AddPriority(string priorityType, float value = 0)
         {
             //if (!dicPlayer.ContainsKey(serialId))
             //{
@@ -235,8 +236,8 @@ namespace StarForce.Data
         public void Damage(float value)
         {
             if (value == 0) return;
-            
-            player.Damage(value);
+
+            AddPriority(Constant.Parameter.HP, -value);
         }
 
         protected override void OnUnload()

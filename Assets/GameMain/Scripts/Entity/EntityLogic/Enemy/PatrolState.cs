@@ -35,6 +35,8 @@ public class PatrolState : BaseState
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
+        if (pause) return;
+
         logic.FlipTo(patrolPosition);
 
         // 收到伤害
@@ -81,6 +83,9 @@ public class PatrolState : BaseState
     protected override void OnDestroy(ProcedureOwner fsm)
     {
         base.OnDestroy(fsm);
+
+        patrolPosition = Vector3.zero;
+        timer = 0;
     }
 
     private Vector3 RandomPatrolPosition()

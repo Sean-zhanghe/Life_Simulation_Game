@@ -25,9 +25,12 @@ namespace StarForce
 
         private CanvasGroup m_CanvasGroup = null;
 
+        public bool interactable = true;
+
         private void Awake()
         {
             m_CanvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
+            interactable = true;
         }
 
         private void OnDisable()
@@ -38,6 +41,11 @@ namespace StarForce
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left)
+            {
+                return;
+            }
+
+            if (!interactable)
             {
                 return;
             }
@@ -54,6 +62,11 @@ namespace StarForce
                 return;
             }
 
+            if (!interactable)
+            {
+                return;
+            }
+
             StopAllCoroutines();
             StartCoroutine(m_CanvasGroup.FadeToAlpha(1f, FadeTime));
         }
@@ -65,6 +78,11 @@ namespace StarForce
                 return;
             }
 
+            if (!interactable)
+            {
+                return;
+            }
+
             m_CanvasGroup.alpha = OnClickAlpha;
             m_OnClick.Invoke();
         }
@@ -72,6 +90,11 @@ namespace StarForce
         public void OnPointerUp(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left)
+            {
+                return;
+            }
+
+            if (!interactable)
             {
                 return;
             }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityGameFramework.Runtime;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace StarForce
 {
@@ -24,13 +25,17 @@ namespace StarForce
         private DataScene dataScene;
         private DataNPC dataNPC;
         private DataEnemy dataEnemy;
+        private DataLevel dataLevel;
+
         private Dictionary<int, EntityLogicNPC> dicEntityNPC;
         private Dictionary<int, EntityLogicEnemy> dicEntityEnemy;
+        private Dictionary<int, EntityLogicPlayer> dicEntityPlayer;
 
         public SceneControl()
         {
             dicEntityNPC = new Dictionary<int, EntityLogicNPC>();
             dicEntityEnemy = new Dictionary<int, EntityLogicEnemy>();
+            dicEntityPlayer = new Dictionary<int, EntityLogicPlayer>();
         }
 
         public static SceneControl Create()
@@ -46,12 +51,15 @@ namespace StarForce
             GameEntry.Event.Subscribe(LoadGameSceneEventArgs.EventId, OnLoadGameScene);
             GameEntry.Event.Subscribe(ShowEntityInGameEventArgs.EventId, OnShowEntityInGame);
             GameEntry.Event.Subscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
+            GameEntry.Event.Subscribe(HideEnemyEventArgs.EventId, OnHideEnemyEntity);
+            GameEntry.Event.Subscribe(ReloadLevelEventArgs.EventId, OnReloadLevel);
 
             entityLoader = EntityLoader.Create(this);
 
             dataScene = GameEntry.Data.GetData<DataScene>();
             dataNPC = GameEntry.Data.GetData<DataNPC>();
             dataEnemy = GameEntry.Data.GetData<DataEnemy>();
+            dataLevel = GameEntry.Data.GetData<DataLevel>();
 
             lastScene = "Character";
             currentScene = "MainGame";
@@ -67,6 +75,8 @@ namespace StarForce
             GameEntry.Event.Unsubscribe(LoadGameSceneEventArgs.EventId, OnLoadGameScene);
             GameEntry.Event.Unsubscribe(ShowEntityInGameEventArgs.EventId, OnShowEntityInGame);
             GameEntry.Event.Unsubscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
+            GameEntry.Event.Unsubscribe(HideEnemyEventArgs.EventId, OnHideEnemyEntity);
+            GameEntry.Event.Unsubscribe(ReloadLevelEventArgs.EventId, OnReloadLevel);
         }
 
         public void Pause()
@@ -125,7 +135,10 @@ namespace StarForce
             }
 
             Vector3 pos = dataScene.GetPlayerPosition(curSceneId, lastSceneId);
-            entityLoader.ShowEntity<T>(player.EntityId, null, EntityDataPlayer.Create(player, pos));
+            entityLoader.ShowEntity<T>(
+                player.EntityId, 
+                (entity) => { dicEntityPlayer.Add(entity.Id, (EntityLogicPlayer)entity.Logic); }, 
+                EntityDataPlayer.Create(player, pos));
         }
 
         public void CreaterNPC()
@@ -166,6 +179,35 @@ namespace StarForce
             }
         }
 
+        public void HideAllPlayerEntity()
+        {
+            foreach (var item in dicEntityPlayer.Values)
+            {
+                entityLoader.HideEntity(item.Entity);
+            }
+
+            dicEntityPlayer.Clear();
+        }
+
+        public void HideAllNPCEntity()
+        {
+            foreach (var item in dicEntityNPC.Values)
+            {
+                entityLoader.HideEntity(item.Entity);
+            }
+
+            dicEntityNPC.Clear();
+        }
+
+        public void HideAllEnemyEntity()
+        {
+            foreach (var item in dicEntityEnemy.Values)
+            {
+                entityLoader.HideEntity(item.Entity);
+            }
+
+            dicEntityEnemy.Clear();
+        }
 
         public void Transition(int to)
         {
@@ -175,9 +217,12 @@ namespace StarForce
             GameEntry.Sound.StopAllLoadedSounds();
 
             // 隐藏所有实体
-            entityLoader.HideAllEntity();
+            //entityLoader.HideAllEntity();
             //GameEntry.Entity.HideAllLoadingEntities();
             //GameEntry.Entity.HideAllLoadedEntities();
+            HideAllPlayerEntity();
+            HideAllNPCEntity();
+            HideAllEnemyEntity();
 
             // 卸载所有场景
             string[] loadedSceneAssetNames = GameEntry.Scene.GetLoadedSceneAssetNames();
@@ -185,6 +230,10 @@ namespace StarForce
             {
                 GameEntry.Scene.UnloadScene(loadedSceneAssetNames[i]);
             }
+
+            // 关闭UI
+            GameEntry.UI.CloseAllLoadedUIForms();
+            GameEntry.UI.CloseAllLoadingUIForms();
 
             SceneData scene = dataScene.GetSceneDataById(to);
             if (scene == null)
@@ -268,6 +317,42 @@ namespace StarForce
                 return;
 
             entityLoader.HideEntity(ne.EntityId);
+        }
+
+        private void OnHideEnemyEntity(object sender, GameEventArgs e)
+        {
+            HideEnemyEventArgs ne = (HideEnemyEventArgs)e;
+            if (ne == null)
+                return;
+
+            int serialId = ne.EntityId;
+
+            if (!dicEntityEnemy.ContainsKey(serialId))
+            {
+                Log.Error("Can't find enemy entity('serial id:{0}') ", serialId);
+                return;
+            }
+
+            entityLoader.HideEntity(serialId);
+            dicEntityEnemy.Remove(serialId);
+
+            if (dicEntityEnemy.Count <= 0)
+                dataLevel.LevelGameSuccess();
+        }
+
+        private void OnReloadLevel(object sender, GameEventArgs e)
+        {
+            ReloadLevelEventArgs ne = (ReloadLevelEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+
+            HideAllPlayerEntity();
+            HideAllEnemyEntity();
+
+            CreatePlayer<EntityLogicPlayerCombat>();
+            CreaterEnemy();
         }
     }
 

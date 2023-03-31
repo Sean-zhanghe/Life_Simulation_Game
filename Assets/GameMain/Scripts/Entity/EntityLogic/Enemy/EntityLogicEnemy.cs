@@ -38,6 +38,16 @@ namespace StarForce
         {
             base.OnInit(userData);
 
+            animator = GetComponent<Animator>();
+            reactPoint = transform.GetChild(0);
+            attackPoint = transform.GetChild(1);
+            hpBarRoot = transform.GetChild(2);
+        }
+
+        protected override void OnShow(object userData)
+        {
+            base.OnShow(userData);
+
             entityDataEnemy = (EntityDataEnemy)userData;
             if (entityDataEnemy == null)
             {
@@ -48,16 +58,6 @@ namespace StarForce
             SERIAL_ID = entityDataEnemy.FSM_SERIAL_ID;
             // 记录起始位置
             origion = entityDataEnemy.Position;
-
-            animator = GetComponent<Animator>();
-            reactPoint = transform.GetChild(0);
-            attackPoint = transform.GetChild(1);
-            hpBarRoot = transform.GetChild(2);
-        }
-
-        protected override void OnShow(object userData)
-        {
-            base.OnShow(userData);
 
             InitFsm();
 
@@ -92,9 +92,8 @@ namespace StarForce
         {
             base.OnHide(isShutdown, userData);
 
-            origion = Vector3.zero;
-
             HideHpBar();
+            GameEntry.Fsm.DestroyFsm(fsm);
         }
 
         private void FindTarget()
@@ -115,11 +114,17 @@ namespace StarForce
         public override void Pause()
         {
             base.Pause();
+
+            BaseState state = (BaseState)fsm.CurrentState;
+            state.Pause();
         }
 
         public override void Resume()
         {
             base.Resume();
+
+            BaseState state = (BaseState)fsm.CurrentState;
+            state.Resume();
         }
 
         public override void Damage(float value)
@@ -153,7 +158,7 @@ namespace StarForce
         {
             base.Dead();
 
-            GameEntry.Event.Fire(this, HideEntityInGameEventArgs.Create(Entity.Id));
+            GameEntry.Event.Fire(this, HideEnemyEventArgs.Create(Entity.Id));
         }
 
         public void FlipTo(Vector3 target)

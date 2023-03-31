@@ -20,6 +20,10 @@ namespace StarForce
             public const string TaskNoTask = "Task.NoTask";
             public const string UIDialogNext = "UI.Dialog.Next";
             public const string UIDialogFinish = "UI.Dialog.Finish";
+            public const string LevelTitle = "Level.LevelTitle";
+            public const string LevelQuitLevelMessage = "Level.QuitLevelMessage";
+            public const string LevelComplete = "Level.Complete";
+            public const string LevelFailed = "Level.Failed";
         }
     }
 }

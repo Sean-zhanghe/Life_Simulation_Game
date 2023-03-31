@@ -51,10 +51,14 @@ public class BaseState : FsmState<EntityLogicEnemy>
     public virtual void Pause()
     {
         pause = true;
+
+        logic.animator.speed = 0;
     }
 
     public virtual void Resume()
     {
         pause = false;
+
+        logic.animator.speed = 1;
     }
 }

@@ -17,12 +17,23 @@ public enum EnumGameState : byte
     Pause = 2,
 
     /// <summary>
+    /// 游戏正常
+    /// </summary>
+    GameNormal = 3,
+
+    /// <summary>
     /// 游戏结束
     /// </summary>
-    Gameover = 3,
+    Gameover = 4,
 
     /// <summary>
     /// 现实结束
     /// </summary>
-    RealityOver = 4
+    RealityOver = 5
+}
+
+public enum EnumGameOverType : byte
+{
+    Success,
+    Fail
 }

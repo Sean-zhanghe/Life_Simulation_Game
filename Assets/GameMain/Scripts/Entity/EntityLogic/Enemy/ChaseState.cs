@@ -29,6 +29,7 @@ public class ChaseState : BaseState
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
+        if (pause) return;
 
         // 收到伤害
         if (logic.IsHit)

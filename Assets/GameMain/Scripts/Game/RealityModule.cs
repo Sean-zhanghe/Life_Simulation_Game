@@ -61,6 +61,7 @@ public class RealityModule : BaseModule
             return;
         }
 
+        GameEntry.UI.OpenUIForm(UIFormId.UIMainForm, this);
         gameManager.sceneControl.CreatePlayer<EntityLogicPlayer>();
     }
 }

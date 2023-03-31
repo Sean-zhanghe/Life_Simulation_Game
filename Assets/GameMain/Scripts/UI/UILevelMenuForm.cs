@@ -1,4 +1,5 @@
 ﻿using StarForce.Data;
+using System.Collections.Generic;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ namespace StarForce
 
         private DataLevel dataLevel;
 
+        private Dictionary<int, GameObject> dicLevelItems;
+
 #if UNITY_2017_3_OR_NEWER
         protected override void OnInit(object userData)
 #else
@@ -25,8 +28,20 @@ namespace StarForce
             base.OnInit(userData);
 
             dataLevel = GameEntry.Data.GetData<DataLevel>();
+            dicLevelItems = new Dictionary<int, GameObject>();
 
             LevelInit();
+        }
+
+#if UNITY_2017_3_OR_NEWER
+        protected override void OnOpen(object userData)
+#else
+        protected internal override void OnOpen(object userData)
+#endif
+        {
+            base.OnOpen(userData);
+
+            RefreshMenu();
         }
 
         private void LevelInit()
@@ -57,6 +72,20 @@ namespace StarForce
                 btnLevel.onClick.AddListener(() => {
                     this.OnBtnLevelClick(levelGO);
                 });
+
+                dicLevelItems.Add(levelData.Id, levelGO);
+            }
+        }
+
+        private void RefreshMenu()
+        {
+            if (dicLevelItems.Count <= 0) return;
+
+            foreach (int key in dicLevelItems.Keys)
+            {
+                GameObject levelGO = dicLevelItems[key];
+                levelGO.transform.GetChild(0).gameObject.SetActive(key <= dataLevel.MaxLevelId);
+                levelGO.transform.GetChild(1).gameObject.SetActive(key > dataLevel.MaxLevelId);
             }
         }
 
@@ -71,14 +100,6 @@ namespace StarForce
             dataLevel.LoadLevel(id);
         }
 
-#if UNITY_2017_3_OR_NEWER
-        protected override void OnOpen(object userData)
-#else
-        protected internal override void OnOpen(object userData)
-#endif
-        {
-            base.OnOpen(userData);
-        }
 
 #if UNITY_2017_3_OR_NEWER
         protected override void OnClose(bool isShutdown, object userData)

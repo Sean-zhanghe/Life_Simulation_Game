@@ -5,8 +5,10 @@
 	1000	主菜单	UIMenuForm	Default	FALSE	TRUE
 	1001	角色选择	UICharacterForm	Default	FALSE	TRUE
 	1002	主场景	UIMainForm	Default	FALSE	TRUE
-	1003	设置	UISettingForm	Setting	FALSE	FALSE
-	1004	对话框	UIDialogForm	Default	FALSE	FALSE
-	1005	等待	UIWaitingForm	PopUp	FALSE	TRUE
-	1006	关卡选择	UILevelMenuForm	Default	FALSE	TRUE
+	1003	对话框	UIDialogForm	Default	FALSE	FALSE
+	1004	等待	UIWaitingForm	PopUp	FALSE	TRUE
+	1005	关卡选择	UILevelMenuForm	Default	FALSE	TRUE
+	1006	关卡界面	UILevelForm	Default	FALSE	TRUE
 	2001	提示框	UITipsForm	PopUp	TRUE	FALSE
+	2002	关卡结束	UILevelOverForm	PopUp	FALSE	TRUE
+	3001	设置	UISettingForm	Setting	FALSE	FALSE
