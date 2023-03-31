@@ -36,6 +36,7 @@ public class IdleState : BaseState
         if (logic.IsHit)
         {
             ChangeState<HitState>(fsm);
+            return;
         }
 
         // 发现玩家并且没有超出追击范围
@@ -43,6 +44,7 @@ public class IdleState : BaseState
             Vector2.Distance(logic.target.position, logic.origion) < logic.enemyData.ChaseRadius)
         {
             ChangeState<ChaseState>(fsm);
+            return;
         }
 
         if (timer >= enemyData.IdleTime)

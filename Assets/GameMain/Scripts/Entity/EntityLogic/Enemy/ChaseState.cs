@@ -55,7 +55,7 @@ public class ChaseState : BaseState
         if (logic.target == null || 
             Vector2.Distance(logic.target.position, logic.origion) > logic.enemyData.ChaseRadius)
         {
-            logic.target = null;
+            // logic.target = null;
             ChangeState<IdleState>(fsm);
             return;
         }
