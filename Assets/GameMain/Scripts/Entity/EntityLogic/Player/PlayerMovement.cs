@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     private CinemachineConfiner virtualConfig;
 
+    private Vector3 tempVelocity;
+
     public bool IsPause { get; private set; }
     public bool IsDead { get; private set; }
 
@@ -81,11 +83,16 @@ public class PlayerMovement : MonoBehaviour
     public void OnPause()
     {
         IsPause = true;
+        animator.speed = 0;
+        tempVelocity = rb2.velocity;
+        rb2.velocity = Vector3.zero;
     }
 
     public void OnResume()
     {
         IsPause = false;
+        animator.speed = 1;
+        rb2.velocity = tempVelocity;
     }
 
     public void OnDead()

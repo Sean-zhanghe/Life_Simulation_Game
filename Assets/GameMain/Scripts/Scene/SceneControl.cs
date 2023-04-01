@@ -103,9 +103,17 @@ namespace StarForce
             }
         }
 
-        public void Restart()
+        public void Quick()
         {
+            if (pause)
+            {
+                Resume();
+                pause = false;
+            }
 
+            HideAllEnemyEntity();
+            HideAllNPCEntity();
+            HideAllPlayerEntity();
         }
 
         public void CreatePlayer<T>() where T : EntityLogic
@@ -220,9 +228,7 @@ namespace StarForce
             //entityLoader.HideAllEntity();
             //GameEntry.Entity.HideAllLoadingEntities();
             //GameEntry.Entity.HideAllLoadedEntities();
-            HideAllPlayerEntity();
-            HideAllNPCEntity();
-            HideAllEnemyEntity();
+            Quick();
 
             // 卸载所有场景
             string[] loadedSceneAssetNames = GameEntry.Scene.GetLoadedSceneAssetNames();
@@ -346,6 +352,12 @@ namespace StarForce
             if (ne == null)
             {
                 return;
+            }
+
+            if (pause)
+            {
+                Resume();
+                pause = false;
             }
 
             HideAllPlayerEntity();

@@ -59,6 +59,8 @@ namespace StarForce.Data
 
         public float AttackInterval { get { return GameEntry.Config.GetInt(Constant.Config.AttackInterval); } }
 
+        public int CharacterId { get { return playerData.CharacterId; } }
+
         public Player()
         {
             playerData = null;

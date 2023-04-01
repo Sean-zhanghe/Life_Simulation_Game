@@ -3,6 +3,7 @@ using GameFramework.DataTable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using UnityEngine.Rendering;
 using UnityGameFramework.Runtime;
 
@@ -180,29 +181,52 @@ namespace StarForce.Data
 
             //Player player = dicPlayer[serialId];
 
+            float lastPriority = 0;
+            float currentPriority = 0;
+            EnumPriority prioritye = EnumPriority.None;
             switch (priorityType)
             {
                 case Constant.Parameter.Power:
+                    prioritye = EnumPriority.Power;
+                    lastPriority = player.Power;
                     player.SetPriority(EnumPriority.Power, value);
+                    currentPriority = player.Power;
                     break;
                 case Constant.Parameter.Energy:
+                    prioritye = EnumPriority.Energy;
+                    lastPriority = player.Energy;
                     player.SetPriority(EnumPriority.Energy, value);
+                    currentPriority = player.Energy;
                     break;
                 case Constant.Parameter.Hygiene:
+                    prioritye = EnumPriority.Hygiene;
+                    lastPriority = player.Hygiene;
                     player.SetPriority(EnumPriority.Hygiene, value);
+                    currentPriority = player.Hygiene;
                     break;
                 case Constant.Parameter.Health:
+                    prioritye = EnumPriority.Health;
+                    lastPriority = player.Health;
                     player.SetPriority(EnumPriority.Health, value);
+                    currentPriority = player.Health;
                     break;
                 case Constant.Parameter.HP:
+                    prioritye = EnumPriority.HP;
+                    lastPriority = player.HP;
                     player.SetPriority(EnumPriority.HP, value);
+                    currentPriority = player.HP;
                     break;
                 case Constant.Parameter.EXP:
+                    prioritye = EnumPriority.EXP;
+                    lastPriority = player.EXP;
                     player.SetPriority(EnumPriority.EXP, value);
+                    currentPriority = player.EXP;
                     break;
                 default:
                     break;
             }
+
+            GameEntry.Event.Fire(this, PlayerPriorityChangeEventArgs.Create(player.SerialId, prioritye, lastPriority, currentPriority));
         }
 
         public void SetLevel(int level)
@@ -238,6 +262,16 @@ namespace StarForce.Data
             if (value == 0) return;
 
             AddPriority(Constant.Parameter.HP, -value);
+
+            if (player.HP <= 0)
+            {
+                GameOver();
+            }
+        }
+
+        private void GameOver()
+        {
+            GameEntry.Data.GetData<DataLevel>().LevelGameFail();
         }
 
         protected override void OnUnload()

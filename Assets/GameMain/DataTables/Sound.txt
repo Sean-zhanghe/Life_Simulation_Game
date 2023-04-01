@@ -5,6 +5,9 @@
 	10001	游戏背景音乐	BGMGame.mp3	1001	1001
 	10002	主菜单背景音乐	BGMMenu.mp3	1001	1001
 	20001	玩家子弹	SFXBullet.wav	1003	1003
+	20002	玩家投掷	SFXThrow.wav	1003	1003
 	30001	按钮点击	UIClick.wav	1002	1002
 	30002	按钮选择	UISelect.wav	1002	1002
 	30003	任务完成	UITaskComplete.wav	1002	1002
+	30004	关卡完成	UIVictory.wav	1002	1002
+	30005	关卡失败	UIDefeat.wav	1002	1002

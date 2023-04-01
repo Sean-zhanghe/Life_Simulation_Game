@@ -44,18 +44,16 @@ namespace StarForce
             }
 
             level = uIGameOverFormOpenParam.LevelData;
-            Debug.Log(uIGameOverFormOpenParam.EnumGameOverType);
+
             switch (uIGameOverFormOpenParam.EnumGameOverType)
             {
                 case EnumGameOverType.Success:
-                    Debug.Log("success 11111111111");
                     title.text = string.Format(GameEntry.Localization.GetString(Constant.Localization.LevelComplete), level.Name);
-                    //GameEntry.Sound.PlaySound(EnumSound.TDVictory);
+                    GameEntry.Sound.PlaySound(EnumSound.UIVictory);
                     break;
                 case EnumGameOverType.Fail:
-                    Debug.Log("fail 2222222222222");
                     title.text = string.Format(GameEntry.Localization.GetString(Constant.Localization.LevelFailed), level.Name);
-                    //GameEntry.Sound.PlaySound(EnumSound.TDDefeat);
+                    GameEntry.Sound.PlaySound(EnumSound.UIDefeat);
                     break;
             }
 

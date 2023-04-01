@@ -1,8 +1,8 @@
-﻿#	玩家配置表				
-#	Id		EntityId	PlayerLevel	WeaponId
-#	int		int	int	int
-#	配置编号	策划备注	实体编号	玩家等级	武器Id
-	101	玩家男1	10001	1	1001
-	102	玩家男2	10002	1	1001
-	201	玩家女1	10003	1	1001
-	202	玩家女2	10004	1	1001
+﻿#	玩家配置表					
+#	Id		EntityId	PlayerLevel	WeaponId	CharacterId
+#	int		int	int	int	int
+#	配置编号	策划备注	实体编号	玩家等级	武器Id	角色Id
+	101	玩家男1	10001	1	1001	1
+	102	玩家男2	10002	1	1001	2
+	201	玩家女1	10003	1	1001	3
+	202	玩家女2	10004	1	1001	4

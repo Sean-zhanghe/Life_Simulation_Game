@@ -46,7 +46,7 @@ public class ChaseState : BaseState
             Vector3 pos = Vector3.zero;
 
             int dir = logic.target.position.x > logic.transform.position.x ? -1 : 1;
-            pos = logic.target.position + new Vector3(dir * 0.7f, 0, 0);
+            pos = logic.target.position + new Vector3(dir * (logic.attackArea + logic.attackPoint.localPosition.x) , 0, 0);
 
             logic.transform.position = Vector2.MoveTowards(logic.transform.position,
                 pos, logic.enemyData.ChaseSpeed * Time.deltaTime);

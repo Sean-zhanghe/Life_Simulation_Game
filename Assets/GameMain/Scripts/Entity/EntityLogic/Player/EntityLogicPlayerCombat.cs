@@ -58,8 +58,10 @@ namespace StarForce
         public override void Damage(float value)
         {
             base.Damage(value);
-
+            Debug.Log("player damage 1111111111111111");
+            Debug.Log(value);
             dataPlayer.Damage(value);
+
         }
 
         public override void Dead()

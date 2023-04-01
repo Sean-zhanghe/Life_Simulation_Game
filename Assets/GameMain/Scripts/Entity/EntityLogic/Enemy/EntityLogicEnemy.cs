@@ -23,7 +23,7 @@ namespace StarForce
 
         public Transform reactPoint;
         public Transform attackPoint;
-        public float attackArea = 0.75f;
+        public float attackArea = 0.95f;
 
         public float HP { get; private set; }
 
@@ -94,6 +94,7 @@ namespace StarForce
 
             HideHpBar();
             GameEntry.Fsm.DestroyFsm(fsm);
+            target = null;
         }
 
         private void FindTarget()

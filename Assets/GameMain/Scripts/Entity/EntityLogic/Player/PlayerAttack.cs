@@ -59,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void OnHide(bool isShutdown, object userData)
     {
-
+        IsDead = false;
     }
 
     public void OnPause()
@@ -149,6 +149,8 @@ public class PlayerAttack : MonoBehaviour
                 null,
                 EntityDataProjectile.Create(projectile, direction, firePoint.position, rotation)
                 ));
+
+            GameEntry.Sound.PlaySound(EnumSound.SFXThrow);
         }
 
     }

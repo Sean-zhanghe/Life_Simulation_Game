@@ -16,6 +16,8 @@ namespace StarForce.Data
 
         public int SceneId { get { return dRLevel.SceneId; } }
 
+        public string Reward { get { return dRLevel.Reward; } }
+
         public LevelData(DRLevel dRLevel)
         {
             this.dRLevel = dRLevel;

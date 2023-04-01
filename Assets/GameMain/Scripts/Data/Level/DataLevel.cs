@@ -124,7 +124,7 @@ namespace StarForce.Data
             }
 
             ChangeLevelState(EnumGameState.GameNormal);
-
+            Debug.Log("11111111111111111");
             GameEntry.Data.GetData<DataPlayer>().Reset();
 
             if (isReload)
@@ -142,13 +142,19 @@ namespace StarForce.Data
             if (levelState != EnumGameState.GameNormal) return;
 
             // TODO 发放通关奖励
+            LevelData levelData = GetLevelDataById(CurLevelId);
+            DataPlayer dataPlayer = GameEntry.Data.GetData<DataPlayer>();
+            dataPlayer.AddPriorityByConfiger(levelData.Reward);
 
-            MaxLevelIndex++;
-            if (MaxLevelIndex >= listLevelId.Count)
+            if (CurLevelId == MaxLevelId)
             {
-                MaxLevelIndex = listLevelId.Count - 1;
+                MaxLevelIndex++;
+                if (MaxLevelIndex >= listLevelId.Count)
+                {
+                    MaxLevelIndex = listLevelId.Count - 1;
+                }
+                MaxLevelId = listLevelId[MaxLevelIndex];
             }
-            MaxLevelId = listLevelId[MaxLevelIndex];
 
             ChangeLevelState(EnumGameState.Gameover);
             GameEntry.Event.Fire(this, GameoverEventArgs.Create(EnumGameOverType.Success));

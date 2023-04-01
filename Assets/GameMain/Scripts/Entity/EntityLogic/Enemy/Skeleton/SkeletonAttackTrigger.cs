@@ -15,6 +15,12 @@ namespace StarForce
         {
             animator = transform.parent.GetComponent<Animator>();
             skeleton = transform.parent.GetComponent<EntityLogicSkeleton>();
+
+        }
+
+        private void OnEnable()
+        {
+            gameObject.layer = Constant.Layer.BulletIgnoreNameLayerId;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

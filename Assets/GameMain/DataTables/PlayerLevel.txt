@@ -2,5 +2,5 @@
 #	Id		Power	Energy	Hygiene	Health	Attack	Defence	MaxHP	MaxEXP
 #	int		float	float	float	float	float	float	float	float
 #	等级Id	策划备注	体力	精力	卫生	健康	攻击力	防御力	最大血量	经验
-	1	等级1	10	10	10	10	100	100	1000	100
-	2	等级2	10	10	10	10	200	200	1500	200
+	1	等级1	100	100	100	100	100	100	100	100
+	2	等级2	100	100	100	100	200	200	150	200

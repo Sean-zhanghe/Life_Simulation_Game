@@ -29,6 +29,11 @@ namespace StarForce.Data
             get { return dRPlayer.WeaponId; }
         }
 
+        public int CharacterId
+        {
+            get { return dRPlayer.CharacterId; }
+        }
+
         public PlayerData(DRPlayer dRPlayer, PlayerLevelData[] playerLevels)
         {
             this.dRPlayer = dRPlayer;

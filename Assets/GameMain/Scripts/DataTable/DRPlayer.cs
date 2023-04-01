@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-03-31 16:54:20.997
+// 生成时间：2023-04-01 16:49:42.847
 //------------------------------------------------------------
 
 using GameFramework;
@@ -63,6 +63,15 @@ namespace StarForce
             private set;
         }
 
+        /// <summary>
+        /// 获取角色Id。
+        /// </summary>
+        public int CharacterId
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -78,6 +87,7 @@ namespace StarForce
             EntityId = int.Parse(columnStrings[index++]);
             PlayerLevel = int.Parse(columnStrings[index++]);
             WeaponId = int.Parse(columnStrings[index++]);
+            CharacterId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -93,6 +103,7 @@ namespace StarForce
                     EntityId = binaryReader.Read7BitEncodedInt32();
                     PlayerLevel = binaryReader.Read7BitEncodedInt32();
                     WeaponId = binaryReader.Read7BitEncodedInt32();
+                    CharacterId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

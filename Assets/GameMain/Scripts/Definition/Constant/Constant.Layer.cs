@@ -18,15 +18,23 @@ namespace StarForce
         {
             public const string DefaultLayerName = "Default";
             public static readonly int DefaultLayerId = LayerMask.GetMask(DefaultLayerName);
+            public static readonly int DefaultNameLayerId = LayerMask.NameToLayer(DefaultLayerName);
 
             public const string UILayerName = "UI";
             public static readonly int UILayerId = LayerMask.GetMask(UILayerName);
+            public static readonly int UINameLayerId = LayerMask.NameToLayer(UILayerName);
 
             public const string CursorLayerName = "Cursor";
             public static readonly int CursorLayerId = LayerMask.GetMask(CursorLayerName);
+            public static readonly int CursorNameLayerId = LayerMask.NameToLayer(CursorLayerName);
 
             public const string PlayerLayerName = "Player";
             public static readonly int PlayerLayerId = LayerMask.GetMask(PlayerLayerName);
+            public static readonly int PlayerNameLayerId = LayerMask.NameToLayer(PlayerLayerName);
+
+            public const string BulletIgnoreLayerName = "BulletIgnore";
+            public static readonly int BulletIgnoreLayerId = LayerMask.GetMask(BulletIgnoreLayerName);
+            public static readonly int BulletIgnoreNameLayerId = LayerMask.NameToLayer(BulletIgnoreLayerName);
 
         }
     }

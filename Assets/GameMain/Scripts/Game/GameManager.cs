@@ -68,12 +68,6 @@ namespace StarForce
             sceneControl.Resume();
         }
 
-        public void Restart()
-        {
-            gameModuleFsmMgr.Restart();
-            sceneControl.Restart();
-        }
-
         public void Quick()
         {
             if (pause)

@@ -387,6 +387,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPBar: {fileID: 750681634480887307}
+  Portrait: {fileID: 750681634437229074}
+  characterSpriteList_SO: {fileID: 11400000, guid: 3141cfc133aec224abd8eedb53f98007,
+    type: 2}
 --- !u!1 &750681635176785713
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,3 +579,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  interactable: 1

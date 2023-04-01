@@ -19,4 +19,5 @@ public class CharacterDetail
 {
     public int characterId;
     public Sprite characterSprite;
+    public Sprite characterIcon;
 }

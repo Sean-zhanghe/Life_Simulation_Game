@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-03-31 16:54:21.053
+// 生成时间：2023-04-01 16:49:42.903
 //------------------------------------------------------------
 
 using GameFramework;
@@ -54,6 +54,15 @@ namespace StarForce
             private set;
         }
 
+        /// <summary>
+        /// 获取通关奖励。
+        /// </summary>
+        public string Reward
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -68,6 +77,7 @@ namespace StarForce
             index++;
             Name = columnStrings[index++];
             SceneId = int.Parse(columnStrings[index++]);
+            Reward = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -82,6 +92,7 @@ namespace StarForce
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     Name = binaryReader.ReadString();
                     SceneId = binaryReader.Read7BitEncodedInt32();
+                    Reward = binaryReader.ReadString();
                 }
             }
 

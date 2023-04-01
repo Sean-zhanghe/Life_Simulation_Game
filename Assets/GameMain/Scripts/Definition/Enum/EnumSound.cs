@@ -9,6 +9,10 @@ namespace StarForce
 
         MenuBGM = 10002,
 
+        SFXThrow = 20002,
 
+        UIVictory = 30004,
+
+        UIDefeat = 30005
     }
 }

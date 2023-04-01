@@ -1,4 +1,5 @@
-﻿using GameFramework.Event;
+﻿using DG.Tweening;
+using GameFramework.Event;
 using StarForce.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ namespace StarForce
     public class UILevelForm : UGuiForm
     {
         public Slider HPBar;
+        public Image Portrait;
+        public CharacterSpriteList_SO characterSpriteList_SO;
 
         private DataPlayer dataPlayer;
         private DataLevel dataLevel;
@@ -34,6 +37,7 @@ namespace StarForce
             base.OnOpen(userData);
 
             RefreshHP();
+            RefreshPortrait();
 
             GameEntry.Event.Subscribe(PlayerPriorityChangeEventArgs.EventId, OnPriorityChange);
         }
@@ -75,6 +79,12 @@ namespace StarForce
         private void RefreshHP()
         {
             HPBar.value = dataPlayer.player.HP / dataPlayer.player.MaxHP;
+        }
+
+        private void RefreshPortrait()
+        {
+            CharacterDetail detail = characterSpriteList_SO.GetCharacterDetail(dataPlayer.player.CharacterId);
+            Portrait.sprite = detail.characterIcon;
         }
 
         public void OnBtnBackClick()

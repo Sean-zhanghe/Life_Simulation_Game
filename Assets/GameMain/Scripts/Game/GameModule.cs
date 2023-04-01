@@ -81,7 +81,6 @@ public class GameModule : BaseModule
         }
 
         LevelData levelData = dataLevel.GetLevelDataById(dataLevel.CurLevelId);
-
         GameEntry.UI.OpenUIForm(UIFormId.UILevelOverForm, UIGameOverFormOpenParam.Create(levelData, ne.EnumGameOverType));
     }
 }
