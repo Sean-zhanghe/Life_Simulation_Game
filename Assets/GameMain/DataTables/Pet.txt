@@ -1,0 +1,5 @@
+﻿#	宠物配置表						
+#	Id		Name	IconId	MaxStack	Description	Sell
+#	int		string	int	int	string	int
+#	宠物配置表	策划配置	名字	图标Id	最大堆叠数	宠物描述	售价
+	1001		猫	1	1	猫猫猫猫猫猫猫猫猫	150

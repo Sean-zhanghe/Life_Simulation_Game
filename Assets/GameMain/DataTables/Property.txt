@@ -1,0 +1,5 @@
+﻿#	道具配置表						
+#	Id		Name	IconId	MaxStack	Description	Sell
+#	int		string	int	int	string	int
+#	道具编号	策划备注	名字	图标Id	最大堆叠数	描述	售价
+	1001		戒指	1	1	戒指戒指戒指戒指戒指	10

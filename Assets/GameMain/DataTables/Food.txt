@@ -1,0 +1,5 @@
+﻿#	食物配置表							
+#	Id		Name	IconId	MaxStack	Description	Attribute	Sell
+#	int		string	int	int	string	string	int
+#	食物编号	策划备注	名字	图标Id	最大堆叠数	食物描述	属性	售价
+	1001		蘑菇	1	10	蘑菇蘑菇蘑菇蘑菇蘑菇蘑菇	uPower=1	1

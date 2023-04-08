@@ -14,6 +14,7 @@ namespace StarForce
         protected EntityDataPlayer entityDataPlayer;
 
         protected PlayerMovement playerMovement;
+        protected PlayerClothes playerClothes;
 
         protected override void OnInit(object userData)
         {
@@ -21,8 +22,10 @@ namespace StarForce
 
             dataPlayer = GameEntry.Data.GetData<DataPlayer>();
             playerMovement = transform.GetComponent<PlayerMovement>();
+            playerClothes = transform.GetComponent<PlayerClothes>();
             
             playerMovement.OnInit(userData);
+            playerClothes.OnInit(userData);
         }
 
         protected override void OnShow(object userData)
@@ -37,6 +40,7 @@ namespace StarForce
             }
 
             playerMovement.OnShow(userData);
+            playerClothes.OnShow(userData);
         }
 
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -44,6 +48,7 @@ namespace StarForce
             base.OnUpdate(elapseSeconds, realElapseSeconds);
 
             playerMovement.OnUpdate(elapseSeconds, realElapseSeconds);
+            playerClothes.OnUpdate(elapseSeconds, realElapseSeconds);
         }
 
         protected override void OnHide(bool isShutdown, object userData)
@@ -51,6 +56,7 @@ namespace StarForce
             base.OnHide(isShutdown, userData);
 
             playerMovement.OnHide(isShutdown, userData);
+            playerClothes.OnHide(isShutdown, userData);
 
             entityDataPlayer = null;
         }

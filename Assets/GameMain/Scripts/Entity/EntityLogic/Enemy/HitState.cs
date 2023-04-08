@@ -30,6 +30,8 @@ public class HitState : BaseState
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
+        if (pause) return;
+
         info = logic.animator.GetCurrentAnimatorStateInfo(0);
 
         if (info.normalizedTime >= .95f)

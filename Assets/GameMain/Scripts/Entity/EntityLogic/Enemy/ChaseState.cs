@@ -13,6 +13,7 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<StarForce.EntityLogicEnemy>;
 public class ChaseState : BaseState
 {
 
+    private Vector3 targetPos;
     protected override void OnInit(ProcedureOwner fsm)
     {
         base.OnInit(fsm);
@@ -43,13 +44,11 @@ public class ChaseState : BaseState
         {
             logic.FlipTo(logic.target.position);
 
-            Vector3 pos = Vector3.zero;
-
             int dir = logic.target.position.x > logic.transform.position.x ? -1 : 1;
-            pos = logic.target.position + new Vector3(dir * (logic.attackArea + logic.attackPoint.localPosition.x) , 0, 0);
+            targetPos = logic.target.position + new Vector3(dir * (logic.attackArea + logic.attackPoint.localPosition.x) , 0, 0);
 
             logic.transform.position = Vector2.MoveTowards(logic.transform.position,
-                pos, logic.enemyData.ChaseSpeed * Time.deltaTime);
+                targetPos, logic.enemyData.ChaseSpeed * Time.deltaTime);
         }
         
         // 目标丢失或超出追击范围 Idle

@@ -80,7 +80,7 @@ namespace StarForce.Data
 
         protected override void OnUnload()
         {
-            GameEntry.DataTable.DestroyDataTable<DRNPC>();
+            GameEntry.DataTable.DestroyDataTable<DRWork>();
 
             dtWork = null;
             dicWorkData = null;

@@ -84,7 +84,7 @@ namespace StarForce.Data
 
         protected override void OnUnload()
         {
-            GameEntry.DataTable.DestroyDataTable<DRProjectile>();
+            GameEntry.DataTable.DestroyDataTable<DRWeapon>();
 
             dtWeapon = null;
             dicWeaponData = null;

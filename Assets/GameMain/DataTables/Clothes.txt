@@ -1,0 +1,6 @@
+﻿#	衣服配置表								
+#	Id		Name	IconId	MaxStack	Endurance	Description	Sell	Clothes
+#	int		string	int	int	int	string	int	int
+#	衣服编号	策划备注	名字	图标Id	最大堆叠数	耐久度	物品描述	售价	衣服
+	1001		红色衣服	1	1	100	红色衣服衣服衣服衣服	100	1
+	1002		衣服	2	1	100	衣服衣服衣服	200	2

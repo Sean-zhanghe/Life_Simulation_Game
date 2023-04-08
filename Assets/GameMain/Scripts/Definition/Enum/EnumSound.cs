@@ -11,6 +11,8 @@ namespace StarForce
 
         SFXThrow = 20002,
 
+        UITaskComplete = 30003,
+
         UIVictory = 30004,
 
         UIDefeat = 30005

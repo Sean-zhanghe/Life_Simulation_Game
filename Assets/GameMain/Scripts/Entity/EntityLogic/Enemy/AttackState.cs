@@ -12,7 +12,6 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<StarForce.EntityLogicEnemy>;
 /// </summary>
 public class AttackState : BaseState
 {
-    private float timer;
     private AnimatorStateInfo info;
 
     protected override void OnInit(ProcedureOwner fsm)
@@ -31,7 +30,7 @@ public class AttackState : BaseState
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
-        timer += elapseSeconds;
+        if (pause) return;
 
         // 受到伤害
         if (logic.IsHit)

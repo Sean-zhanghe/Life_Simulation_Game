@@ -2,10 +2,12 @@
 using StarForce;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using GameFramework.Event;
 using UnityGameFramework.Runtime;
 using StarForce.Data;
+using static StarForce.Constant;
+using UnityEngine;
+using Animator = UnityEngine.Animator;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,7 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb2;
 
-    private Animator animator;
+    [SerializeField] private Animator animatorHead;
+    [SerializeField] private Animator animatorArm;
+    [SerializeField] private Animator animatorBody;
+    [SerializeField] private Animator animatorLeg;
 
     private float inputX, inputY;
 
@@ -34,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     public void OnInit(object userData)
     {
         rb2 = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
 
         IsPause = false;
         IsDead = false;
@@ -64,15 +68,15 @@ public class PlayerMovement : MonoBehaviour
         Vector2 input = (transform.right * inputX + transform.up * inputY).normalized;
         rb2.velocity = input * speed;
 
-        animator.SetBool(Constant.Animator.IsMoving, input != Vector2.zero);
+        SetAnimatorBool(Constant.Animator.IsMoving, input != Vector2.zero);
         if (input != Vector2.zero)
         {
             stopX = inputX;
             stopY = inputY;
         }
 
-        animator.SetFloat(Constant.Animator.InputX, stopX);
-        animator.SetFloat(Constant.Animator.InputY, stopY);
+        SetAnimatorFloat(Constant.Animator.InputX, stopX);
+        SetAnimatorFloat(Constant.Animator.InputY, stopY);
     }
 
     public void OnHide(bool isShutdown, object userData)
@@ -83,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnPause()
     {
         IsPause = true;
-        animator.speed = 0;
+        SetAnimatorSpeed(0);
         tempVelocity = rb2.velocity;
         rb2.velocity = Vector3.zero;
     }
@@ -91,12 +95,36 @@ public class PlayerMovement : MonoBehaviour
     public void OnResume()
     {
         IsPause = false;
-        animator.speed = 1;
+        SetAnimatorSpeed(1);
         rb2.velocity = tempVelocity;
     }
 
     public void OnDead()
     {
         IsDead = true;
+    }
+
+    private void SetAnimatorSpeed(int value)
+    {
+        animatorHead.speed = value;
+        animatorArm.speed = value;
+        animatorBody.speed = value;
+        animatorLeg.speed = value;
+    }
+
+    private void SetAnimatorBool(string parameters, bool value)
+    {
+        animatorHead.SetBool(parameters, value);
+        animatorArm.SetBool(parameters, value);
+        animatorBody.SetBool(parameters, value);
+        animatorLeg.SetBool(parameters, value);
+    }
+
+    private void SetAnimatorFloat(string parameters, float value)
+    {
+        animatorHead.SetFloat(parameters, value);
+        animatorArm.SetFloat(parameters, value);
+        animatorBody.SetFloat(parameters, value);
+        animatorLeg.SetFloat(parameters, value);
     }
 }

@@ -9,6 +9,7 @@
 	1004	等待	UIWaitingForm	PopUp	FALSE	TRUE
 	1005	关卡选择	UILevelMenuForm	Default	FALSE	TRUE
 	1006	关卡界面	UILevelForm	Default	FALSE	TRUE
+	1007	背包	UIBagForm	Default	FALSE	FALSE
 	2001	提示框	UITipsForm	PopUp	TRUE	FALSE
 	2002	关卡结束	UILevelOverForm	PopUp	FALSE	FALSE
 	3001	设置	UISettingForm	Setting	FALSE	FALSE

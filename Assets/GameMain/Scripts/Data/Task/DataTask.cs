@@ -147,12 +147,12 @@ namespace StarForce.Data
                     {
                         CurrentMainTask = dicMainTask[CurrentMainTask.NextTaskId];
                         GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
-                        GameEntry.Sound.PlaySound(30003);
                     }
                     else
                     {
                         CurrentMainTask = null;
                     }
+                    GameEntry.Sound.PlaySound(EnumSound.UITaskComplete);
                 }
             }
 

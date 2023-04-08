@@ -17,6 +17,12 @@ namespace StarForce
             public const string Hygiene = "Player.Hygiene";
             public const string Health = "Player.Health";
             public const string AttackInterval = "Player.AttackInterval";
+            
+            public const string BagPropertySlotCount = "Bag.PropertySlotCount";
+            public const string BagClothesSlotCount = "Bag.ClothesSlotCount";
+            public const string BagFoodSlotCount = "Bag.FoodSlotCount";
+            public const string BagEquipmentSlotCount = "Bag.EquipmentSlotCount";
+            public const string BagPetSlotCount = "Bag.PetSlotCount";
         }
     }
 }

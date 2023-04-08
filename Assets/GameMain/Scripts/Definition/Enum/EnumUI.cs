@@ -50,6 +50,11 @@ namespace StarForce
         UILevelForm = 1006,
 
         /// <summary>
+        /// 背包界面
+        /// </summary>
+        UIBagForm = 1007,
+
+        /// <summary>
         /// 弹出框。
         /// </summary>
         UITipsForm = 2001,

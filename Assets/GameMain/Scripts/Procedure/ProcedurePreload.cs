@@ -22,7 +22,8 @@ namespace StarForce
         {
             "Scene", "Sound", "SoundGroup", "SoundPlayParam", "Entity", "EntityGroup",
             "UIForm", "PoolParam", "Character", "Player", "PlayerLevel", "Task", "NPC",
-            "Dialog", "Work", "Level", "Weapon", "Projectile", "Enemy"
+            "Dialog", "Work", "Level", "Weapon", "Projectile", "Enemy", "Clothes",
+            "Property", "Food", "Pet", "Equipment",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
@@ -66,7 +67,7 @@ namespace StarForce
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-
+            
             foreach (KeyValuePair<string, bool> loadedFlag in m_LoadedFlag)
             {
                 if (!loadedFlag.Value)

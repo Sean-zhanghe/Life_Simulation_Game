@@ -1,0 +1,5 @@
+﻿#	装备配置表							
+#	Id		Name	IconId	MaxStack	Description	WeaponId	Sell
+#	int		string	int	int	string	int	int
+#	装备Id	策划备注	名字	图标Id	最大堆叠数	装备描述	武器Id	售价
+	1001		弓	1	1	弓箭弓箭弓箭弓箭弓箭	1001	100

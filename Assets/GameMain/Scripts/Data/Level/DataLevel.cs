@@ -124,7 +124,7 @@ namespace StarForce.Data
             }
 
             ChangeLevelState(EnumGameState.GameNormal);
-            Debug.Log("11111111111111111");
+
             GameEntry.Data.GetData<DataPlayer>().Reset();
 
             if (isReload)

@@ -30,6 +30,8 @@ public class IdleState : BaseState
     {
         base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
 
+        if (pause) return;
+
         timer += elapseSeconds;
 
         // 收到伤害
