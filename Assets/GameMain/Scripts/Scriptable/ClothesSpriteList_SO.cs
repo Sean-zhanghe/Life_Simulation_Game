@@ -20,4 +20,5 @@ public class ClothesDetail
 {
     public int ClothesId;
     public Sprite ClothesIcon;
+    public Sprite PlayerImage;
 }

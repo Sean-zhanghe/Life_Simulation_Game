@@ -7,6 +7,7 @@ using UnityGameFramework.Runtime;
 using System;
 using DG.Tweening;
 using GameFramework.Event;
+using GameFramework.Data;
 
 namespace StarForce
 {
@@ -27,11 +28,15 @@ namespace StarForce
         [SerializeField] private Text hygieneText;
         [SerializeField] private Text healthText;
         [SerializeField] private Text moneyText;
+        [SerializeField] private Transform phone;
 
         private bool isShow;
+        private bool isCall;
 
         private DataPlayer dataPlayer;
         private DataTask dataTask;
+
+        private Data.Event m_Event;
 
 #if UNITY_2017_3_OR_NEWER
         protected override void OnInit(object userData)
@@ -59,6 +64,7 @@ namespace StarForce
 
             GameEntry.Event.Subscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
             GameEntry.Event.Subscribe(ReleaseTaskEventArgs.EventId, OnRefreshTask);
+            GameEntry.Event.Subscribe(ReleaseEventEventArgs.EventId, OnRelesaseEvent);
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -71,6 +77,7 @@ namespace StarForce
 
             GameEntry.Event.Unsubscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
             GameEntry.Event.Unsubscribe(ReleaseTaskEventArgs.EventId, OnRefreshTask);
+            GameEntry.Event.Unsubscribe(ReleaseEventEventArgs.EventId, OnRelesaseEvent);
 
             if (DOTween.IsTweening("task_move"))
                 DOTween.Kill("task_move", true);
@@ -222,6 +229,26 @@ namespace StarForce
             taskPanel.DOMoveX(x, 0.5f).SetId("task_move");
         }
 
+        public void OnBtnPhoneCallClick()
+        {
+            if (!isCall) return;
+
+            isCall = false;
+
+            DataNPC dataNPC = GameEntry.Data.GetData<DataNPC>();
+            DataEvent dataEvent = GameEntry.Data.GetData<DataEvent>();
+
+            int dialogId = int.Parse(dataEvent.GetEventConditionValue(m_Event.Parameter, Constant.Parameter.Dialog));
+            int npcId = int.Parse(dataEvent.GetEventConditionValue(m_Event.Parameter, Constant.Parameter.NPC)); ;
+
+            NPCData npc = dataNPC.GetNPCDataById(npcId);
+
+            GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(npc.Name, npc.IconId, dialogId));
+            
+            m_Event = null;
+            phone.gameObject.SetActive(false);
+        }
+
         private void OnRefreshPriority(object sender, GameEventArgs e)
         {
             PlayerPriorityChangeEventArgs ne = (PlayerPriorityChangeEventArgs)e;
@@ -242,6 +269,22 @@ namespace StarForce
             }
 
             RefreshTaskByType(ne.TaskType);
+        }
+
+        private void OnRelesaseEvent(object sender, GameEventArgs e)
+        {
+            ReleaseEventEventArgs ne = (ReleaseEventEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+            m_Event = ne.m_Event;
+
+            if (m_Event.EventType == (int)EnumEventType.Phone)
+            {
+                isCall = true;
+                phone.gameObject.SetActive(true);
+            }
         }
 
     }

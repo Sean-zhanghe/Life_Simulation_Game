@@ -131,8 +131,8 @@ namespace StarForce
                 return;
             }
 
-            GameEntry.Setting.SetInt(Constant.DataNode.CharacterId, curId);
-            GameEntry.Setting.SetString(Constant.DataNode.PlayerName, characterName);
+            GameEntry.Setting.SetInt(Constant.Setting.CharacterId, curId);
+            GameEntry.Setting.SetString(Constant.Setting.PlayerName, characterName);
 
             GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt(Constant.Config.MainGame)));
         }

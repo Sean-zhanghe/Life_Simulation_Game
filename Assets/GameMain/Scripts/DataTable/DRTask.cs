@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-04-08 17:42:58.477
+// 生成时间：2023-04-13 17:37:11.455
 //------------------------------------------------------------
 
 using GameFramework;
@@ -55,9 +55,36 @@ namespace StarForce
         }
 
         /// <summary>
+        /// 获取任务类型。
+        /// </summary>
+        public int SubTaskType
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取任务参数。
+        /// </summary>
+        public string Parameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取任务完成条件(type=完成任务条件类型&任务目标=(数量或Id)&...)。
         /// </summary>
         public string TaskCondition
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取是否强制执行。
+        /// </summary>
+        public bool IsForce
         {
             get;
             private set;
@@ -81,6 +108,15 @@ namespace StarForce
             private set;
         }
 
+        /// <summary>
+        /// 获取触发事件Id。
+        /// </summary>
+        public string EventId
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -95,9 +131,13 @@ namespace StarForce
             index++;
             TaskType = int.Parse(columnStrings[index++]);
             Description = columnStrings[index++];
+            SubTaskType = int.Parse(columnStrings[index++]);
+            Parameter = columnStrings[index++];
             TaskCondition = columnStrings[index++];
+            IsForce = bool.Parse(columnStrings[index++]);
             Reward = columnStrings[index++];
             NextTaskId = int.Parse(columnStrings[index++]);
+            EventId = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -112,9 +152,13 @@ namespace StarForce
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     TaskType = binaryReader.Read7BitEncodedInt32();
                     Description = binaryReader.ReadString();
+                    SubTaskType = binaryReader.Read7BitEncodedInt32();
+                    Parameter = binaryReader.ReadString();
                     TaskCondition = binaryReader.ReadString();
+                    IsForce = binaryReader.ReadBoolean();
                     Reward = binaryReader.ReadString();
                     NextTaskId = binaryReader.Read7BitEncodedInt32();
+                    EventId = binaryReader.ReadString();
                 }
             }
 

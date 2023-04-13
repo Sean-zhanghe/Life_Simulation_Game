@@ -1,5 +1,6 @@
 ﻿using GameFramework;
 using GameFramework.DataTable;
+using GameFramework.Event;
 using StarForce;
 using StarForce.Data;
 using System.Collections;
@@ -57,6 +58,8 @@ namespace StarForce.Data
                     dicRandomTask.Add(task.Id, task);
                 }
             }
+
+            Subscribe(EventFinishEventArgs.EventId, OnEventRelease);
         }
 
         public TaskData GetTaskData(int id)
@@ -121,6 +124,21 @@ namespace StarForce.Data
             return task;
         }
 
+        public string GetTaskConditionValue(string condition, string key)
+        {
+            if (condition == string.Empty) return string.Empty;
+
+            string[] conditions = condition.Split('&');
+            foreach (var cond in conditions)
+            {
+                if (cond.StartsWith(key + "="))
+                {
+                    return cond.Substring(key.Length + 1);
+                }
+            }
+            return string.Empty;
+        }
+
         public void LoadGameTask()
         {
             // 未保存任务数据时 从最小任务ID开始主线任务
@@ -143,15 +161,16 @@ namespace StarForce.Data
 
                 if (CurrentMainTask.state == EnumTaskState.Finish)
                 {
+                    TriggerEvent(CurrentMainTask);
                     if (dicMainTask.ContainsKey(CurrentMainTask.NextTaskId))
                     {
                         CurrentMainTask = dicMainTask[CurrentMainTask.NextTaskId];
-                        GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
                     }
                     else
                     {
                         CurrentMainTask = null;
                     }
+                    GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
                     GameEntry.Sound.PlaySound(EnumSound.UITaskComplete);
                 }
             }
@@ -168,16 +187,73 @@ namespace StarForce.Data
 
                 if (CurrentRandomTask.state == EnumTaskState.Finish)
                 {
-                    GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.RandomTask, CurrentMainTask));
+                    TriggerEvent(CurrentRandomTask);
                     CurrentRandomTask = null;
-                    GameEntry.Sound.PlaySound(30003);
+                    GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.RandomTask, CurrentRandomTask));
+                    GameEntry.Sound.PlaySound(EnumSound.UITaskComplete);
+                }
+            }
+        }
+
+        private void TriggerEvent(Task task)
+        {
+            if (task == null) return;
+
+            if (task.EventId == string.Empty) return;
+
+            DataEvent dataEvent = GameEntry.Data.GetData<DataEvent>();
+            string[] ids = task.EventId.Split('|');
+            for (int i = 0; i < ids.Length; i++)
+            {
+                int id = int.Parse(ids[i]);
+                dataEvent.TriggerEvent(id);
+            }
+        }
+
+        private void OnEventRelease(object sender, GameEventArgs e)
+        {
+            EventFinishEventArgs ne = (EventFinishEventArgs)e;
+            if (ne == null) return;
+
+            Event m_Event = ne.m_Event;
+            if (m_Event.Trigger != string.Empty)
+            {
+                string[] taskIds = m_Event.Trigger.Split('|');
+                for (int j = 0; j < taskIds.Length; j++)
+                {
+                    int taskId = int.Parse(taskIds[j]);
+
+                    TaskData taskData = GetTaskData(taskId);
+                    if (taskData.TaskType == (int)EnumTaskType.MainTask)
+                    {
+                        if (CurrentMainTask != null) continue;
+
+                        if (!dicMainTask.ContainsKey(taskId)) continue;
+
+                        if (dicMainTask[taskId].state == EnumTaskState.Finish) continue;
+
+                        CurrentMainTask = dicMainTask[taskId];
+                        GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.MainTask, CurrentMainTask));
+                    }
+
+                    if (taskData.TaskType == (int)EnumTaskType.RandomTask)
+                    {
+                        if (CurrentRandomTask != null) continue;
+
+                        if (!dicRandomTask.ContainsKey(taskId)) continue;
+
+                        if (dicRandomTask[taskId].state == EnumTaskState.Finish) continue;
+
+                        CurrentRandomTask = dicRandomTask[taskId];
+                        GameEntry.Event.Fire(this, ReleaseTaskEventArgs.Create(EnumTaskType.RandomTask, CurrentMainTask));
+                    }
                 }
             }
         }
 
         protected override void OnUnload()
         {
-
+            UnSubscribe(EventFinishEventArgs.EventId, OnEventRelease);
         }
 
         protected override void OnShutdown()

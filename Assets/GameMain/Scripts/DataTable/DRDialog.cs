@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-04-08 17:42:58.491
+// 生成时间：2023-04-13 17:37:11.500
 //------------------------------------------------------------
 
 using GameFramework;
@@ -46,6 +46,15 @@ namespace StarForce
         }
 
         /// <summary>
+        /// 获取参数(参数类型=参数值)。
+        /// </summary>
+        public string Parameter
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 获取下一段对话Id。
         /// </summary>
         public int NextDialogId
@@ -67,6 +76,7 @@ namespace StarForce
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             DialogContent = columnStrings[index++];
+            Parameter = columnStrings[index++];
             NextDialogId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
@@ -81,6 +91,7 @@ namespace StarForce
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     DialogContent = binaryReader.ReadString();
+                    Parameter = binaryReader.ReadString();
                     NextDialogId = binaryReader.Read7BitEncodedInt32();
                 }
             }

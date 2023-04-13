@@ -20,6 +20,7 @@ namespace StarForce.Data
         public void SetProperty(PropertyData data)
         {
             propertyData = data;
+            Number = 1;
 
             if (propertyData == null)
             {

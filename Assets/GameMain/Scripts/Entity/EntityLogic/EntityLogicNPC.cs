@@ -14,10 +14,13 @@ namespace StarForce
 
         protected EntityDataNPC entityDataNPC;
         private DataTask dataTask;
+        private DataEvent dataEvent;
         private NPCData data;
 
         private bool isEnter = false;
         protected bool pause = false;
+
+        private int dialogId = 0;
 
         protected override void OnInit(object userData)
         {
@@ -39,6 +42,7 @@ namespace StarForce
             }
             data = entityDataNPC.data;
             dataTask = GameEntry.Data.GetData<DataTask>();
+            dataEvent = GameEntry.Data.GetData<DataEvent>();
         }
 
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -51,7 +55,6 @@ namespace StarForce
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    int dialogId = GetDialogId();
                     GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(data.Name, data.IconId, dialogId));
                 }
             }
@@ -66,10 +69,34 @@ namespace StarForce
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (data.DefDialogId == 0) { return; }
-
             if (collision.CompareTag(Constant.Tag.Player))
             {
+                Task task = null;
+                Data.Event m_Event = null;
+                GetTaskAndDialogId(out task, out m_Event, out dialogId);
+
+                // 无对话
+                if (dialogId == 0) return;
+
+                // 有任务 有对话
+                if (task != null && dialogId != 0)
+                {
+                    // 任务强制执行
+                    if (task.IsForce)
+                    {
+                        GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(data.Name, data.IconId, dialogId));
+                        return;
+                    }
+                }
+                else if (m_Event != null && dialogId != 0)
+                {
+                    if (m_Event.IsForce)
+                    {
+                        GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(data.Name, data.IconId, dialogId));
+                        return;
+                    }
+                }
+
                 isEnter = true;
                 NPCTips.gameObject.SetActive(true);
             }
@@ -77,9 +104,7 @@ namespace StarForce
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (data.DefDialogId == 0) { return; }
-
-            if (collision.CompareTag(Constant.Tag.Player) && data.DefDialogId != 0)
+            if (collision.CompareTag(Constant.Tag.Player))
             {
                 isEnter = false;
                 NPCTips.gameObject.SetActive(false);
@@ -100,23 +125,28 @@ namespace StarForce
             animator.speed = 1;
         }
 
-        private int GetDialogId()
+        private void GetTaskAndDialogId(out Task task, out Data.Event m_Event, out int dialog)
         {
-
             // 判断前置任务是否完成 未完成返回默认对话
             if (data.PreTaskId != 0)
             {
-                Task task = GetTask(data.PreTaskId);
-                if (task.state == EnumTaskState.UnFinish)
+                Task preTask = dataTask.GetTask(data.PreTaskId);
+                if (preTask.state == EnumTaskState.UnFinish)
                 {
-                    return data.DefDialogId;
+                    task = null;
+                    m_Event = null;
+                    dialog = data.DefDialogId;
+                    return;
                 }
             }
 
             // 无任务对话
             if (data.Task == string.Empty)
             {
-                return data.DefDialogId;
+                task = null;
+                m_Event = null;
+                dialog = data.DefDialogId;
+                return;
             }
 
             string tasks = data.Task;
@@ -124,36 +154,47 @@ namespace StarForce
             foreach (string taskStr in singleTaskConfigs)
             {
                 string[] configs = taskStr.Split(':');
-                int index = int.Parse(configs[0]);
-                int taskId = int.Parse(configs[1]);
-                int dialogId = int.Parse(configs[2]);
+                int type = int.Parse(configs[0]);
+                int id = int.Parse(configs[1]);
 
-                Task task = GetTask(taskId);
-                if (task.state == EnumTaskState.UnFinish)
+                if (type == (int)EnumTriggerType.Task)
                 {
-                    return dialogId;
+                    Task curTask = dataTask.GetTask(id);
+                    if (curTask.state == EnumTaskState.UnFinish)
+                    {
+                        task = curTask;
+                        m_Event = null;
+                        dialog = 0;
+                        string value = dataTask.GetTaskConditionValue(task.Parameter, Constant.Parameter.Dialog);
+                        if (value != string.Empty)
+                            dialog = int.Parse(value);
+                        return;
+                    }
+                }
+
+                if (type == (int)EnumTriggerType.Event)
+                {
+                    Data.Event curEvent = dataEvent.GetEvent(id);
+                    if (curEvent.state == EnumEventState.UnFinish)
+                    {
+                        // 触发事件
+                        dataEvent.TriggerEvent(id);
+
+                        task = null;
+                        m_Event = curEvent;
+                        dialog = 0;
+                        string value = dataEvent.GetEventConditionValue(m_Event.Parameter, Constant.Parameter.Dialog);
+                        if (value != string.Empty)
+                            dialog = int.Parse(value);
+                        return;
+                    }
                 }
             }
 
-            return data.DefDialogId;
-        }
-
-        private Task GetTask(int taskId)
-        {
-            TaskData taskData = dataTask.GetTaskData(taskId);
-            Task result = null;
-            switch (taskData.TaskType)
-            {
-                case (int)EnumTaskType.MainTask:
-                    result = dataTask.GetMainTask(taskData.Id);
-                    break;
-                case (int)EnumTaskType.RandomTask:
-                    result = dataTask.GetRandomTask(taskData.Id);
-                    break;
-                default:
-                    break;
-            }
-            return result;
+            task = null;
+            m_Event = null;
+            dialog = data.DefDialogId;
+            return;
         }
 
     }

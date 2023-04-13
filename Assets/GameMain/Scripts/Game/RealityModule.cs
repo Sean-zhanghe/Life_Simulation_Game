@@ -25,6 +25,7 @@ public class RealityModule : BaseModule
         GameEntry.Event.Subscribe(LoadSceneCompleteEventArgs.EventId, OnLoadSceneComplete);
 
         GameEntry.UI.OpenUIForm(UIFormId.UIMainForm, this);
+        GameEntry.UI.OpenUIForm(UIFormId.UIPopupForm, this);
 
         gameManager.sceneControl.CreatePlayer<EntityLogicPlayer>();
     }
@@ -62,6 +63,7 @@ public class RealityModule : BaseModule
         }
 
         GameEntry.UI.OpenUIForm(UIFormId.UIMainForm, this);
+        GameEntry.UI.OpenUIForm(UIFormId.UIPopupForm, this);
         gameManager.sceneControl.CreatePlayer<EntityLogicPlayer>();
     }
 }

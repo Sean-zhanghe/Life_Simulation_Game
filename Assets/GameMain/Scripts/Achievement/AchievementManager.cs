@@ -55,9 +55,9 @@ public class AchievementManager : IReference
         }
 
         string consume = workData.Consume;
-        dataPlayer.AddPriorityByConfiger(consume);
+        dataPlayer.AddRewardByConfiger(consume);
 
         string reward = workData.Reward;
-        dataPlayer.AddPriorityByConfiger(reward);
+        dataPlayer.AddRewardByConfiger(reward);
     }
 }

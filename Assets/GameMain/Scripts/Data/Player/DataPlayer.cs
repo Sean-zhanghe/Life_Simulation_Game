@@ -119,31 +119,44 @@ namespace StarForce.Data
             float lastPriority = 0;
             float currentPriority = 0;
             EnumPriority prioritye = EnumPriority.None;
-            switch(priorityType)
+            string content = string.Empty;
+            switch (priorityType)
             {
                 case Constant.Parameter.Power:
                     prioritye = EnumPriority.Power;
                     lastPriority = player.Power;
                     player.AddPriority(EnumPriority.Power, value);
                     currentPriority = player.Power;
+
+                    content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupPower), value >= 0 ? "+" + value : value.ToString());
+                    GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
                     break;
                 case Constant.Parameter.Energy:
                     prioritye = EnumPriority.Energy;
                     lastPriority = player.Energy;
                     player.AddPriority(EnumPriority.Energy, value);
                     currentPriority = player.Energy;
+
+                    content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupHygiene), value >= 0 ? "+" + value : value.ToString());
+                    GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
                     break;
                 case Constant.Parameter.Hygiene:
                     prioritye = EnumPriority.Hygiene;
                     lastPriority = player.Hygiene;
                     player.AddPriority(EnumPriority.Hygiene, value);
                     currentPriority = player.Hygiene;
+
+                    content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupHygiene), value >= 0 ? "+" + value : value.ToString());
+                    GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
                     break;
                 case Constant.Parameter.Health:
                     prioritye = EnumPriority.Health;
                     lastPriority = player.Health;
                     player.AddPriority(EnumPriority.Health, value);
                     currentPriority = player.Health;
+
+                    content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupHealth), value >= 0 ? "+" + value : value.ToString());
+                    GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
                     break;
                 case Constant.Parameter.HP:
                     prioritye = EnumPriority.HP;
@@ -162,6 +175,9 @@ namespace StarForce.Data
                     lastPriority = player.Money;
                     player.AddPriority(EnumPriority.Money, value);
                     currentPriority = player.Money;
+
+                    content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupMoney), value >= 0 ? "+" + value : value.ToString());
+                    GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
                     break;
                 default:
                     break;
@@ -229,6 +245,28 @@ namespace StarForce.Data
             GameEntry.Event.Fire(this, PlayerPriorityChangeEventArgs.Create(player.SerialId, prioritye, lastPriority, currentPriority));
         }
 
+        public void AddItem(string key, int value)
+        {
+            DataBag dataBag = GameEntry.Data.GetData<DataBag>();
+            switch (key)
+            {
+                case Constant.Parameter.Property:
+                    dataBag.AddProperty(value);
+                    break;
+                case Constant.Parameter.Clothes:
+                    dataBag.AddClothes(value);
+                    break;
+                case Constant.Parameter.Food:
+                    break;
+                case Constant.Parameter.Equipment:
+                    break;
+                case Constant.Parameter.Pet:
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void SetLevel(int level)
         {
             player.SetLevel(level);
@@ -244,7 +282,7 @@ namespace StarForce.Data
             player.Upgrade();
         }
 
-        public void AddPriorityByConfiger(string configer)
+        public void AddRewardByConfiger(string configer)
         {
             if (configer == string.Empty) return;
 
@@ -254,6 +292,7 @@ namespace StarForce.Data
                 string key = priority.Split('=')[0];
                 int value = int.Parse(priority.Split('=')[1]);
                 AddPriority(key, value);
+                AddItem(key, value);
             }
         }
 

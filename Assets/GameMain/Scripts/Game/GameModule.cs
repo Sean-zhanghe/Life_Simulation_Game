@@ -29,6 +29,7 @@ public class GameModule : BaseModule
         GameEntry.Event.Subscribe(GameoverEventArgs.EventId, OnGameover);
 
         GameEntry.UI.OpenUIForm(UIFormId.UILevelForm, this);
+        GameEntry.UI.OpenUIForm(UIFormId.UIPopupForm, this);
 
         gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
     }
@@ -70,6 +71,7 @@ public class GameModule : BaseModule
 
         gameManager.sceneControl.CreatePlayer<EntityLogicPlayerCombat>();
         GameEntry.UI.OpenUIForm(UIFormId.UILevelForm, this);
+        GameEntry.UI.OpenUIForm(UIFormId.UIPopupForm, this);
     }
 
     private void OnGameover(object sender, GameEventArgs e)

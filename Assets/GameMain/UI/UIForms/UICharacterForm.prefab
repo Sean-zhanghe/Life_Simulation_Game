@@ -116,6 +116,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  interactable: 1
 --- !u!1 &2108886752604503643
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2108886753962845855
 RectTransform:
   m_ObjectHideFlags: 0

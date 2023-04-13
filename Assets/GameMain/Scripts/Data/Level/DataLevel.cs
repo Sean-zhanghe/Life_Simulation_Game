@@ -144,7 +144,7 @@ namespace StarForce.Data
             // TODO 发放通关奖励
             LevelData levelData = GetLevelDataById(CurLevelId);
             DataPlayer dataPlayer = GameEntry.Data.GetData<DataPlayer>();
-            dataPlayer.AddPriorityByConfiger(levelData.Reward);
+            dataPlayer.AddRewardByConfiger(levelData.Reward);
 
             if (CurLevelId == MaxLevelId)
             {

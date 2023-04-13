@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameFramework.Data;
 using GameFramework.DataTable;
+using UnityEngine.Assertions.Must;
+using GameFramework;
+using System;
 
 namespace StarForce.Data
 {
@@ -68,13 +71,6 @@ namespace StarForce.Data
                 listPet.Add(Pet.Create());
             }
             pet = new Pet();
-
-            DataClothes dataClothes = GameEntry.Data.GetData<DataClothes>();
-            ClothesData data = dataClothes.GetClothesDataById(1001);
-            ClothesData data1 = dataClothes.GetClothesDataById(1002);
-
-            listClothes[0].SetClothes(data);
-            listClothes[0].SetNumber(1);
         }
 
         public void ExchangeBagSlot(EnumBag bag, string from, string to)
@@ -169,12 +165,169 @@ namespace StarForce.Data
             pet = temp;
         }
 
+        public bool AddProperty(int propertyId)
+        {
+            DataProperty dataProperty = GameEntry.Data.GetData<DataProperty>();
+            PropertyData property = dataProperty.GetPropertyDataById(propertyId);
+            if (property == null) return false;
+
+            string content = string.Empty;
+            int emptySlot = -1;
+            for (int i = 0; i < listProperty.Count; i++)
+            {
+                if (emptySlot == -1 && listProperty[i].Number == 0)
+                {
+                    emptySlot = i;
+                }
+
+                if (listProperty[i].Number > 0 && listProperty[i].propertyData.Id == property.Id)
+                {
+                    if (listProperty[i].Number < property.MaxStack)
+                    {
+                        listProperty[i].AddNumber(1);
+
+                        content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), property.Name);
+                        GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
+                        return true;
+                    }
+                }
+            }
+            if (emptySlot == -1)
+            {
+                GameEntry.UI.OpenTips(new DialogParams()
+                {
+                    Mode = 1,
+                    Title = GameEntry.Localization.GetString(Constant.Localization.BagTitle),
+                    Message = GameEntry.Localization.GetString(Constant.Localization.BagNoEmptySlotMessage),
+                    UserData = null
+                });
+                return false;
+            }
+
+            listProperty[emptySlot].SetProperty(property);
+            content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), property.Name);
+            GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
+            return true;
+        }
+
+        public bool AddClothes(int clothesId)
+        {
+            DataClothes dataClothes = GameEntry.Data.GetData<DataClothes>();
+            ClothesData clothes = dataClothes.GetClothesDataById(clothesId);
+            if (clothes == null) return false;
+
+            string content = string.Empty;
+            int emptySlot = -1;
+            for (int i = 0; i < listClothes.Count; i++)
+            {
+                if (emptySlot == -1 && listClothes[i].Number == 0)
+                {
+                    emptySlot = i;
+                }
+
+                if (listClothes[i].Number > 0 && listClothes[i].clothesData.Id == clothes.Id)
+                {
+                    if (listClothes[i].Number < clothes.MaxStack)
+                    {
+                        listClothes[i].AddNumber(1);
+
+                        content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), clothes.Name);
+                        GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
+                        return true;
+                    }
+                }
+            }
+            if (emptySlot == -1)
+            {
+                GameEntry.UI.OpenTips(new DialogParams()
+                {
+                    Mode = 1,
+                    Title = GameEntry.Localization.GetString(Constant.Localization.BagTitle),
+                    Message = GameEntry.Localization.GetString(Constant.Localization.BagNoEmptySlotMessage),
+                    UserData = null
+                });
+                return false;
+            }
+
+            listClothes[emptySlot].SetClothes(clothes);
+            content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), clothes.Name);
+            GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
+            return true;
+        }
+
+
+        public bool AddFood(int foodId)
+        {
+            return true;
+        }
+
+        public bool AddEquipment(int equipmentId)
+        {
+            return true;
+
+        }
+
+        public bool AddPet(int petId)
+        {
+            return true;
+        }
+
         private List<T> SwapListItem<T>(List<T> list, int index1, int index2)
         {
             var temp = list[index1];
             list[index1] = list[index2];
             list[index2] = temp;
             return list;
+        }
+
+        public bool FindItemIsInBag(EnumBag bag, int id)
+        {
+            switch (bag)
+            {
+                case EnumBag.Property:
+                    foreach (var property in listProperty)
+                    {
+                        if (property.Number <= 0) continue;
+                        if (property.propertyData.Id == id)
+                            return true;
+                    }
+                    break;
+                case EnumBag.Clothes:
+                    foreach (var clothes in listClothes)
+                    {
+                        if (clothes.Number <= 0) continue;
+                        if (clothes.clothesData.Id == id)
+                            return true;
+                    }
+                    break;
+                case EnumBag.Food:
+                    foreach (var food in listFood)
+                    {
+                        if (food.Number <= 0) continue;
+                        if (food.foodData.Id == id)
+                            return true;
+                    }
+                    break;
+                case EnumBag.Equipment:
+                    foreach (var equipment in listEquipment)
+                    {
+                        if (equipment.Number <= 0) continue;
+                        if (equipment.equipmentData.Id == id)
+                            return true;
+                    }
+                    break;
+                case EnumBag.Pet:
+                    foreach (var pet in listPet)
+                    {
+                        if (pet.Number <= 0) continue;
+                        if (pet.petData.Id == id)
+                            return true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return false;
         }
 
         protected override void OnUnload()

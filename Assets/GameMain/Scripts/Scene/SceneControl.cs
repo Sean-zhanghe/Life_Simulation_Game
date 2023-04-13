@@ -118,8 +118,8 @@ namespace StarForce
 
         public void CreatePlayer<T>() where T : EntityLogic
         {
-            int characterId = GameEntry.Setting.GetInt(Constant.DataNode.CharacterId);
-            string playerName = GameEntry.Setting.GetString(Constant.DataNode.PlayerName);
+            int characterId = GameEntry.Setting.GetInt(Constant.Setting.CharacterId);
+            string playerName = GameEntry.Setting.GetString(Constant.Setting.PlayerName);
 
             int playerId = GameEntry.Data.GetData<DataCharacter>().GetCharacterData(characterId).PlayerId;
             Player player = GameEntry.Data.GetData<DataPlayer>().CreatePlayer(playerId, playerName);

@@ -2,4 +2,4 @@
 #	Id		Name	IconId	MaxStack	Description	Sell
 #	int		string	int	int	string	int
 #	道具编号	策划备注	名字	图标Id	最大堆叠数	描述	售价
-	1001		戒指	1	1	戒指戒指戒指戒指戒指	10
+	1001		宿舍钥匙	1	1	钥匙钥匙钥匙钥匙钥匙钥匙	10

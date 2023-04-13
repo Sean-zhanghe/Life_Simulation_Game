@@ -247,6 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f68162a1b4698d4da36254ae7dc1c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorHead: {fileID: 3843401382965584628}
+  animatorArm: {fileID: 3843401381647726538}
+  animatorBody: {fileID: 3843401383119205563}
+  animatorLeg: {fileID: 3843401383342936576}
 --- !u!114 &3843401382705141869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +391,7 @@ GameObject:
   - component: {fileID: 3843401383119205561}
   - component: {fileID: 3843401383119205560}
   - component: {fileID: 3843401383119205563}
+  - component: {fileID: 7924224386974948289}
   m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
@@ -477,6 +482,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7924224386974948289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843401383119205510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dd7c2f748c1fc4d9c0947dca8ef0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3843401383119205563}
+  firePoint: {fileID: 3843401381853912172}
 --- !u!1 &3843401383342936591
 GameObject:
   m_ObjectHideFlags: 0

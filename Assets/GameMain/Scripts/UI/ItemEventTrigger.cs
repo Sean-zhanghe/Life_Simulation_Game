@@ -54,7 +54,7 @@ namespace StarForce
                         name.text = clothes.clothesData.Name;
                         description.text = clothes.clothesData.Description;
                         break;
-                    case "Slot_Food":
+                    case "Slot_Ring":
                         break;
                     case "Slot_Weapon":
                         break;
@@ -76,7 +76,34 @@ namespace StarForce
                     name.text = clothes.clothesData.Name;
                     description.text = clothes.clothesData.Description;
                     break;
+                case (int)EnumBag.Property:
+                    Property property = dataBag.listProperty[slot];
+                    if (property.propertyData == null) return;
 
+                    name.text = property.propertyData.Name;
+                    description.text = property.propertyData.Description;
+                    break;
+                case (int)EnumBag.Food:
+                    Food food = dataBag.listFood[slot];
+                    if (food.foodData == null) return;
+
+                    name.text = food.foodData.Name;
+                    description.text = food.foodData.Description;
+                    break;
+                case (int)EnumBag.Equipment:
+                    Equipment equipment = dataBag.listEquipment[slot];
+                    if (equipment.equipmentData == null) return;
+
+                    name.text = equipment.equipmentData.Name;
+                    description.text = equipment.equipmentData.Description;
+                    break;
+                case (int)EnumBag.Pet:
+                    Pet pet = dataBag.listPet[slot];
+                    if (pet.petData == null) return;
+
+                    name.text = pet.petData.Name;
+                    description.text = pet.petData.Description;
+                    break;
                 default:
                     break;
             }
@@ -181,8 +208,9 @@ namespace StarForce
                 ExchangeData(from, to);
                 transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform);
                 transform.localPosition = Vector3.zero;
-                eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).SetParent(originalParent);
-                eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).localPosition = Vector3.zero;
+                Transform item = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(1);
+                item.SetParent(originalParent);
+                item.localPosition = Vector3.zero;
                 transform.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 return;
             }

@@ -16,6 +16,8 @@ namespace StarForce.Data
 
         public string DialogContent { get { return dRDialog.DialogContent; } }
 
+        public string Parameter { get { return dRDialog.Parameter; } }
+
         public int NextDialog { get { return dRDialog.NextDialogId; } }
 
         public DialogData(DRDialog dRDialog)

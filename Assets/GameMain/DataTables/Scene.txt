@@ -1,11 +1,12 @@
-#	³¡¾°ÅäÖÃ±í					
+ï»¿#	åœºæ™¯é…ç½®è¡¨					
 #	Id		AssetName	BackgroundMusicId	Procedure	PlayerPosition
 #	int		string	int	string	string
-#	³¡¾°±àºÅ	±¸×¢	×ÊÔ´Ãû³Æ	±³¾°ÒôÀÖ±àºÅ	Á÷³ÌÃû³Æ	Íæ¼ÒÎ»ÖÃ
-	1	ÈËÎïÑ¡Ôñ	Character	10002	ProcedureCharacter	"0:0,0,0"
-	2	ÓÎÏ·Ö÷³¡¾°	MainGame	10002	ProcedureGame	"0:5,-50,0|3:55.5,17,0|4:-54,-3,0"
-	3	ËŞÉá	Dormitory	10002	ProcedureGame	"0:8,-11,0"
-	4	¹Ø¿¨Ñ¡Ôñ	Level_Menu	10001	ProcedureGame	"0:0,0,0"
-	5	µÚÒ»¹Ø	Level_1	10001	ProcedureGame	"0:-3.49,4.57,0"
-	6	µÚ¶ş¹Ø	Level_2	10001	ProcedureGame	"0:-12.4,-25.4,0"
-	7	µÚÈı¹Ø	Level_3	10001	ProcedureGame	"0:-25.1,-18.8,0"
+#	åœºæ™¯ç¼–å·	å¤‡æ³¨	èµ„æºåç§°	èƒŒæ™¯éŸ³ä¹ç¼–å·	æµç¨‹åç§°	ç©å®¶ä½ç½®
+	1	äººç‰©é€‰æ‹©	Character	10002	ProcedureCharacter	"0:0,0,0"
+	2	æ¸¸æˆä¸»åœºæ™¯	MainGame	10002	ProcedureGame	"0:5,-50,0|3:55.5,17,0|4:-54,-3,0"
+	3	å®¿èˆ	Dormitory	10002	ProcedureGame	"0:8,-11,0"
+	4	å…³å¡é€‰æ‹©	Level_Menu	10001	ProcedureGame	"0:0,0,0"
+	5	ç¬¬ä¸€å…³	Level_1	10001	ProcedureGame	"0:-3.49,4.57,0"
+	6	ç¬¬äºŒå…³	Level_2	10001	ProcedureGame	"0:-12.4,-25.4,0"
+	7	ç¬¬ä¸‰å…³	Level_3	10001	ProcedureGame	"0:-25.1,-18.8,0"
+	8	èƒŒæ™¯ç®€ä»‹	BackGround	10002	ProcedureBackGround	"0:0,0,0"

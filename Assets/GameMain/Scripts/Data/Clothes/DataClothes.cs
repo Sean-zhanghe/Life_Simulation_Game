@@ -41,6 +41,8 @@ namespace StarForce.Data
         private IDataTable<DRClothes> dtClothes;
         private Dictionary<int, ClothesData> dicClothesData;
 
+        public List<int> listClothesStore;
+
         protected override void OnInit()
         {
 
@@ -64,6 +66,10 @@ namespace StarForce.Data
                 ClothesData clothesData = new ClothesData(dRCloth);
                 dicClothesData.Add(clothesData.Id, clothesData);
             }
+
+            listClothesStore = new List<int>() { 
+                1001,
+            };
         }
 
         public ClothesData GetClothesDataById(int clothesId)

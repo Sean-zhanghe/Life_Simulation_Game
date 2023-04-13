@@ -8,8 +8,7 @@ namespace StarForce
     {
         public static class DataNode
         {
-            public const string CharacterId = "DataNode.Character";
-            public const string PlayerName = "DataNode.PlayerName";
+
         }
     }
 }

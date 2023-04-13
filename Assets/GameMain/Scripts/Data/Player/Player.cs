@@ -220,7 +220,7 @@ namespace StarForce.Data
             player.Hygiene = player.MaxHygiene;
             player.Health = player.MaxHealth;
             player.EXP = 0;
-            player.Money = 0;
+            player.Money = 1000;
             return player;
         }
 

@@ -9,7 +9,11 @@ using Random = UnityEngine.Random;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField] private Animator animatorHead;
+    [SerializeField] private Animator animatorArm;
+    [SerializeField] private Animator animatorBody;
+    [SerializeField] private Animator animatorLeg;
+
     private Transform firePoint;
 
     private DataWeapon dataWeapon;
@@ -23,8 +27,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void OnInit(object userData)
     {
-        animator = GetComponent<Animator>();
-        firePoint = transform.GetChild(0).GetComponent<Transform>();
+        firePoint = transform.Find("FirePoint").GetComponent<Transform>();
 
         dataWeapon = GameEntry.Data.GetData<DataWeapon>();
         dataPlayer = GameEntry.Data.GetData<DataPlayer>();
@@ -85,11 +88,11 @@ public class PlayerAttack : MonoBehaviour
         if (weapon == null)
         {
             // TODO 无装备武器空手近战
-            animator.SetTrigger(Constant.Animator.Attack);
+            SetAnimatorTrigger(Constant.Animator.Attack);
             return;
         }
 
-        animator.SetTrigger(weapon.Parameter);
+        SetAnimatorTrigger(weapon.Parameter);
 
         
     }
@@ -120,8 +123,8 @@ public class PlayerAttack : MonoBehaviour
             ProjectileData projectile = dataProjectile.GetProjectileDataById(weapon.ProjectileId);
             if (projectile == null) return;
 
-            float inputX = animator.GetFloat(Constant.Animator.InputX);
-            float inputY = animator.GetFloat(Constant.Animator.InputY);
+            float inputX = animatorBody.GetFloat(Constant.Animator.InputX);
+            float inputY = animatorBody.GetFloat(Constant.Animator.InputY);
             Vector2 direction = (transform.right * inputX + transform.up * inputY).normalized;
             float angel = Random.Range(-2f, 2f);
             direction = Quaternion.AngleAxis(angel, Vector3.forward) * direction;
@@ -158,5 +161,13 @@ public class PlayerAttack : MonoBehaviour
     public void EndAttackEnemy()
     {
 
+    }
+
+    private void SetAnimatorTrigger(string parameters)
+    {
+        animatorHead.SetTrigger(parameters);
+        animatorArm.SetTrigger(parameters);
+        animatorBody.SetTrigger(parameters);
+        animatorLeg.SetTrigger(parameters);
     }
 }

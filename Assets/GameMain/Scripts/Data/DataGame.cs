@@ -36,6 +36,7 @@ namespace StarForce.Data
                 Log.Error("Only can pause when game is in Normal, now is {0}", gameState.ToString());
                 return;
             }
+
             ChangeGameState(EnumGameState.Pause);
         }
 

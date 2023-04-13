@@ -23,7 +23,7 @@ namespace StarForce
             "Scene", "Sound", "SoundGroup", "SoundPlayParam", "Entity", "EntityGroup",
             "UIForm", "PoolParam", "Character", "Player", "PlayerLevel", "Task", "NPC",
             "Dialog", "Work", "Level", "Weapon", "Projectile", "Enemy", "Clothes",
-            "Property", "Food", "Pet", "Equipment",
+            "Property", "Food", "Pet", "Equipment", "Event"
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
@@ -77,7 +77,7 @@ namespace StarForce
             }
 
             SetComponents();
-            procedureOwner.SetData<VarInt32>(Constant.ProcedureData.NextSceneId, GameEntry.Config.GetInt(Constant.Config.Character));
+            procedureOwner.SetData<VarInt32>(Constant.ProcedureData.NextSceneId, GameEntry.Config.GetInt(Constant.Config.BackGround));
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 

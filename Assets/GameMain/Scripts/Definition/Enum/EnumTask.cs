@@ -20,18 +20,33 @@
         Finish = 1,
     }
 
-    // 任务完成条件类型
-    public enum EnumTaskConditionType : byte
+    public enum EnumTaskCondition : byte
     {
-        Nono = 0,
+        None = 0,
 
-        // 对话类型
-        DialogueType = 1,
+        /// <summary>
+        /// 对话类型
+        /// </summary>
+        Dialog = 1,
 
-        // 游戏类型
-        GameType = 2,
+        /// <summary>
+        /// 工作类型
+        /// </summary>
+        Work = 2,
 
-        // 工作类型
-        WorkType = 3,
+        /// <summary>
+        /// 收集类型
+        /// </summary>
+        Collection = 3,
+
+        /// <summary>
+        /// 打开UI
+        /// </summary>
+        UI = 4,
+
+        /// <summary>
+        /// 场景跳转
+        /// </summary>
+        Scene = 5,
     }
 }

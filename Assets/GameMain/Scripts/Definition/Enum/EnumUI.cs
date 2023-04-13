@@ -55,6 +55,16 @@ namespace StarForce
         UIBagForm = 1007,
 
         /// <summary>
+        /// 服装界面
+        /// </summary>
+        UIClothesStoreForm = 1008,
+
+        /// <summary>
+        /// 背景介绍
+        /// </summary>
+        UIBackGroundForm = 1009,
+
+        /// <summary>
         /// 弹出框。
         /// </summary>
         UITipsForm = 2001,
@@ -63,6 +73,11 @@ namespace StarForce
         /// 关卡结束
         /// </summary>
         UILevelOverForm = 2002,
+
+        /// <summary>
+        /// 提示界面
+        /// </summary>
+        UIPopupForm = 2003,
 
         /// <summary>
         /// 设置

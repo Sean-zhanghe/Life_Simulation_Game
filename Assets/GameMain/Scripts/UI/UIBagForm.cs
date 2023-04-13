@@ -24,6 +24,8 @@ namespace StarForce
         [SerializeField] private Text healthProgress;
 
         [SerializeField] private Transform btnBagPanel;
+        [SerializeField] private Transform btnUse;
+        [SerializeField] private Image player;
 
         [SerializeField] private PropertySpriteList_SO propertySpriteList_SO;
         [SerializeField] private ClothesSpriteList_SO clothesSpriteList_SO;
@@ -36,6 +38,7 @@ namespace StarForce
         public Transform Tips;
 
         public int curBagIndex { get; private set; }
+        public int curSlotIndex { get; private set; }
 
         private DataPlayer dataPlayer;
         private DataBag dataBag;
@@ -61,11 +64,15 @@ namespace StarForce
             base.OnOpen(userData);
 
             GameEntry.Event.Subscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
+            GameEntry.Event.Subscribe(ChangeClothesEventArgs.EventId, OnRefreshClothes);
 
             RefreshPriority();
+            RefreshPlayerClothes();
 
             curBagIndex = 0;
             OnBtnBagClick(curBagIndex);
+
+            curSlotIndex = -1;
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -77,6 +84,7 @@ namespace StarForce
             base.OnClose(isShutdown, userData);
 
             GameEntry.Event.Unsubscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
+            GameEntry.Event.Unsubscribe(ChangeClothesEventArgs.EventId, OnRefreshClothes);
 
             OnBtnBagClick(0);
 
@@ -148,6 +156,7 @@ namespace StarForce
 
         private void RefreshBag()
         {
+            curSlotIndex = -1;
             int count = 0;
             switch (curBagIndex)
             {
@@ -233,8 +242,9 @@ namespace StarForce
 
         private void RefreshSlot(EnumBag bag, Transform slot, int number, int spriteId)
         {
-            Image item = slot.GetChild(0).GetComponent<Image>();
+            Image item = slot.Find("Item").GetComponent<Image>();
             Text num = item.transform.GetChild(0).GetComponent<Text>();
+            Transform selectBox = slot.Find("SelectBox");
 
             if (number > 0)
             {
@@ -280,6 +290,19 @@ namespace StarForce
             {
                 item.gameObject.SetActive(false);
             }
+
+            selectBox?.gameObject.SetActive(false);
+        }
+
+        private void RefreshPlayerClothes()
+        {
+            int id = 0;
+            if (dataBag.clothes.Number > 0)
+            {
+                id = dataBag.clothes.clothesData.IconId;
+            }
+            ClothesDetail detail = clothesSpriteList_SO.GetClothesDetail(id);
+            player.sprite = detail.PlayerImage;
         }
 
         private void OnBtnBagClick(int index)
@@ -291,7 +314,32 @@ namespace StarForce
             bagBtn = btnBagPanel.GetChild(curBagIndex);
             bagBtn.GetComponent<Image>().color = Color.red;
 
+            curSlotIndex = -1;
             RefreshBag();
+
+            btnUse.gameObject.SetActive(false);
+            if (curBagIndex == (int)EnumBag.Food)
+            {
+                btnUse.gameObject.SetActive(true);
+            }
+        }
+
+        public void OnSlotClick(GameObject obj)
+        {
+            int index = int.Parse(obj.name.Split('_')[1]);
+            if (0 <= curSlotIndex && curSlotIndex < bag.childCount)
+            {
+                Transform slot = bag.GetChild(curSlotIndex);
+                slot?.Find("SelectBox")?.gameObject.SetActive(false);
+            }
+
+            curSlotIndex = index;
+            obj.transform.Find("SelectBox")?.gameObject.SetActive(true);
+        }
+
+        public void OnBtnUseClick()
+        {
+
         }
 
         private void OnRefreshPriority(object sender, GameEventArgs e)
@@ -303,6 +351,17 @@ namespace StarForce
             }
 
             RefreshPriorityByType(ne.PriorityType);
+        }
+
+        private void OnRefreshClothes(object sender, GameEventArgs e)
+        {
+            ChangeClothesEventArgs ne = (ChangeClothesEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+
+            RefreshPlayerClothes();
         }
     }
 }

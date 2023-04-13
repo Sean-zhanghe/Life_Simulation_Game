@@ -38,5 +38,17 @@
     <String Key="Level.QuitLevelMessage" Value="确定退出当前关卡？" />
     <String Key="Level.Complete" Value="{0}完成" />
     <String Key="Level.Failed" Value="{0}失败" />
+    <String Key="Store.Title" Value="商店" />
+    <String Key="Store.SelectMessage" Value="请选择商品" />
+    <String Key="Store.BalanceMessage" Value="余额不足" />
+    <String Key="Bag.Title" Value="背包" />
+    <String Key="Bag.NoEmptySlotMessage" Value="背包暂无空格" />
+    <String Key="Bag.NoItem" Value="背包内没有{0}" />
+    <String Key="Popup.Power" Value="体力{0}" />
+    <String Key="Popup.Energy" Value="精力{0}" />
+    <String Key="Popup.Hygiene" Value="卫生{0}" />
+    <String Key="Popup.Health" Value="健康{0}" />
+    <String Key="Popup.Money" Value="金钱{0}" />
+    <String Key="Popup.GetItem" Value="获取物品{0}" />
   </Dictionary>
 </Dictionaries>

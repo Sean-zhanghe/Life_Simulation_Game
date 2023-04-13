@@ -21,6 +21,7 @@ namespace StarForce.Data
         public void SetClothes(ClothesData data)
         {
             clothesData = data;
+            Number = 1;
 
             if (clothesData == null)
             {

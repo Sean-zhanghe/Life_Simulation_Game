@@ -16,11 +16,19 @@ namespace StarForce.Data
 
         public string Description { get { return taskData.Description; } }
 
+        public int SubTaskType { get { return taskData.SubTaskType; } }
+
+        public string Parameter { get { return taskData.Parameter; } }
+
         public string TaskCondition { get { return taskData.TaskCondition; } }
+
+        public bool IsForce { get { return taskData.IsForce; } }
 
         public string Reward { get { return taskData.Reward; } }
 
         public int NextTaskId { get { return taskData.NextTaskId; } }
+
+        public string EventId { get { return taskData.EventId; } }
 
         public EnumTaskState state { get; private set; }
 

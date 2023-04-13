@@ -17,6 +17,10 @@
         Level_1 = 5,
 
         Level_2 = 6,
+
+        Level_3 = 7,
+
+        BackGround = 8,
     }
 
 }

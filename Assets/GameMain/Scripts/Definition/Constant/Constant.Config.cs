@@ -8,6 +8,7 @@ namespace StarForce
     {
         public static class Config
         {
+            public const string BackGround = "Scene.BackGround";
             public const string Character = "Scene.Character";
             public const string MainGame = "Scene.MainGame";
             public const string Dormitory = "Scene.Dormitory";

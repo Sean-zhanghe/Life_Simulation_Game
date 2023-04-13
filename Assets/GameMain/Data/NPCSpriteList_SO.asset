@@ -19,3 +19,7 @@ MonoBehaviour:
     NPCIcon: {fileID: 21300000, guid: aa3e0837878604144b973aa396ea7dbd, type: 3}
   - NPCId: 3
     NPCIcon: {fileID: 21300000, guid: aa3e0837878604144b973aa396ea7dbd, type: 3}
+  - NPCId: 4
+    NPCIcon: {fileID: 21300000, guid: aa3e0837878604144b973aa396ea7dbd, type: 3}
+  - NPCId: 5
+    NPCIcon: {fileID: 21300000, guid: aa3e0837878604144b973aa396ea7dbd, type: 3}

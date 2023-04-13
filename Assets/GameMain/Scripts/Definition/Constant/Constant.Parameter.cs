@@ -11,6 +11,9 @@ namespace StarForce
             public const string Type = "uType";
             public const string Dialog = "uDialog";
             public const string Work = "uWork";
+            public const string Scene = "uScene";
+            public const string NPC = "uNPC";
+
             public const string Power = "uPower";
             public const string Energy = "uEnergy";
             public const string Hygiene = "uHygiene";
@@ -19,6 +22,14 @@ namespace StarForce
             public const string EXP = "uEXP";
             public const string Money = "uMoney";
             public const string Level = "uLevel";
+
+            public const string Property = "uProperty";
+            public const string Clothes = "uClothes";
+            public const string Food = "uFood";
+            public const string Equipment = "uEquipment";
+            public const string Pet = "uPet";
+
+            public const string Setting = "uSetting";
         }
     }
 }

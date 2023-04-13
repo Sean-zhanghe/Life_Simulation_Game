@@ -1,8 +1,10 @@
-﻿#	任务配置表						
-#	Id		TaskType	Description	TaskCondition	Reward	NextTaskId
-#	int		int	string	string	string	int
-#	任务ID		任务类型(1:主线，2:随机)	任务描述	任务完成条件(type=完成任务条件类型&任务目标=(数量或Id)&...)	奖励	下一任务ID
-	10001		1	入学报道	uType=1&uDialog=10004		10002
-	10002		1	找到宿舍	uType=1&uDialog=10004		10003
-	10003		1	整理床铺	uType=2&uWork=1001		10004
-	10004		1	学校发布招聘任务信息招募设备内测人员	uType=1&uDialog=10004		0
+﻿#	任务配置表										
+#	Id		TaskType	Description	SubTaskType	Parameter	TaskCondition	IsForce	Reward	NextTaskId	EventId
+#	int		int	string	int	string	string	bool	string	int	string
+#	任务ID		任务类型(1:主线，2:随机)	任务描述	任务类型	任务参数	任务完成条件(type=完成任务条件类型&任务目标=(数量或Id)&...)	是否强制执行	奖励	下一任务ID	触发事件Id
+	10001		1	入学报道	1	uDialog=20001	uDialog=20009	TRUE	uMoney=50	10002	
+	10002		1	寻找宿舍	5		uScene=Dormitory	TRUE	uMoney=50	0	
+	10003		1	整理床铺	2		uWork=1001	FALSE	uMoney=50	0	10003
+	10004		1	赚10万给爷爷治病	3		uMoney=100000	FALSE		0	
+	20001		2	在招聘平台上找一份工作	4		uUIForm=1010	FALSE	uMoney=50	0	
+	20002		2	前往生物科技公司工作	1	uDialog=60001	uDialog=60011	FALSE	uMoney=50	0	

@@ -34,6 +34,9 @@ namespace StarForce
                     var work = clickObject.GetComponent<Work>();
                     work?.StarWork();
                     break;
+                case Constant.Tag.Clothes:
+                    GameEntry.UI.OpenUIForm(UIFormId.UIClothesStoreForm);
+                    break;
                 default:
                     break;
             }

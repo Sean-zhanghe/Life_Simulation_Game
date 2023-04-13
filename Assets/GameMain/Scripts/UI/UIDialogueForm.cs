@@ -1,4 +1,5 @@
-﻿using StarForce.Data;
+﻿using DG.Tweening;
+using StarForce.Data;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace StarForce
         [SerializeField] private Text NPCName;
         [SerializeField] private Image icon;
         [SerializeField] private Transform content;
+        [SerializeField] private Scrollbar vertical;
         [SerializeField] private Text buttonText;
         [SerializeField] private GameObject dialogItemTemplate;
         [SerializeField] private NPCSpriteList_SO npcSpriteList_SO;
@@ -93,9 +95,17 @@ namespace StarForce
 
         private void CreateDialogItem(string dialogContent)
         {
-            GameObject dialogItem = Instantiate(dialogItemTemplate);
+            GameObject dialogItem = Instantiate(dialogItemTemplate, content);
             dialogItem.GetComponent<Text>().text = dialogContent;
-            dialogItem.transform.SetParent(content);
+            //dialogItem.transform.SetParent(content);
+
+            //vertical.value = 0;
+            float timer = 0;
+            DOTween.To(() => timer, x => timer = x, 1, 0.1f)
+                      .OnStepComplete(() =>
+                      {
+                          vertical.value = 0;
+                      });
         }
 
         private void ClearContent()
@@ -122,10 +132,32 @@ namespace StarForce
                 buttonText.text = GameEntry.Localization.GetString(Constant.Localization.UIDialogFinish);
             }
 
-            CreateDialogItem(dialog.DialogContent);
+            string content = dialog.DialogContent;
+            if (dialog.Parameter != "")
+            {
+                string[] parameters = dialog.Parameter.Split('&');
+                for (int i = 0; i < parameters.Length; i++)
+                {
+                    string parameter = "";
+                    string type = parameters[i].Split('=')[0];
+                    string value = parameters[i].Split('=')[1];
+                    switch (type)
+                    {
+                        case Constant.Parameter.Setting:
+                            parameter = GameEntry.Setting.GetString(value);
+                            content = string.Format(content, parameter);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            CreateDialogItem(content);
 
             oldDialog = currentDialog;
             currentDialog = dialog.NextDialog;
         }
+
     }
 }
