@@ -23,7 +23,7 @@ namespace StarForce
             "Scene", "Sound", "SoundGroup", "SoundPlayParam", "Entity", "EntityGroup",
             "UIForm", "PoolParam", "Character", "Player", "PlayerLevel", "Task", "NPC",
             "Dialog", "Work", "Level", "Weapon", "Projectile", "Enemy", "Clothes",
-            "Property", "Food", "Pet", "Equipment", "Event"
+            "Property", "Food", "Pet", "Equipment", "Event", "Recruit"
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

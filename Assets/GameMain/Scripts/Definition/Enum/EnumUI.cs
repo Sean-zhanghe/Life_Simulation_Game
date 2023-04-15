@@ -65,6 +65,11 @@ namespace StarForce
         UIBackGroundForm = 1009,
 
         /// <summary>
+        /// 手机界面
+        /// </summary>
+        UIPhoneForm = 1010,
+
+        /// <summary>
         /// 弹出框。
         /// </summary>
         UITipsForm = 2001,

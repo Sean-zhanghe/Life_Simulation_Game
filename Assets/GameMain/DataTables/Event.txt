@@ -5,3 +5,4 @@
 	10001	宿管阿姨对话	1	uDialog=30001	uDialog=30006	uProperty=1001	TRUE	
 	10002	室友对话	1	uDialog=40001	uDialog=40006		TRUE	10003
 	10003	母亲电话	2	uDialog=50001&uNPC=1005	uDialog=50016		TRUE	10004|20001
+	10004	招聘对话	1	uDialog=60001	uDialog=60011	uMoney=50	FALSE	

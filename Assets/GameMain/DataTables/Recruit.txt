@@ -1,0 +1,5 @@
+﻿#	招聘配置表							
+#	Id		Name	Pay	PayMode	Description	Address	Condition
+#	int		string	int	string	string	string	string
+#	招聘工作Id	策划备注	工作名称	薪资	支付方式	工作描述	公司地址	招聘条件(l:小于 el:小于等于 e:等于 eg:大于等于 g:大于)
+	101		游戏内测人员	300	关	无需工作经验，参与游戏设备内测需要身体健康，体力值，精力值，健康值不得低于90	生物科技公司	uPower=90=eg&uHealth=90=eg&uEnergy=90=eg

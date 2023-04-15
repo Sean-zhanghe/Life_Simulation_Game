@@ -188,13 +188,7 @@ namespace StarForce
 
         public void OnBtnPhoneClick()
         {
-            GameEntry.UI.OpenTips(new DialogParams()
-            {
-                Mode = 1,
-                Title = GameEntry.Localization.GetString(Constant.Localization.TipsFunctionTitle),
-                Message = GameEntry.Localization.GetString(Constant.Localization.TipsFunctionForbidden),
-                UserData = null
-            });
+            GameEntry.UI.OpenUIForm(UIFormId.UIPhoneForm);
         }
 
         public void OnBtnMapClick()

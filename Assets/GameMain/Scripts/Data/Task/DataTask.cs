@@ -6,7 +6,7 @@ using StarForce.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
+using UnityGameFramework.Runtime;
 
 namespace StarForce.Data
 {
@@ -60,6 +60,7 @@ namespace StarForce.Data
             }
 
             Subscribe(EventFinishEventArgs.EventId, OnEventRelease);
+            Subscribe(ChangeRecruitStateEventArgs.EventId, OnRecruitStateChange);
         }
 
         public TaskData GetTaskData(int id)
@@ -177,7 +178,7 @@ namespace StarForce.Data
 
             if (taskType == EnumTaskType.RandomTask)
             {
-                if (CurrentRandomTask != null) return;
+                if (CurrentRandomTask == null) return;
 
                 CurrentRandomTask.ChangeTaskState(taskState);
                 if (dicRandomTask.ContainsKey(CurrentRandomTask.Id))
@@ -222,7 +223,6 @@ namespace StarForce.Data
                 for (int j = 0; j < taskIds.Length; j++)
                 {
                     int taskId = int.Parse(taskIds[j]);
-
                     TaskData taskData = GetTaskData(taskId);
                     if (taskData.TaskType == (int)EnumTaskType.MainTask)
                     {
@@ -251,9 +251,18 @@ namespace StarForce.Data
             }
         }
 
+        protected void OnRecruitStateChange(object sender, GameEventArgs e)
+        {
+            ChangeRecruitStateEventArgs ne = (ChangeRecruitStateEventArgs)e;
+            if (ne == null) return;
+
+            Recruit recruit = ne.recruit;
+        }
+
         protected override void OnUnload()
         {
             UnSubscribe(EventFinishEventArgs.EventId, OnEventRelease);
+            UnSubscribe(ChangeRecruitStateEventArgs.EventId, OnRecruitStateChange);
         }
 
         protected override void OnShutdown()

@@ -43,6 +43,10 @@ namespace StarForce
             public const string PopupMoney = "Popup.Money";
             public const string PopupGetItem = "Popup.GetItem";
 
+            public const string RecruitTitle = "Recruit.Title";
+            public const string RecruitApplyFail = "Recruit.ApplyFail";
+            public const string RecruitTeleportFail = "Recruit.TeleportFail";
+
         }
     }
 }

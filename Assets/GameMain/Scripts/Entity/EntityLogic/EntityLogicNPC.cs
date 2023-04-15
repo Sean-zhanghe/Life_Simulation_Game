@@ -15,6 +15,7 @@ namespace StarForce
         protected EntityDataNPC entityDataNPC;
         private DataTask dataTask;
         private DataEvent dataEvent;
+        private DataRecruit dataRecruit;
         private NPCData data;
 
         private bool isEnter = false;
@@ -43,6 +44,7 @@ namespace StarForce
             data = entityDataNPC.data;
             dataTask = GameEntry.Data.GetData<DataTask>();
             dataEvent = GameEntry.Data.GetData<DataEvent>();
+            dataRecruit = GameEntry.Data.GetData<DataRecruit>();
         }
 
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
@@ -74,10 +76,8 @@ namespace StarForce
                 Task task = null;
                 Data.Event m_Event = null;
                 GetTaskAndDialogId(out task, out m_Event, out dialogId);
-
                 // 无对话
                 if (dialogId == 0) return;
-
                 // 有任务 有对话
                 if (task != null && dialogId != 0)
                 {
@@ -160,6 +160,7 @@ namespace StarForce
                 if (type == (int)EnumTriggerType.Task)
                 {
                     Task curTask = dataTask.GetTask(id);
+
                     if (curTask.state == EnumTaskState.UnFinish)
                     {
                         task = curTask;
@@ -186,6 +187,19 @@ namespace StarForce
                         string value = dataEvent.GetEventConditionValue(m_Event.Parameter, Constant.Parameter.Dialog);
                         if (value != string.Empty)
                             dialog = int.Parse(value);
+                        return;
+                    }
+                }
+
+                if (type == (int)EnumTriggerType.Recruit)
+                {
+                    Recruit recuruit = dataRecruit.GetRecruit(id);
+
+                    if (recuruit.state == EnumWorkState.Working)
+                    {
+                        task = null;
+                        m_Event = null;
+                        dialog = int.Parse(configs[2]);
                         return;
                     }
                 }

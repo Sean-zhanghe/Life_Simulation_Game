@@ -13,6 +13,7 @@ namespace StarForce
             public const string Work = "uWork";
             public const string Scene = "uScene";
             public const string NPC = "uNPC";
+            public const string UI = "uUIForm";
 
             public const string Power = "uPower";
             public const string Energy = "uEnergy";

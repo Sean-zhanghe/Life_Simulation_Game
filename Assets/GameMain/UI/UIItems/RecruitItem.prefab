@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6E38\u620F\u5185\u6D4B\u4EBA\u5458"
+  m_Text: "\u6E38\u620F\u5185\u6D4B"
 --- !u!114 &5934043073090901155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 5424226332416938113}
   - component: {fileID: 8405423352941801770}
   - component: {fileID: 913852717861907768}
-  - component: {fileID: 4993650878689537446}
+  - component: {fileID: 5398348070822986654}
   m_Layer: 5
   m_Name: BtnApply
   m_TagString: Untagged
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4993650878689537446
+--- !u!114 &5398348070822986654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,16 +272,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 3072130868986470830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5079836f95c2a44b96fa331487ebb70, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OnHover:
-    m_PersistentCalls:
-      m_Calls: []
+  m_Navigation:
+    m_Mode: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 913852717861907768}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  interactable: 1
 --- !u!1 &3541659546214668219
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +554,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7533\u8BF7"
+  m_Text: "\u5DF2\u7533\u8BF7"
 --- !u!1 &5277546616528284858
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +645,7 @@ GameObject:
   - component: {fileID: 855462202314537158}
   - component: {fileID: 1644953812556096742}
   m_Layer: 5
-  m_Name: WorkItem
+  m_Name: RecruitItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
