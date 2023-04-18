@@ -8,11 +8,12 @@ namespace StarForce
 {
     public class UILevelMenuForm : UGuiForm
     {
-        [SerializeField]
-        private GameObject levelTemplate;
+        [SerializeField] private GameObject levelTemplate;
 
-        [SerializeField]
-        private Transform content;
+        [SerializeField] private Transform content;
+
+        [SerializeField] private Sprite normalBox;
+        [SerializeField] private Sprite lockBox;
 
         private DataLevel dataLevel;
 
@@ -58,14 +59,20 @@ namespace StarForce
                 levelGO.transform.SetParent(content.transform);
                 levelGO.name = "Level_" + levelData.Id;
 
+                Sprite box = levelData.Id <= dataLevel.MaxLevelId ? normalBox : lockBox;
+                levelGO.GetComponent<Image>().sprite = box;
+
                 levelGO.transform.GetChild(0).gameObject.SetActive(levelData.Id <= dataLevel.MaxLevelId);
                 Text Id = levelGO.transform.GetChild(0).GetComponent<Text>();
                 Id.text = levelData.Id.ToString();
 
                 levelGO.transform.GetChild(1).gameObject.SetActive(levelData.Id > dataLevel.MaxLevelId);
                 
+                levelGO.transform.GetChild(2).gameObject.SetActive(levelData.Id <= dataLevel.MaxLevelId);
                 Text name = levelGO.transform.GetChild(2).GetComponent<Text>();
                 name.text = levelData.Name;
+
+                levelGO.transform.GetChild(3).gameObject.SetActive(levelData.Id > dataLevel.MaxLevelId);
 
                 Button btnLevel = levelGO.GetComponent<Button>();
                 btnLevel.onClick.AddListener(() => {
@@ -83,8 +90,11 @@ namespace StarForce
             foreach (int key in dicLevelItems.Keys)
             {
                 GameObject levelGO = dicLevelItems[key];
+                Sprite box = key <= dataLevel.MaxLevelId ? normalBox : lockBox;
+                levelGO.GetComponent<Image>().sprite = box;
                 levelGO.transform.GetChild(0).gameObject.SetActive(key <= dataLevel.MaxLevelId);
                 levelGO.transform.GetChild(1).gameObject.SetActive(key > dataLevel.MaxLevelId);
+                levelGO.transform.GetChild(3).gameObject.SetActive(key > dataLevel.MaxLevelId);
             }
         }
 

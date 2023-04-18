@@ -101,5 +101,10 @@ namespace StarForce
                 UserData = null
             });
         }
+
+        public void OnBtnMapClick()
+        {
+            GameEntry.UI.OpenUIForm(UIFormId.UIMapForm);
+        }
     }
 }

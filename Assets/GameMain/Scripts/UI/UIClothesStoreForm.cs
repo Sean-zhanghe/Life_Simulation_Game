@@ -90,8 +90,8 @@ namespace StarForce
                 Transform slot = store.GetChild(i);
                 Transform selectBox = slot.GetChild(0);
                 Image item = slot.GetChild(1).GetComponent<Image>();
-                Text price = item.transform.GetChild(0).GetComponent<Text>();
                 Text name = slot.GetChild(2).GetComponent<Text>();
+                Text price = slot.GetChild(3).GetComponent<Text>();
 
                 selectBox.gameObject.SetActive(false);
                 ClothesDetail detail = clothesSpriteList_SO.GetClothesDetail(data.IconId);

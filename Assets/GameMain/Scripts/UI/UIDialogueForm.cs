@@ -13,7 +13,9 @@ namespace StarForce
         [SerializeField] private Image icon;
         [SerializeField] private Transform content;
         [SerializeField] private Scrollbar vertical;
-        [SerializeField] private Text buttonText;
+        [SerializeField] private Sprite next;
+        [SerializeField] private Sprite complete;
+        [SerializeField] private Image button;
         [SerializeField] private GameObject dialogItemTemplate;
         [SerializeField] private NPCSpriteList_SO npcSpriteList_SO;
 
@@ -60,13 +62,12 @@ namespace StarForce
             currentDialog = dialog.NextDialog;
             if (currentDialog != 0)
             {
-                buttonText.text = GameEntry.Localization.GetString(Constant.Localization.UIDialogNext);
+                button.sprite = next;
             }
             else
             {
-                buttonText.text = GameEntry.Localization.GetString(Constant.Localization.UIDialogFinish);
+                button.sprite = complete;
             }
-
 
             // 游戏转为暂停状态
             dataGame.GamePause();
@@ -129,7 +130,8 @@ namespace StarForce
             DialogData dialog = dataDialog.GetDialogDataById(currentDialog);
             if (dialog.NextDialog == 0)
             {
-                buttonText.text = GameEntry.Localization.GetString(Constant.Localization.UIDialogFinish);
+                //buttonText.text = GameEntry.Localization.GetString(Constant.Localization.UIDialogFinish);
+                button.sprite = complete;
             }
 
             string content = dialog.DialogContent;

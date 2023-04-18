@@ -42,6 +42,7 @@ namespace StarForce
 
         private DataPlayer dataPlayer;
         private DataBag dataBag;
+        private DataGame dataGame;
 
 #if UNITY_2017_3_OR_NEWER
         protected override void OnInit(object userData)
@@ -53,6 +54,7 @@ namespace StarForce
 
             dataPlayer = GameEntry.Data.GetData<DataPlayer>();
             dataBag = GameEntry.Data.GetData<DataBag>();
+            dataGame = GameEntry.Data.GetData<DataGame>();
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -73,6 +75,8 @@ namespace StarForce
             OnBtnBagClick(curBagIndex);
 
             curSlotIndex = -1;
+
+            dataGame.GamePause();
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -97,6 +101,8 @@ namespace StarForce
             {
                 DOTween.Kill("tips_hide", true);
             }
+
+            dataGame.GameResume();
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -308,11 +314,11 @@ namespace StarForce
         private void OnBtnBagClick(int index)
         {
             Transform bagBtn = btnBagPanel.GetChild(curBagIndex);
-            bagBtn.GetComponent<Image>().color = Color.white;
+            bagBtn.GetChild(0).gameObject.SetActive(false);
 
             curBagIndex = index;
             bagBtn = btnBagPanel.GetChild(curBagIndex);
-            bagBtn.GetComponent<Image>().color = Color.red;
+            bagBtn.GetChild(0).gameObject.SetActive(true);
 
             curSlotIndex = -1;
             RefreshBag();

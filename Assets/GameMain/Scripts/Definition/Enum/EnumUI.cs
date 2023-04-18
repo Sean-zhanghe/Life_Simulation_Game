@@ -70,6 +70,11 @@ namespace StarForce
         UIPhoneForm = 1010,
 
         /// <summary>
+        /// 地图界面
+        /// </summary>
+        UIMapForm = 1011,
+
+        /// <summary>
         /// 弹出框。
         /// </summary>
         UITipsForm = 2001,

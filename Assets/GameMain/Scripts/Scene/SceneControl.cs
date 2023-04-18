@@ -64,6 +64,8 @@ namespace StarForce
             lastScene = "Character";
             currentScene = "MainGame";
 
+            dataScene.scene = currentScene;
+
             CreaterNPC();
             CreaterEnemy();
         }
@@ -273,7 +275,8 @@ namespace StarForce
 
             lastScene = currentScene;
             currentScene = ne.SceneAssetName.Substring(Constant.Path.Scenes.Length, ne.SceneAssetName.Length - Constant.Path.Scenes.Length - ".unity".Length);
-
+            dataScene.scene = currentScene;
+            
             if (m_BackgroundMusicId > 0)
             {
                 GameEntry.Sound.PlayMusic(m_BackgroundMusicId);

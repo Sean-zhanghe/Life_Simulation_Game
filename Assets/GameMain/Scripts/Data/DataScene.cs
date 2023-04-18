@@ -31,6 +31,7 @@ namespace StarForce.Data
     {
         private IDataTable<DRScene> dtScene;
         private Dictionary<int, SceneData> dicSceneData;
+        public string scene;
 
         protected override void OnInit()
         {

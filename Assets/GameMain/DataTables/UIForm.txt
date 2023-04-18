@@ -13,6 +13,7 @@
 	1008	服装界面	UIClothesStoreForm	Default	FALSE	TRUE
 	1009	背景介绍	UIBackGroundForm	Default	FALSE	TRUE
 	1010	手机界面	UIPhoneForm	Default	FALSE	FALSE
+	1011	地图界面	UIMapForm	Default	FALSE	FALSE
 	2001	提示框	UITipsForm	PopUp	TRUE	FALSE
 	2002	关卡结束	UILevelOverForm	PopUp	FALSE	FALSE
 	2003	提示界面	UIPopUpForm	PopUp	FALSE	FALSE

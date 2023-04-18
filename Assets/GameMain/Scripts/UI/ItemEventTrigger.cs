@@ -37,8 +37,10 @@ namespace StarForce
                 DOTween.Kill("tips_hide", false);
             }
 
+            Vector3 offset = new Vector3(70, 0, 0);
+
             Tips.GetComponent<CanvasGroup>().DOFade(1, 0.2f).SetId("tips_show");
-            Tips.position = eventData.position;
+            Tips.position = transform.position + offset;
 
             Text name = Tips.GetChild(0).GetComponent<Text>();
             Text description = Tips.GetChild(1).GetComponent<Text>();

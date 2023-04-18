@@ -125,7 +125,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
+        width: 23
         height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -144,7 +144,7 @@ TextureImporter:
       name: Skeleton Idle_1
       rect:
         serializedVersion: 2
-        x: 24
+        x: 23
         y: 0
         width: 24
         height: 32
