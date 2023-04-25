@@ -94,6 +94,7 @@ namespace StarForce
                 levelGO.GetComponent<Image>().sprite = box;
                 levelGO.transform.GetChild(0).gameObject.SetActive(key <= dataLevel.MaxLevelId);
                 levelGO.transform.GetChild(1).gameObject.SetActive(key > dataLevel.MaxLevelId);
+                levelGO.transform.GetChild(2).gameObject.SetActive(key <= dataLevel.MaxLevelId);
                 levelGO.transform.GetChild(3).gameObject.SetActive(key > dataLevel.MaxLevelId);
             }
         }

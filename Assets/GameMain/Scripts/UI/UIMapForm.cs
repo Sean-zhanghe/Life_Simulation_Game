@@ -33,7 +33,8 @@ namespace StarForce
                 { EnumScene.Dormitory.ToString(), mapsRender[1] },
                 { EnumScene.Level_1.ToString(), mapsRender[2] },
                 { EnumScene.Level_2.ToString(), mapsRender[3] },
-                { EnumScene.Level_3.ToString(), mapsRender[4] }
+                { EnumScene.Level_3.ToString(), mapsRender[4] },
+                { EnumScene.Restaurant.ToString(), mapsRender[5] }
             };
         }
 

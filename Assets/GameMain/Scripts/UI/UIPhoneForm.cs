@@ -15,6 +15,7 @@ namespace StarForce
         [SerializeField] private GameObject recruitTemplete;
 
         private DataRecruit dataRecruit;
+        private DataPlayer dataPlayer;
 
         private Dictionary<int, GameObject> dicRecruitContent;
 
@@ -27,6 +28,7 @@ namespace StarForce
             base.OnInit(userData);
 
             InitRecruitList();
+            dataPlayer = GameEntry.Data.GetData<DataPlayer>();
         }
 
         private void InitRecruitList()
@@ -55,7 +57,7 @@ namespace StarForce
 
                 Button btnApply = item.transform.GetChild(4).GetComponent<Button>();
                 btnApply.onClick.AddListener(() => {
-                    this.OnRecruitApplyClick(item);
+                    this.OnRecruitBtnClick(item);
                 });
 
                 dicRecruitContent.Add(recruit.Id, item);
@@ -78,8 +80,14 @@ namespace StarForce
                 case EnumWorkState.Apply:
                     applyText.text = "申请";
                     break;
-                case EnumWorkState.Working:
+                case EnumWorkState.Applied:
                     applyText.text = "已申请";
+                    break;
+                case EnumWorkState.Working:
+                    applyText.text = "工作中";
+                    break;
+                case EnumWorkState.Finish:
+                    applyText.text = "领取";
                     break;
             }
         }
@@ -152,9 +160,19 @@ namespace StarForce
             AppOnOff(app, false);
         }
 
-        public void OnRecruitApplyClick(GameObject sender)
+        public void OnRecruitBtnClick(GameObject sender)
         {
             int recruitId = int.Parse(sender.name.Split('_')[1]);
+            Recruit recruit = dataRecruit.GetRecruit(recruitId);
+            if (recruit.state == EnumWorkState.Finish)
+            {
+                // 发放奖励
+                dataPlayer.AddRewardByConfiger(recruit.Reward);
+                dataRecruit.ChangeRecruitState(recruitId, EnumWorkState.Apply);
+                RefreshRecruit(recruitId);
+                return;
+            }
+
             bool isPass = dataRecruit.CheckRecruitCondition(recruitId);
             if (!isPass)
             {
@@ -167,7 +185,13 @@ namespace StarForce
                 });
                 return;
             }
-            dataRecruit.ChangeRecruitState(recruitId, EnumWorkState.Working);
+
+            if (recruit.state == EnumWorkState.Working || recruit.state == EnumWorkState.Applied)
+            {
+                return;
+            }
+            EnumWorkState state = recruit.Apply == string.Empty ? EnumWorkState.Working : EnumWorkState.Applied;
+            dataRecruit.ChangeRecruitState(recruitId, state);
             RefreshRecruit(recruitId);
         }
     }

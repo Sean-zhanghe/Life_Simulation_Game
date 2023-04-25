@@ -3,7 +3,8 @@
 #	int		string	int	int
 #	声音编号	策划备注	资源名称	声音组名称	声音播放参数
 	10001	游戏背景音乐	BGMGame.mp3	1001	1001
-	10002	主菜单背景音乐	BGMMenu.mp3	1001	1001
+	10002	游戏菜单背景音乐	BGMMenu.mp3	1001	1001
+	10003	主场景背景音乐	BGMMain.ogg	1001	1001
 	20001	玩家子弹	SFXBullet.wav	1003	1003
 	20002	玩家投掷	SFXThrow.wav	1003	1003
 	30001	按钮点击	UIClick.wav	1002	1002

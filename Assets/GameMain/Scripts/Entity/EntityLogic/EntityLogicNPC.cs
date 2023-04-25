@@ -21,6 +21,8 @@ namespace StarForce
         private bool isEnter = false;
         protected bool pause = false;
 
+        private Task task = null;
+        private Data.Event m_Event = null;
         private int dialogId = 0;
 
         protected override void OnInit(object userData)
@@ -45,7 +47,11 @@ namespace StarForce
             dataTask = GameEntry.Data.GetData<DataTask>();
             dataEvent = GameEntry.Data.GetData<DataEvent>();
             dataRecruit = GameEntry.Data.GetData<DataRecruit>();
-        }
+
+            task = null;
+            m_Event = null;
+            dialogId = 0;
+    }
 
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
@@ -53,10 +59,15 @@ namespace StarForce
 
             if (isEnter)
             {
-                if (data.DefDialogId == 0) { return; }
+                if (dialogId == 0) { return; }
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    if (m_Event != null)
+                    {
+                        // 触发事件
+                        dataEvent.TriggerEvent(m_Event.Id);
+                    }
                     GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(data.Name, data.IconId, dialogId));
                 }
             }
@@ -67,15 +78,18 @@ namespace StarForce
             base.OnHide(isShutdown, userData);
 
             entityDataNPC = null;
+
+            task = null;
+            m_Event = null;
+            dialogId = 0;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag(Constant.Tag.Player))
             {
-                Task task = null;
-                Data.Event m_Event = null;
                 GetTaskAndDialogId(out task, out m_Event, out dialogId);
+
                 // 无对话
                 if (dialogId == 0) return;
                 // 有任务 有对话
@@ -92,6 +106,7 @@ namespace StarForce
                 {
                     if (m_Event.IsForce)
                     {
+                        dataEvent.TriggerEvent(m_Event.Id);
                         GameEntry.Event.Fire(this, OpenDialogEventArgs.Create(data.Name, data.IconId, dialogId));
                         return;
                     }
@@ -176,11 +191,8 @@ namespace StarForce
                 if (type == (int)EnumTriggerType.Event)
                 {
                     Data.Event curEvent = dataEvent.GetEvent(id);
-                    if (curEvent.state == EnumEventState.UnFinish)
+                    if (curEvent.state == EnumEventState.UnFinish || curEvent.IsRepeat)
                     {
-                        // 触发事件
-                        dataEvent.TriggerEvent(id);
-
                         task = null;
                         m_Event = curEvent;
                         dialog = 0;
@@ -194,12 +206,16 @@ namespace StarForce
                 if (type == (int)EnumTriggerType.Recruit)
                 {
                     Recruit recuruit = dataRecruit.GetRecruit(id);
-
+                    if (recuruit.state == EnumWorkState.Applied)
+                    {
+                        task = null;
+                        dialog = GetEventDialogId(recuruit.Apply, out m_Event);
+                        return;
+                    }
                     if (recuruit.state == EnumWorkState.Working)
                     {
                         task = null;
-                        m_Event = null;
-                        dialog = int.Parse(configs[2]);
+                        dialog = GetEventDialogId(recuruit.Finish, out m_Event);
                         return;
                     }
                 }
@@ -211,6 +227,29 @@ namespace StarForce
             return;
         }
 
+        private int GetEventDialogId(string condition, out Data.Event m_Event)
+        {
+            int dialog = 0;
+            m_Event = null;
+            if (condition == string.Empty) return dialog;
+            string[] conds = condition.Split('&');
+            foreach (var cond in conds)
+            {
+                string type = cond.Split('=')[0];
+                if (type != Constant.Parameter.Event) continue;
+
+                int eventId = int.Parse(cond.Split('=')[1]);
+                Data.Event applyEvent = dataEvent.GetEvent(eventId);
+                if (applyEvent.EventType != (int)EnumEventType.Dialog) continue;
+
+                string value = dataEvent.GetEventConditionValue(applyEvent.Parameter, Constant.Parameter.Dialog);
+                if (value != string.Empty)
+                    dialog = int.Parse(value);
+                m_Event = applyEvent;
+                return dialog;
+            }
+            return dialog;
+        }
     }
 
 }

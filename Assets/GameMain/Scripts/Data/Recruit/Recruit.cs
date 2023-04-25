@@ -24,21 +24,39 @@ namespace StarForce.Data
 
         public string Condition { get { return recruitData.Condition; } }
 
+        public string Apply { get { return recruitData.Apply; } }
+
+        public string Finish { get { return recruitData.Finish; } }
+
+        public string Reward { get { return recruitData.Reward; } }
+
         public EnumWorkState state { get; private set; }
+
+        public int Progress { get; private set; }
 
         public void ChangeWorkState(EnumWorkState workState)
         {
-            if (state == EnumWorkState.Finish) return;
-
             if (workState == state) return;
 
             state = workState;
+        }
+
+        public void UpdateProgress(int value)
+        {
+            Progress += value;
+        }
+
+        public void Reset()
+        {
+            state = EnumWorkState.Apply;
+            Progress = 0;
         }
 
         public Recruit()
         {
             recruitData = null;
             state = EnumWorkState.Apply;
+            Progress = 0;
         }
 
         public static Recruit Create(RecruitData recruitData)
@@ -52,6 +70,7 @@ namespace StarForce.Data
         {
             recruitData = null;
             state = EnumWorkState.Apply;
+            Progress = 0;
         }
     }
 }

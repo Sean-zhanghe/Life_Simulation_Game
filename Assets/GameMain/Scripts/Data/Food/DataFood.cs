@@ -39,6 +39,8 @@ namespace StarForce.Data
         private IDataTable<DRFood> dtFood;
         private Dictionary<int, FoodData> dicFoodData;
 
+        public List<int> listCanteen;
+
         protected override void OnInit()
         {
 
@@ -62,6 +64,10 @@ namespace StarForce.Data
                 FoodData foodData = new FoodData(dRFood);
                 dicFoodData.Add(foodData.Id, foodData);
             }
+
+            listCanteen = new List<int>() {
+                1001,
+            };
         }
 
         public FoodData GetFoodDataById(int foodId)

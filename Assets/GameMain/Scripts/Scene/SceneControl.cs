@@ -1,9 +1,11 @@
-﻿using GameFramework;
+﻿using DG.Tweening;
+using GameFramework;
 using GameFramework.DataTable;
 using GameFramework.Event;
 using StarForce.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityGameFramework.Runtime;
@@ -53,6 +55,7 @@ namespace StarForce
             GameEntry.Event.Subscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
             GameEntry.Event.Subscribe(HideEnemyEventArgs.EventId, OnHideEnemyEntity);
             GameEntry.Event.Subscribe(ReloadLevelEventArgs.EventId, OnReloadLevel);
+            GameEntry.Event.Subscribe(ReleaseEventEventArgs.EventId, OnReleaseEvent);
 
             entityLoader = EntityLoader.Create(this);
 
@@ -79,6 +82,7 @@ namespace StarForce
             GameEntry.Event.Unsubscribe(HideEntityInGameEventArgs.EventId, OnHideEntityInGame);
             GameEntry.Event.Unsubscribe(HideEnemyEventArgs.EventId, OnHideEnemyEntity);
             GameEntry.Event.Unsubscribe(ReloadLevelEventArgs.EventId, OnReloadLevel);
+            GameEntry.Event.Unsubscribe(ReleaseEventEventArgs.EventId, OnReleaseEvent);
         }
 
         public void Pause()
@@ -146,8 +150,8 @@ namespace StarForce
 
             Vector3 pos = dataScene.GetPlayerPosition(curSceneId, lastSceneId);
             entityLoader.ShowEntity<T>(
-                player.EntityId, 
-                (entity) => { dicEntityPlayer.Add(entity.Id, (EntityLogicPlayer)entity.Logic); }, 
+                player.EntityId,
+                (entity) => { dicEntityPlayer.Add(entity.Id, (EntityLogicPlayer)entity.Logic); },
                 EntityDataPlayer.Create(player, pos));
         }
 
@@ -162,10 +166,10 @@ namespace StarForce
 
                 // 创建NPC
                 entityLoader.ShowEntity(
-                    npcData.EntityId, 
+                    npcData.EntityId,
                     typeof(EntityLogicNPC),
                     (entity) => { dicEntityNPC.Add(entity.Id, (EntityLogicNPC)entity.Logic); },
-                    EntityDataNPC.Create(npcData, npc.transform.position)
+                    EntityDataNPC.Create(npcData, npc.transform.position, npc.transform.localRotation)
                 );
             }
         }
@@ -276,7 +280,7 @@ namespace StarForce
             lastScene = currentScene;
             currentScene = ne.SceneAssetName.Substring(Constant.Path.Scenes.Length, ne.SceneAssetName.Length - Constant.Path.Scenes.Length - ".unity".Length);
             dataScene.scene = currentScene;
-            
+
             if (m_BackgroundMusicId > 0)
             {
                 GameEntry.Sound.PlayMusic(m_BackgroundMusicId);
@@ -369,6 +373,48 @@ namespace StarForce
             CreatePlayer<EntityLogicPlayerCombat>();
             CreaterEnemy();
         }
-    }
 
+        private void OnReleaseEvent(object sender, GameEventArgs e)
+        {
+            ReleaseEventEventArgs ne = (ReleaseEventEventArgs)e;
+            if (ne == null) return;
+
+            Data.Event m_Event = ne.m_Event;
+
+            if (m_Event.EventType == (int)EnumEventType.Entity)
+            {
+                string condition = m_Event.Parameter;
+                if (m_Event.Parameter == string.Empty) return;
+                string[] conditions = condition.Split('&');
+
+                Dictionary<int, int> dicEntity = new Dictionary<int, int>();
+                string tag = string.Empty;
+                foreach (var cond in conditions)
+                {
+                    if (cond.StartsWith(Constant.Parameter.Entity))
+                    {
+                        int entity = int.Parse(cond.Split('=')[1]);
+                        int value = int.Parse(cond.Split('=')[2]);
+                        dicEntity.Add(entity, value);
+                    }
+                    if (cond.StartsWith(Constant.Parameter.Tag))
+                    {
+                        tag = cond.Substring(Constant.Parameter.Tag.Length + 1);
+                    }
+                }
+
+                GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
+                int count = 0;
+                foreach (var entity in dicEntity.Keys)
+                {
+                    if (count >= objs.Length) break;
+                    for (int i = 0; i < dicEntity[entity]; i++)
+                    {
+                        entityLoader.ShowEntity(entity, typeof(EntityLogicGarbage), null, EntityData.Create(objs[i].transform.position));
+                        count++;
+                    }
+                }
+            }
+        }
+    }
 }

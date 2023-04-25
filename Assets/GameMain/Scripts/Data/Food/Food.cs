@@ -20,6 +20,7 @@ namespace StarForce.Data
         public void SetFood(FoodData data)
         {
             foodData = data;
+            Number = 1;
 
             if (foodData == null)
             {
@@ -30,8 +31,6 @@ namespace StarForce.Data
         public void AddNumber(int value)
         {
             if (foodData == null) return;
-
-            if (Number >= foodData.MaxStack) return;
 
             Number += value;
 

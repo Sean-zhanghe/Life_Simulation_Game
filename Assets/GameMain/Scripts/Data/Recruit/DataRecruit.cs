@@ -5,8 +5,8 @@ using StarForce;
 using StarForce.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 namespace StarForce.Data
 {
@@ -137,31 +137,89 @@ namespace StarForce.Data
         {
             if (!dicRecruit.ContainsKey(id)) return;
 
-            Recruit recruit = dicRecruit[id];
+            if (dicRecruit[id].state == state) return;
 
-            if (recruit.state == state) return;
-
-            if (recruit.state != EnumWorkState.Apply) return;
-
-            recruit.ChangeWorkState(state);
-            GameEntry.Event.Fire(ChangeRecruitStateEventArgs.EventId, ChangeRecruitStateEventArgs.Create(recruit));
+            dicRecruit[id].ChangeWorkState(state);
+            GameEntry.Event.Fire(ChangeRecruitStateEventArgs.EventId, ChangeRecruitStateEventArgs.Create(dicRecruit[id]));
         }
 
-        private void TriggerTask(Task task)
+        public void CheckRecruit(string condition, string value)
         {
-            if (task == null) return;
-
-            if (task.EventId == string.Empty) return;
-
+            DataEntity dataEntity = GameEntry.Data.GetData<DataEntity>();
+            RecruitData[] recruitDatas = GetAllRecruitData();
             DataEvent dataEvent = GameEntry.Data.GetData<DataEvent>();
-            string[] ids = task.EventId.Split('|');
-            for (int i = 0; i < ids.Length; i++)
+            for (int i = 0; i < recruitDatas.Length; i++)
             {
-                int id = int.Parse(ids[i]);
-                dataEvent.TriggerEvent(id);
+                RecruitData recruitData = recruitDatas[i];
+                Recruit recruit = GetRecruit(recruitData.Id);
+                if (recruit.state == EnumWorkState.Applied)
+                {
+                    if (recruit.Apply == string.Empty) continue;
+
+                    string[] applies = recruit.Apply.Split('&');
+
+                    bool isContinue = false;
+                    for (int j = 0; j < applies.Length; j++)
+                    {
+                        string type = applies[j].Split('=')[0];
+                        string applyValue = applies[j].Split('=')[1];
+
+                        if (type == Constant.Parameter.Event)
+                        { 
+                            Event m_Event = dataEvent.GetEvent(int.Parse(applyValue));
+                            if (m_Event.state != EnumEventState.Finish) 
+                            {
+                                isContinue = true;
+                                break;
+                            };
+                        }
+                    }
+                    if (isContinue) continue;
+                    ChangeRecruitState(recruit.Id, EnumWorkState.Working);
+                    continue;
+                }
+
+                if (recruit.state == EnumWorkState.Working)
+                {
+                    if (recruit.Finish == string.Empty) continue;
+
+                    string[] finishes = recruit.Finish.Split('&');
+
+                    bool isContinue = false;
+                    for (int j = 0; j < finishes.Length; j++)
+                    {
+                        string type = finishes[j].Split('=')[0];
+                        string finishValue = finishes[j].Split('=')[1];
+                        if (type == Constant.Parameter.Entity)
+                        { 
+                            int count = int.Parse(finishes[j].Split('=')[2]);
+                            // 当前检查条件和该条件一致
+                            if (condition == type)
+                            {
+                                EntityData entityData = dataEntity.GetEntityData(int.Parse(finishValue));
+                                if (entityData.Name == value)
+                                {
+                                    if (recruit.Progress < count)
+                                    {
+                                        UpdateRecruitProgress(recruit.Id, 1);
+                                    }
+                                }
+                            }
+                            if (dicRecruit[recruit.Id].Progress < count) isContinue = true;
+                            continue;
+                        }
+                    }
+                    if (isContinue) continue;
+                    ChangeRecruitState(recruit.Id, EnumWorkState.Finish);
+                }
             }
         }
 
+        public void UpdateRecruitProgress(int recruitId, int value)
+        {
+            if (!dicRecruit.ContainsKey(recruitId)) return;
+            dicRecruit[recruitId].UpdateProgress(value);
+        }
 
         protected override void OnUnload()
         {

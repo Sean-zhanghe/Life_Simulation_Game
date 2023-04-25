@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-04-17 17:32:18.080
+// 生成时间：2023-04-24 15:26:59.731
 //------------------------------------------------------------
 
 using GameFramework;
@@ -82,9 +82,18 @@ namespace StarForce
         }
 
         /// <summary>
-        /// 获取触发任务。
+        /// 获取触发任务事件。
         /// </summary>
         public string Trigger
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取是否重复执行。
+        /// </summary>
+        public bool IsRepeat
         {
             get;
             private set;
@@ -108,6 +117,7 @@ namespace StarForce
             Reward = columnStrings[index++];
             IsForce = bool.Parse(columnStrings[index++]);
             Trigger = columnStrings[index++];
+            IsRepeat = bool.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -126,6 +136,7 @@ namespace StarForce
                     Reward = binaryReader.ReadString();
                     IsForce = binaryReader.ReadBoolean();
                     Trigger = binaryReader.ReadString();
+                    IsRepeat = binaryReader.ReadBoolean();
                 }
             }
 

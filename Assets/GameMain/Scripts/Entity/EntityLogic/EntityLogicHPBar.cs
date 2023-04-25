@@ -20,7 +20,6 @@ namespace StarForce
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
-
         }
 
         protected override void OnShow(object userData)

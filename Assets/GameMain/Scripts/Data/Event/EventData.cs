@@ -22,6 +22,8 @@ namespace StarForce.Data
 
         public string Trigger { get { return dREvent.Trigger; } }
 
+        public bool IsRepeat { get { return dREvent.IsRepeat; } }
+
         public EventData(DREvent dREvent)
         {
             this.dREvent = dREvent;

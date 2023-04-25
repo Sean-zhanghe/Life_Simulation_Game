@@ -94,9 +94,19 @@ namespace StarForce.Data
                         dicEvent[m_Event.Id].ChangeEventState(eventState);
                     }
 
-                    if (m_Event.state == EnumEventState.Finish)
+                    if (eventState == EnumEventState.Finish)
                     {
-                        
+                        if (m_Event.Trigger != string.Empty)
+                        {
+                            string[] Ids = m_Event.Trigger.Split('&');
+                            for (int j = 0; j < Ids.Length; j++)
+                            {
+                                if (!Ids[i].StartsWith(Constant.Parameter.Event)) continue;
+
+                                int eventId = int.Parse(Ids[i].Substring(Constant.Parameter.Event.Length + 1));
+                                TriggerEvent(eventId);
+                            }
+                        }
                         CurrentEvent.Remove(m_Event);
                         GameEntry.Event.Fire(EventFinishEventArgs.EventId, EventFinishEventArgs.Create(m_Event));
                     }
@@ -110,8 +120,9 @@ namespace StarForce.Data
         {
             if (!dicEvent.ContainsKey(eventId)) return;
 
-            if (dicEvent[eventId].state == EnumEventState.Finish) return;
+            if (CurrentEvent.Contains(dicEvent[eventId])) return;
 
+            dicEvent[eventId].Reset();
             CurrentEvent.Add(dicEvent[eventId]);
             GameEntry.Event.Fire(ReleaseEventEventArgs.EventId, ReleaseEventEventArgs.Create(dicEvent[eventId]));
         }
@@ -129,6 +140,12 @@ namespace StarForce.Data
                 }
             }
             return string.Empty;
+        }
+
+        public void UpdateEventProgress(int eventId, int value)
+        {
+            if (!dicEvent.ContainsKey(eventId)) return;
+            dicEvent[eventId].UpdateProgress(value);
         }
 
         protected override void OnUnload()

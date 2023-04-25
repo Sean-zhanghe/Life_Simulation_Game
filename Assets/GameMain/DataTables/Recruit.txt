@@ -1,5 +1,6 @@
-﻿#	招聘配置表							
-#	Id		Name	Pay	PayMode	Description	Address	Condition
-#	int		string	int	string	string	string	string
-#	招聘工作Id	策划备注	工作名称	薪资	支付方式	工作描述	公司地址	招聘条件(l:小于 el:小于等于 e:等于 eg:大于等于 g:大于)
-	101		游戏内测人员	300	关	无需工作经验，参与游戏设备内测需要身体健康，体力值，精力值，健康值不得低于90	生物科技公司	uPower=90=eg&uHealth=90=eg&uEnergy=90=eg
+﻿#	招聘配置表											
+#	Id		Name	Pay	PayMode	Description	Address	Condition	WorkType	Apply	Finish	Reward
+#	int		string	int	string	string	string	string	int	string	string	string
+#	招聘工作Id	策划备注	工作名称	薪资	支付方式	工作描述	公司地址	招聘条件(l:小于 el:小于等于 e:等于 eg:大于等于 g:大于)	工作类型（1：游戏闯关，2：实体）	申请	完成	奖励
+	101		游戏内测人员	300	关	无需工作经验，参与游戏设备内测需要身体健康，体力值，精力值，健康值不得低于90	生物科技公司	uPower=90=eg&uHealth=90=eg&uEnergy=90=eg	1	uEvent=10004		
+	102		食堂保洁	150	天	无需工作经验，体力和健康值不低于70	食堂	uPower=70=eg&uHealth=70=eg	2	uEvent=10005	uEntity=70001=10	uMoney=150

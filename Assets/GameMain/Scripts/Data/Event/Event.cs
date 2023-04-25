@@ -24,7 +24,11 @@ namespace StarForce.Data
 
         public string Trigger { get { return eventData.Trigger; } }
 
+        public bool IsRepeat { get { return eventData.IsRepeat; } }
+
         public EnumEventState state { get; private set; }
+
+        public int Progress { get; private set; }
 
         public void ChangeEventState(EnumEventState eventState)
         {
@@ -35,10 +39,22 @@ namespace StarForce.Data
             state = eventState;
         }
 
+        public void UpdateProgress(int value)
+        {
+            Progress += value;
+        }
+
+        public void Reset()
+        {
+            state = EnumEventState.UnFinish;
+            Progress = 0;
+        }
+
         public Event()
         {
             eventData = null;
             state = EnumEventState.UnFinish;
+            Progress = 0;
         }
 
         public static Event Create(EventData eventData)
@@ -50,7 +66,9 @@ namespace StarForce.Data
 
         public void Clear()
         {
-
+            eventData = null;
+            state = EnumEventState.UnFinish;
+            Progress = 0;
         }
     }
 }

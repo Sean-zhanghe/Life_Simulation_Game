@@ -21,6 +21,8 @@
         Level_3 = 7,
 
         BackGround = 8,
+
+        Restaurant = 9,
     }
 
 }

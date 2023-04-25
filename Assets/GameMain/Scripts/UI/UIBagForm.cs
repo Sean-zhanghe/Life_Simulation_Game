@@ -67,6 +67,7 @@ namespace StarForce
 
             GameEntry.Event.Subscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
             GameEntry.Event.Subscribe(ChangeClothesEventArgs.EventId, OnRefreshClothes);
+            GameEntry.Event.Subscribe(RefreshBagEventArgs.EventId, OnRefreshBag);
 
             RefreshPriority();
             RefreshPlayerClothes();
@@ -89,6 +90,7 @@ namespace StarForce
 
             GameEntry.Event.Unsubscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
             GameEntry.Event.Unsubscribe(ChangeClothesEventArgs.EventId, OnRefreshClothes);
+            GameEntry.Event.Unsubscribe(RefreshBagEventArgs.EventId, OnRefreshBag);
 
             OnBtnBagClick(0);
 
@@ -162,7 +164,6 @@ namespace StarForce
 
         private void RefreshBag()
         {
-            curSlotIndex = -1;
             int count = 0;
             switch (curBagIndex)
             {
@@ -345,7 +346,15 @@ namespace StarForce
 
         public void OnBtnUseClick()
         {
+            if (curBagIndex != (int)EnumBag.Food) return;
 
+            if (curSlotIndex < 0 || curSlotIndex >= dataBag.listFood.Count) return;
+
+            Food food = dataBag.listFood[curSlotIndex];
+
+            if (food.Number == 0) return;
+
+            dataBag.ReduceFood(curSlotIndex, 1);
         }
 
         private void OnRefreshPriority(object sender, GameEventArgs e)
@@ -368,6 +377,19 @@ namespace StarForce
             }
 
             RefreshPlayerClothes();
+        }
+
+        private void OnRefreshBag(object sender, GameEventArgs e)
+        {
+            RefreshBagEventArgs ne = (RefreshBagEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+
+            if ((int)ne.bag != curBagIndex) return;
+            
+            RefreshBag();
         }
     }
 }

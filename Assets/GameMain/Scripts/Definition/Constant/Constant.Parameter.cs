@@ -14,6 +14,11 @@ namespace StarForce
             public const string Scene = "uScene";
             public const string NPC = "uNPC";
             public const string UI = "uUIForm";
+            public const string Entity = "uEntity";
+            public const string Tag = "uTag";
+
+            public const string Task = "uTask";
+            public const string Event = "uEvent";
 
             public const string Power = "uPower";
             public const string Energy = "uEnergy";

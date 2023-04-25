@@ -65,6 +65,7 @@ namespace StarForce
             GameEntry.Event.Subscribe(PlayerPriorityChangeEventArgs.EventId, OnRefreshPriority);
             GameEntry.Event.Subscribe(ReleaseTaskEventArgs.EventId, OnRefreshTask);
             GameEntry.Event.Subscribe(ReleaseEventEventArgs.EventId, OnRelesaseEvent);
+
         }
 
 #if UNITY_2017_3_OR_NEWER

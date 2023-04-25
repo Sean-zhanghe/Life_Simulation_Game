@@ -59,7 +59,7 @@ namespace StarForce.Data
                 }
             }
 
-            Subscribe(EventFinishEventArgs.EventId, OnEventRelease);
+            Subscribe(EventFinishEventArgs.EventId, OnEventFinish);
             Subscribe(ChangeRecruitStateEventArgs.EventId, OnRecruitStateChange);
         }
 
@@ -211,7 +211,7 @@ namespace StarForce.Data
             }
         }
 
-        private void OnEventRelease(object sender, GameEventArgs e)
+        private void OnEventFinish(object sender, GameEventArgs e)
         {
             EventFinishEventArgs ne = (EventFinishEventArgs)e;
             if (ne == null) return;
@@ -219,10 +219,13 @@ namespace StarForce.Data
             Event m_Event = ne.m_Event;
             if (m_Event.Trigger != string.Empty)
             {
-                string[] taskIds = m_Event.Trigger.Split('|');
-                for (int j = 0; j < taskIds.Length; j++)
+                string[] Ids = m_Event.Trigger.Split('&');
+                for (int i = 0; i < Ids.Length; i++)
                 {
-                    int taskId = int.Parse(taskIds[j]);
+                    if (!Ids[i].StartsWith(Constant.Parameter.Task)) continue;
+
+                    int taskId = int.Parse(Ids[i].Substring(Constant.Parameter.Task.Length + 1));
+
                     TaskData taskData = GetTaskData(taskId);
                     if (taskData.TaskType == (int)EnumTaskType.MainTask)
                     {
@@ -261,7 +264,7 @@ namespace StarForce.Data
 
         protected override void OnUnload()
         {
-            UnSubscribe(EventFinishEventArgs.EventId, OnEventRelease);
+            UnSubscribe(EventFinishEventArgs.EventId, OnEventFinish);
             UnSubscribe(ChangeRecruitStateEventArgs.EventId, OnRecruitStateChange);
         }
 

@@ -258,6 +258,46 @@ namespace StarForce.Data
 
         public bool AddFood(int foodId)
         {
+            DataFood dataFood = GameEntry.Data.GetData<DataFood>();
+            FoodData food = dataFood.GetFoodDataById(foodId);
+            if (food == null) return false;
+
+            string content = string.Empty;
+            int emptySlot = -1;
+            for (int i = 0; i < listFood.Count; i++)
+            {
+                if (emptySlot == -1 && listFood[i].Number == 0)
+                {
+                    emptySlot = i;
+                }
+
+                if (listFood[i].Number > 0 && listFood[i].foodData.Id == food.Id)
+                {
+                    if (listFood[i].Number < food.MaxStack)
+                    {
+                        listFood[i].AddNumber(1);
+
+                        content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), food.Name);
+                        GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
+                        return true;
+                    }
+                }
+            }
+            if (emptySlot == -1)
+            {
+                GameEntry.UI.OpenTips(new DialogParams()
+                {
+                    Mode = 1,
+                    Title = GameEntry.Localization.GetString(Constant.Localization.BagTitle),
+                    Message = GameEntry.Localization.GetString(Constant.Localization.BagNoEmptySlotMessage),
+                    UserData = null
+                });
+                return false;
+            }
+
+            listFood[emptySlot].SetFood(food);
+            content = string.Format(GameEntry.Localization.GetString(Constant.Localization.PopupGetItem), food.Name);
+            GameEntry.Event.Fire(this, ShowTipsEventArgs.Create(content));
             return true;
         }
 
@@ -269,6 +309,22 @@ namespace StarForce.Data
 
         public bool AddPet(int petId)
         {
+            return true;
+        }
+
+        public bool ReduceFood(int index, int value)
+        {
+            if (index < 0 || index >= listFood.Count) return false;
+
+            Food food = listFood[index];
+            DataPlayer dataPlayer = GameEntry.Data.GetData<DataPlayer>();
+            for (int i = 0; i < value; i++)
+            {
+                dataPlayer.AddRewardByConfiger(food.foodData.Attribute);
+            }
+            listFood[index].AddNumber(-value);
+            GameEntry.Event.Fire(this, RefreshBagEventArgs.Create(EnumBag.Food));
+
             return true;
         }
 

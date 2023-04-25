@@ -341,6 +341,7 @@ MonoBehaviour:
   - {fileID: 8400000, guid: 185fe28ee5abd7f4596e26f71f3d9085, type: 2}
   - {fileID: 8400000, guid: 17745b3ab3b530a41809c5b98af256d0, type: 2}
   - {fileID: 8400000, guid: c7cba2217b5d9554693d5c103df7b51b, type: 2}
+  - {fileID: 8400000, guid: 0e08a618d4d976446aa7e0bcc893c8b0, type: 2}
   mapRaw: {fileID: 6118756760268776080}
 --- !u!1 &6118756760268776083
 GameObject:

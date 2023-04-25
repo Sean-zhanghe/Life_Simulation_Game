@@ -22,6 +22,12 @@ namespace StarForce.Data
 
         public string Condition { get { return dRRecruit.Condition; } }
 
+        public string Apply { get { return dRRecruit.Apply; } }
+
+        public string Finish { get { return dRRecruit.Finish; } }
+
+        public string Reward { get { return dRRecruit.Reward; } }
+
         public RecruitData(DRRecruit dRRecruit)
         {
             this.dRRecruit = dRRecruit;

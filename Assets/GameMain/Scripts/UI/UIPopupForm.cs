@@ -37,6 +37,7 @@ namespace StarForce
                 return;
             }
             target.SetActive(false);
+            target.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -121,7 +122,6 @@ namespace StarForce
             Tween t = DOTween.To(() => timer, x => timer = x, 1, waitCount * 0.5f)
                       .OnStepComplete(() =>
                       {
-
                           waitCount -= 1;
                           if (waitCount < 0)
                           {
@@ -130,28 +130,29 @@ namespace StarForce
 
                           GameObject tips = null;
                           TipsObject tipsOjbect = m_TipsObjectPool.Spawn();
-                          if (tips != null)
+                          if (tipsOjbect != null)
                           {
                               tips = (GameObject)tipsOjbect.Target;
+                              tips.SetActive(true);
                           }
                           else
                           {
                               tips = Instantiate(tipsTemplete);
                               tips.transform.SetParent(tipsRoot);
                               tips.transform.localPosition = Vector3.zero;
+                              tips.name = "Tips_" + m_TipsObjectPool.Count;
                               m_TipsObjectPool.Register(TipsObject.Create(tips), true);
                           }
 
                           Text content = tips.GetComponentInChildren<Text>();
                           content.text = ne.Content;
+                          string tweenId = tips.name;
 
-                          string tweenId = "tips_" + dicTips.Count.ToString();
                           tips.transform.DOLocalMoveY(600, 2).SetId(tweenId).OnComplete(
                               () => {
                                   dicTips.Remove(tweenId);
                                   m_TipsObjectPool.Unspawn(tips);
                               });
-
                           dicTips.Add(tweenId, tips);
                       });
             waitCount++;

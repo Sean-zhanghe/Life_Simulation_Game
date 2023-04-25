@@ -44,7 +44,6 @@ namespace StarForce
 #endif
         {
             base.OnOpen(userData);
-
             OpenDialogEventArgs args = (OpenDialogEventArgs) userData;
             if (args == null)
                 Log.Error("UI Dialog can't get data");
@@ -80,7 +79,7 @@ namespace StarForce
 #endif
         {
             base.OnClose(isShutdown, userData);
-
+            GameEntry.Event.Fire(this, DialogFinishEventArgs.Create(oldDialog));
             // 游戏转为正常状态
             dataGame.GameResume();
         }
@@ -121,7 +120,6 @@ namespace StarForce
         {
             if (currentDialog == 0)
             {
-                GameEntry.Event.Fire(this, DialogFinishEventArgs.Create(oldDialog));
                 ClearContent();
                 this.Close();
                 return;

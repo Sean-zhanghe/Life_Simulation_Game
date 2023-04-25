@@ -50,5 +50,10 @@ namespace StarForce
         {
             return Utility.Text.Format("Assets/GameMain/UI/UIForms/{0}.prefab", assetName);
         }
+
+        public static string GetPrefab(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Res/Prefabs/{0}.prefab", assetName);
+        }
     }
 }

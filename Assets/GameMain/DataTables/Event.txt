@@ -1,8 +1,12 @@
-﻿#	事件配置表							
-#	Id		EventType	Parameter	Condition	Reward	IsForce	Trigger
-#	int		int	string	string	string	bool	string
-#	事件ID	策划配置	事件类型(1: 对话 2:电话)	参数	完成条件	事件完成奖励	是否强制执行	触发任务
-	10001	宿管阿姨对话	1	uDialog=30001	uDialog=30006	uProperty=1001	TRUE	
-	10002	室友对话	1	uDialog=40001	uDialog=40006		TRUE	10003
-	10003	母亲电话	2	uDialog=50001&uNPC=1005	uDialog=50016		TRUE	10004|20001
-	10004	招聘对话	1	uDialog=60001	uDialog=60011	uMoney=50	FALSE	
+﻿#	事件配置表								
+#	Id		EventType	Parameter	Condition	Reward	IsForce	Trigger	IsRepeat
+#	int		int	string	string	string	bool	string	bool
+#	事件ID	策划配置	事件类型(1: 对话 2:电话)	参数	完成条件	事件完成奖励	是否强制执行	触发任务事件	是否重复执行
+	10001	宿管阿姨对话	1	uDialog=30001	uDialog=30006	uProperty=1001	TRUE		FALSE
+	10002	室友对话	1	uDialog=40001	uDialog=40006		TRUE	uTask=10003	FALSE
+	10003	母亲电话	2	uDialog=50001&uNPC=1005	uDialog=50016		TRUE	uTask=10004&uTask=20001	FALSE
+	10004	招聘对话	1	uDialog=60001	uDialog=60011	uMoney=50	FALSE		TRUE
+	10005	饭店老板对话	1	uDialog=70001	uDialog=70006		FALSE	uEvent=10008	TRUE
+	10006	饭店老板对话	1	uDialog=80001	uDialog=80001		FALSE	uEvent=10007	TRUE
+	10007	打开饭店界面	5	uUIForm=1012	uUIForm=UICanteenForm		FALSE		TRUE
+	10008	生成生物	6	uEntity=70001=10&uTag=Garbage	uEntity=70001=10		FALSE		TRUE

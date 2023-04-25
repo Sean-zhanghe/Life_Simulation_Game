@@ -10,7 +10,6 @@ namespace StarForce
     {
         [SerializeField] private Transform store;
         [SerializeField] private Text money;
-        [SerializeField] private GameObject clothesSlot;
         [SerializeField] private ClothesSpriteList_SO clothesSpriteList_SO;
 
         private DataGame dataGame;
@@ -46,7 +45,7 @@ namespace StarForce
 
             curSlotIndex = -1;
             RefreshPriorityByType(EnumPriority.Money);
-            RefreshClothesStore();
+            RefreshCanteen();
 
             dataGame.GamePause();
         }
@@ -73,7 +72,7 @@ namespace StarForce
             base.OnUpdate(elapseSeconds, realElapseSeconds);
         }
 
-        private void RefreshClothesStore()
+        private void RefreshCanteen()
         {
             for (int i = 0; i < store.childCount; i++)
             {

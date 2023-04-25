@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2023-04-17 17:32:18.089
+// 生成时间：2023-04-24 15:26:59.745
 //------------------------------------------------------------
 
 using GameFramework;
@@ -90,6 +90,42 @@ namespace StarForce
             private set;
         }
 
+        /// <summary>
+        /// 获取工作类型（1：游戏闯关，2：实体）。
+        /// </summary>
+        public int WorkType
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取申请。
+        /// </summary>
+        public string Apply
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取完成。
+        /// </summary>
+        public string Finish
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取奖励。
+        /// </summary>
+        public string Reward
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -108,6 +144,10 @@ namespace StarForce
             Description = columnStrings[index++];
             Address = columnStrings[index++];
             Condition = columnStrings[index++];
+            WorkType = int.Parse(columnStrings[index++]);
+            Apply = columnStrings[index++];
+            Finish = columnStrings[index++];
+            Reward = columnStrings[index++];
 
             GeneratePropertyArray();
             return true;
@@ -126,6 +166,10 @@ namespace StarForce
                     Description = binaryReader.ReadString();
                     Address = binaryReader.ReadString();
                     Condition = binaryReader.ReadString();
+                    WorkType = binaryReader.Read7BitEncodedInt32();
+                    Apply = binaryReader.ReadString();
+                    Finish = binaryReader.ReadString();
+                    Reward = binaryReader.ReadString();
                 }
             }
 
